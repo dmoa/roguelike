@@ -1,25 +1,28 @@
 #include "Game.h"
 
-Game::Game() {
-	_rectangle.setSize(sf::Vector2f(200, 150));
-	_rectangle.setFillColor(sf::Color::Red);
-	_rectangle.setPosition(20, 20);
+Game::Game(sf::Shader* _shader)
+{
+	_rectangle.setSize(sf::Vector2f(500, 500));
+	_rectangle.setFillColor(sf::Color::White);
+	sf::Texture shapeTexture;
+	shapeTexture.loadFromFile("content/bg.png");
+	_rectangle.setTexture(&shapeTexture);
+	shader = _shader;
 }
 
 // Update function contains state-specific logic
-void Game::Update(sf::Time deltaTime) {
-	// The rectangle moves with time
-	_rectangle.move(0.2f * deltaTime.asMilliseconds(),
-		0.2f * deltaTime.asMilliseconds());
-
-	// Pause the state when the rectangle nears the bottom
-	// of the screen
-	if (_rectangle.getGlobalBounds().left > 300) {
-		SetPaused(true);
-	}
+void Game::Update(sf::Time deltaTime)
+{
+	deltaTime.asMilliseconds();
 }
 
 // Draw function contains SFML draw calls
-void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window) {
+void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
+{
+	// shader->setUniform("texture", shapeTexture);
 	window->draw(_rectangle);
 }
+
+	// sf::RectangleShape shape;
+	// shape.setSize(sf::Vector2f(500, 500));
+	//

@@ -19,30 +19,19 @@ int main()
 	window->create(sf::VideoMode(500.0f * screenScalingFactor, 500.0f * screenScalingFactor), "SFML works!");
 	platform.setIcon(window->getSystemHandle());
 
-	sm::StateMachine stateMachine(std::make_shared<Game>());
+	sf::Shader mainShader;
+	if (!mainShader.loadFromFile("content/shader.frag", sf::Shader::Fragment))
+	{
+		throw "Shaders not available!";
+	}
+	mainShader.setUniform("screen", sf::Glsl::Vec2(500.0f, 500.0f));
+	mainShader.setUniform("num_lights", 1);
+	mainShader.setUniform("lights[0].position", sf::Glsl::Vec2(250.0f, 250.0f));
+	mainShader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
+	mainShader.setUniform("lights[0].power", 10.0f);
 
-	// sf::RectangleShape shape;
-	// shape.setSize(sf::Vector2f(500, 500));
-	// shape.setFillColor(sf::Color::White);
+	sm::StateMachine stateMachine(std::make_shared<Game>(&mainShader));
 
-	// sf::Texture shapeTexture;
-	// shapeTexture.loadFromFile("content/bg.png");
-	// shape.setTexture(&shapeTexture);
-
-	// sf::Shader shader;
-	// if (!shader.loadFromFile("content/shader.frag", sf::Shader::Fragment))
-	// {
-	// 	throw "Shaders not available!";
-	// }
-	// shader.setUniform("screen", sf::Glsl::Vec2(500.0f, 500.0f));
-	// shader.setUniform("texture", shapeTexture);
-	// shader.setUniform("num_lights", 2);
-	// shader.setUniform("lights[0].position", sf::Glsl::Vec2(275.0f, 250.0f));
-	// shader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
-	// shader.setUniform("lights[0].power", 1.0f);
-	// shader.setUniform("lights[1].position", sf::Glsl::Vec2(150.0f, 0.0f));
-	// shader.setUniform("lights[1].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
-	// shader.setUniform("lights[1].power", 5.0f);
 	sf::Clock deltaClock;
 
 	while (window->isOpen())
@@ -50,9 +39,10 @@ int main()
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed) {
 				stateMachine.ClearAll();
 				window->close();
+			}
 		}
 
 		stateMachine.UpdateStates(deltaClock.restart());

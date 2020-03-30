@@ -37,5 +37,5 @@ void main()
     diffuse = clamp(diffuse, 0.0, 1.0);
 
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
-    gl_FragColor = vec4(diffuse, 1.0) * pixel;
+    gl_FragColor = pixel;
 }
