@@ -1,5 +1,4 @@
 #include "StateMachine.hpp"
-#include <algorithm>
 
 namespace sm {
 	StateMachine::StateMachine(std::shared_ptr<State> initialState) {

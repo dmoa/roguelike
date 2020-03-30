@@ -1,5 +1,7 @@
 #pragma once
 
+#include <StateMachine/State.hpp>
+
 class Game final: public sm::State {
 public:
 	// Constructor initialises the state

@@ -1,10 +1,12 @@
-#include "Game.h"
+#include "../include/Game.hpp"
+
+extern const float WINDOW_WIDTH;
+extern const float WINDOW_HEIGHT;
 
 Game::Game(sf::Shader* _shader)
 {
-	_rectangle.setSize(sf::Vector2f(500, 500));
+	_rectangle.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 	_rectangle.setFillColor(sf::Color::White);
-	sf::Texture shapeTexture;
 	shapeTexture.loadFromFile("content/bg.png");
 	_rectangle.setTexture(&shapeTexture);
 	shader = _shader;
@@ -19,10 +21,6 @@ void Game::Update(sf::Time deltaTime)
 // Draw function contains SFML draw calls
 void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 {
-	// shader->setUniform("texture", shapeTexture);
-	window->draw(_rectangle);
+	shader->setUniform("texture", shapeTexture);
+	window->draw(_rectangle, shader);
 }
-
-	// sf::RectangleShape shape;
-	// shape.setSize(sf::Vector2f(500, 500));
-	//

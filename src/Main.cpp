@@ -1,8 +1,10 @@
 #include "Platform/PlatformHelper.hpp"
-#include "StateMachine/State.hpp"
-#include "StateMachine/StateMachine.hpp"
+#include <StateMachine/StateMachine.hpp>
 
-#include "States/Game.hpp"
+#include "States/include/Game.hpp"
+
+extern const float WINDOW_WIDTH = 1000.0;
+extern const float WINDOW_HEIGHT = 1000.0;
 
 int main()
 {
@@ -16,7 +18,7 @@ int main()
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
 	// Use the screenScalingFactor
-	window->create(sf::VideoMode(500.0f * screenScalingFactor, 500.0f * screenScalingFactor), "SFML works!");
+	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "SFML works!");
 	platform.setIcon(window->getSystemHandle());
 
 	sf::Shader mainShader;
@@ -24,9 +26,9 @@ int main()
 	{
 		throw "Shaders not available!";
 	}
-	mainShader.setUniform("screen", sf::Glsl::Vec2(500.0f, 500.0f));
+	mainShader.setUniform("screen", sf::Glsl::Vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
 	mainShader.setUniform("num_lights", 1);
-	mainShader.setUniform("lights[0].position", sf::Glsl::Vec2(250.0f, 250.0f));
+	mainShader.setUniform("lights[0].position", sf::Glsl::Vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 	mainShader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
 	mainShader.setUniform("lights[0].power", 10.0f);
 
