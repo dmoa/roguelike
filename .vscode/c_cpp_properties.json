@@ -31,7 +31,6 @@
 			"includePath": [
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
-				"${workspaceFolder}/test",
 				"/usr/local/include/**"
 			],
 			"defines": [
