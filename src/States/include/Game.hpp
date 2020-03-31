@@ -1,6 +1,7 @@
 #pragma once
 
 #include <StateMachine/State.hpp>
+#include "TileMap.hpp"
 
 class Game final: public sm::State {
 public:
@@ -12,4 +13,6 @@ private:
 	sf::RectangleShape _rectangle;
 	sf::Texture shapeTexture;
 	sf::Shader* shader;
+	TileMap tilemap;
+	sf::View view;
 };
