@@ -19,6 +19,7 @@ const float quadratic = 200.0;
 
 uniform sampler2D texture;
 
+
 void main()
 {
     vec2 norm_screen = vec2(gl_TexCoord[0].x, gl_TexCoord[0].y);

@@ -42,6 +42,8 @@ public:
         return true;
     }
 
+    sf::Texture m_tileset;
+
 private:
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -57,5 +59,4 @@ private:
     }
 
     sf::VertexArray m_vertices;
-    sf::Texture m_tileset;
 };
