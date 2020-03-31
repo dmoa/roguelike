@@ -11,12 +11,6 @@ Game::Game(sf::Shader* _shader)
 	_rectangle.setFillColor(sf::Color::White);
 	shapeTexture.loadFromFile("content/tileset.png");
 	_rectangle.setTexture(&shapeTexture);
-
-	ty::Settings::TileSize = 16;
-	ty::Settings::ChunkWidth = 16;
-	ty::Settings::ChunkHeight = 16;
-
-	map.Create(320, 160, 1);
 }
 
 // Update function contains state-specific logic
@@ -28,8 +22,7 @@ void Game::Update(sf::Time deltaTime)
 // Draw function contains SFML draw calls
 void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 {
-	map.DrawLayer(0, window, sf::RenderStates(&shapeTexture));
 
 	// shader->setUniform("texture", shapeTexture);
-	// window->draw(_rectangle);
+	window->draw(_rectangle, shader);
 }

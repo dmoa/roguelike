@@ -1,7 +1,6 @@
 #pragma once
 
 #include <StateMachine/State.hpp>
-#include <Tily/Tily.hpp>
 
 class Game final: public sm::State {
 public:
@@ -13,5 +12,4 @@ private:
 	sf::RectangleShape _rectangle;
 	sf::Texture shapeTexture;
 	sf::Shader* shader;
-	ty::Map map;
 };
