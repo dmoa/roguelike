@@ -40,6 +40,6 @@ void Map::Update()
 // Draw function contains SFML draw calls
 void Map::Draw(const std::shared_ptr<sf::RenderWindow>& window, sf::Shader* shader)
 {
-	shader->setUniform("texture", tilemap.m_tileset);
+	shader->setUniform("texture", sf::Shader::CurrentTexture);
 	window->draw(tilemap, shader);
 }

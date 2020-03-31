@@ -42,7 +42,6 @@ public:
         return true;
     }
 
-    sf::Texture m_tileset;
 
 private:
 
@@ -58,5 +57,6 @@ private:
         target.draw(m_vertices, states);
     }
 
+    sf::Texture m_tileset;
     sf::VertexArray m_vertices;
 };

@@ -3,7 +3,7 @@
 	"C_Cpp.intelliSenseEngine": "Default",
 	"C_Cpp.dimInactiveRegions": false,
 	"C_Cpp.preferredPathSeparator": "Forward Slash",
-	"C_Cpp.loggingLevel": "Warning",
+	"C_Cpp.loggingLevel": "None",
 	"C_Cpp.workspaceParsingPriority": "highest",
 	"C_Cpp.enhancedColorization": "Disabled",
 
@@ -63,5 +63,10 @@
 	"[applescript]": {
 		"files.encoding": "utf8"
 	},
-	"C_Cpp.errorSquiggles": "Disabled"
+	"C_Cpp.errorSquiggles": "Disabled",
+	"workbench.colorCustomizations": {
+		"editorError.foreground":   "#00000000",
+		"editorWarning.foreground": "#00000000",
+		"editorInfo.foreground":    "#00000000"
+	}
 }
