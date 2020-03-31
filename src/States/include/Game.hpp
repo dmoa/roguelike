@@ -9,7 +9,12 @@ public:
 private:
 	void Update(sf::Time deltaTime);
 	void Draw(const std::shared_ptr<sf::RenderWindow>& window);
-	sf::Shader* shader;
-	Map map;
-	sf::View view;
+	sf::Shader* m_shader;
+	Map m_map;
+	sf::View m_view;
+	sf::RenderTexture m_renderTexture;
+	sf::Texture m_renderTexture_texture;
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
+	sf::Sprite tempSprite;
 };

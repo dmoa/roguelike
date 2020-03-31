@@ -4,32 +4,9 @@ extern const int SCALE;
 
 Map::Map()
 {
-	const int level[] =
-    {
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    };
-
-	tilemap.load("content/tileset.png", sf::Vector2u(8, 8), level, 10, 20);
-	tilemap.setScale(SCALE, SCALE);
+	//m_texture.loadFromFile("content/tileset.png");
+	//m_sprite.setTexture(m_texture);
+	m_sprite.setColor(sf::Color::White);
 }
 
 // Update function contains state-specific logic
@@ -38,8 +15,12 @@ void Map::Update()
 }
 
 // Draw function contains SFML draw calls
-void Map::Draw(const std::shared_ptr<sf::RenderWindow>& window, sf::Shader* shader)
+void Map::Draw(sf::RenderTexture* renderTexture)
 {
-	shader->setUniform("texture", sf::Shader::CurrentTexture);
-	window->draw(tilemap, shader);
+	renderTexture->draw(m_sprite);
+}
+
+sf::Sprite Map::getSprite()
+{
+	return m_sprite;
 }

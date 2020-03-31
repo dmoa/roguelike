@@ -1,12 +1,12 @@
 #pragma once
 
-#include <TileMap/TileMap.hpp>
-
 class Map {
 public:
 	Map();
 	void Update();
-	void Draw(const std::shared_ptr<sf::RenderWindow>& window, sf::Shader* shader);
-	TileMap tilemap;
+	void Draw(sf::RenderTexture* renderTexture);
+	sf::Sprite getSprite();
 private:
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
 };
