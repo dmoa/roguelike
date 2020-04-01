@@ -13,8 +13,5 @@ private:
 	Map m_map;
 	sf::View m_view;
 	sf::RenderTexture m_renderTexture;
-	sf::Texture m_renderTexture_texture;
-	sf::Texture m_texture;
 	sf::Sprite m_sprite;
-	sf::Sprite tempSprite;
 };

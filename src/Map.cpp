@@ -4,9 +4,8 @@ extern const int SCALE;
 
 Map::Map()
 {
-	//m_texture.loadFromFile("content/tileset.png");
-	//m_sprite.setTexture(m_texture);
-	m_sprite.setColor(sf::Color::White);
+	m_texture.loadFromFile("content/tileset.png");
+	m_sprite.setTexture(m_texture);
 }
 
 // Update function contains state-specific logic
