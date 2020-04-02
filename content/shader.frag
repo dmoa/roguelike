@@ -22,7 +22,9 @@ uniform sampler2D texture;
 
 void main()
 {
-    vec2 norm_screen = vec2(gl_TexCoord[0].x, gl_TexCoord[0].y);
+    // 1.0 - gl_TexCoord[0].y because y position for some reason was inverted
+    // don't know why yet....
+    vec2 norm_screen = vec2(gl_TexCoord[0].x, 1.0 - gl_TexCoord[0].y);
     vec3 diffuse = vec3(0);
 
 
