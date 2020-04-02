@@ -2,6 +2,7 @@
 #include <StateMachine/StateMachine.hpp>
 
 #include "GameCore/include/Game.hpp"
+#include "GameCore/include/EventHandler.hpp"
 
 extern const int WINDOW_WIDTH = 1000;
 extern const int WINDOW_HEIGHT = 1000;
@@ -33,7 +34,7 @@ int main()
 	mainShader.setUniform("num_lights", 1);
 	mainShader.setUniform("lights[0].position", sf::Glsl::Vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 	mainShader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
-	mainShader.setUniform("lights[0].power", 10.0f);
+	mainShader.setUniform("lights[0].power", 2.0f);
 
 	sm::StateMachine stateMachine(std::make_shared<Game>(&mainShader));
 
@@ -42,14 +43,7 @@ int main()
 	while (window->isOpen())
 	{
 		sf::Event event;
-		while (window->pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				stateMachine.ClearAll();
-				window->close();
-			}
-		}
+
 
 		stateMachine.UpdateStates(deltaClock.restart());
 		// Draw states
