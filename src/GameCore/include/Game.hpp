@@ -8,7 +8,7 @@ class Game final: public sm::State {
 public:
 	Game(sf::Shader* _shader);
 private:
-	void Update(sf::Time deltaTime);
+	void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window);
 	void Draw(const std::shared_ptr<sf::RenderWindow>& window);
 	sf::RenderTexture m_renderTexture;
 	sf::Color m_backgroundColor;

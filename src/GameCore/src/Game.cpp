@@ -1,5 +1,7 @@
 #include "../include/Game.hpp"
 
+extern bool QUIT;
+
 extern const int SCALE;
 extern const int GAME_WIDTH;
 extern const int GAME_HEIGHT;
@@ -15,9 +17,21 @@ Game::Game(sf::Shader* _shader)
 	m_player.setTexture(&m_tileSetTexture);
 }
 
-void Game::Update(sf::Time deltaTime)
+void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)
 {
 	deltaTime.asMilliseconds();
+	sf::Event event;
+	while (window->pollEvent(event))
+	{
+		switch (event.type)
+		{
+			default: break;
+
+			case sf::Event::Closed:
+				QUIT = true;
+				break;
+		}
+	}
 }
 
 void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)

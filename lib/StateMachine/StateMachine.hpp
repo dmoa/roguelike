@@ -66,11 +66,11 @@ namespace sm {
 
 		///<summary>Updates active states according to state logic, and removes any states queued
 		///for removal.</summary>
-		void UpdateStates(sf::Time deltaTime) {
+		void UpdateStates(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window) {
 			// Update states according to state logic
 			for (unsigned int i = 0; i < _states.size(); i++) {
 				if (!_states[i]->GetPaused()) {
-					_states[i]->Update(deltaTime);
+					_states[i]->Update(deltaTime, window);
 				}
 			}
 			// Process any state removals that have been queued

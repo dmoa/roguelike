@@ -2,7 +2,9 @@
 #include <StateMachine/StateMachine.hpp>
 
 #include "GameCore/include/Game.hpp"
-#include "GameCore/include/EventHandler.hpp"
+
+extern bool QUIT;
+bool QUIT = false;
 
 extern const int WINDOW_WIDTH = 1000;
 extern const int WINDOW_HEIGHT = 1000;
@@ -40,12 +42,10 @@ int main()
 
 	sf::Clock deltaClock;
 
-	while (window->isOpen())
+	while (!QUIT)
 	{
-		sf::Event event;
 
-
-		stateMachine.UpdateStates(deltaClock.restart());
+		stateMachine.UpdateStates(deltaClock.restart(), window);
 		// Draw states
 		window->clear();
 		stateMachine.DrawStates(window);

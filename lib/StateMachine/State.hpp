@@ -31,7 +31,7 @@ namespace sm {
 	private:
 		///<summary>Handles state-specific logic</summary>
 		///<param name="deltaTime">Time since the previous execution</param>
-		virtual void Update(sf::Time deltaTime) = 0;
+		virtual void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window) = 0;
 
 		///<summary>Handles state-specific rendering</summary>
 		///<param name="window">A pointer to the window to render the state to</param>
