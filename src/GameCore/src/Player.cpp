@@ -2,12 +2,13 @@
 
 extern const int GAME_WIDTH;
 extern const int GAME_HEIGHT;
+extern const int SCALE;
 
 Player::Player()
 {
-	tileX = 13;
-	tileY = 13;
-	m_sprite.setPosition(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+	tileX = 12;
+	tileY = 12;
+	m_sprite.setPosition(tileX * 8, tileY * 8);
 	m_sprite.setTextureRect(sf::Rect(32, 8, 8, 8));
 }
 
@@ -22,9 +23,15 @@ void Player::Draw(sf::RenderTexture* renderTexture)
 	renderTexture->draw(m_sprite);
 }
 
-void Player::move(int directionX, int directionY)
+void Player::move(int directionX, int directionY, sf::Shader* shader)
 {
 	tileX += directionX;
 	tileY += directionY;
-	m_sprite.setPosition(tileX * 8, tileY * 8);
+
+	int newPosX = tileX * 8;
+	int newPosY = tileY * 8;
+
+	m_sprite.setPosition(newPosX, newPosY);
+	// +4 to align the shader with the middle of the sprite
+	shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + 4) * SCALE, (newPosY + 4) * SCALE));
 }

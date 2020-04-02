@@ -27,18 +27,7 @@ int main()
 	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "SFML works!");
 	platform.setIcon(window->getSystemHandle());
 
-	sf::Shader mainShader;
-	if (!mainShader.loadFromFile("content/shader.frag", sf::Shader::Fragment))
-	{
-		throw "Shaders not available!";
-	}
-	mainShader.setUniform("screen", sf::Glsl::Vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
-	mainShader.setUniform("num_lights", 1);
-	mainShader.setUniform("lights[0].position", sf::Glsl::Vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
-	mainShader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
-	mainShader.setUniform("lights[0].power", 2.0f);
-
-	sm::StateMachine stateMachine(std::make_shared<Game>(&mainShader));
+	sm::StateMachine stateMachine(std::make_shared<Game>());
 
 	sf::Clock deltaClock;
 
