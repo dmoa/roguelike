@@ -49,16 +49,16 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 					default: break;
 
 					case sf::Keyboard::Left:
-						m_player.move(-1, 0, &m_shader);
+						m_player.move(-1, 0, &m_shader, m_map.getGridData(), m_map.getMapTileLength());
 						break;
 					case sf::Keyboard::Right:
-						m_player.move(1, 0, &m_shader);
+						m_player.move(1, 0, &m_shader, m_map.getGridData(), m_map.getMapTileLength());
 						break;
 					case sf::Keyboard::Up:
-						m_player.move(0, -1, &m_shader);
+						m_player.move(0, -1, &m_shader, m_map.getGridData(), m_map.getMapTileLength());
 						break;
 					case sf::Keyboard::Down:
-						m_player.move(0, 1, &m_shader);
+						m_player.move(0, 1, &m_shader, m_map.getGridData(), m_map.getMapTileLength());
 						break;
 				}
 		}

@@ -7,8 +7,11 @@ public:
 	Map();
 	void Update();
 	void Draw(sf::RenderTexture* renderTexture);
+	std::vector<int> getGridData();
+	int getMapTileLength();
 private:
-	int tileLength;
-	std::vector<int> gridData;
-	TileMapRenderer mapRenderer;
+	int m_tileLength;
+	std::vector<int> m_gridData;
+	int m_mapTileLength;
+	TileMapRenderer m_mapRenderer;
 };

@@ -6,10 +6,11 @@ extern const int SCALE;
 
 Player::Player()
 {
-	tileX = 12;
-	tileY = 12;
-	m_sprite.setPosition(tileX * 8, tileY * 8);
-	m_sprite.setTextureRect(sf::Rect(32, 8, 8, 8));
+	m_playerLength = 8;
+	m_tileX = 12;
+	m_tileY = 12;
+	m_sprite.setPosition(m_tileX * m_playerLength, m_tileY * m_playerLength);
+	m_sprite.setTextureRect(sf::Rect(32, 8, m_playerLength, m_playerLength));
 }
 
 void Player::setTexture(sf::Texture* texture)
@@ -23,15 +24,18 @@ void Player::Draw(sf::RenderTexture* renderTexture)
 	renderTexture->draw(m_sprite);
 }
 
-void Player::move(int directionX, int directionY, sf::Shader* shader)
+void Player::move(int directionX, int directionY, sf::Shader* shader, std::vector<int> gridData, int mapTileLength)
 {
-	tileX += directionX;
-	tileY += directionY;
+	if (gridData[(m_tileY + directionY) * mapTileLength + (m_tileX + directionX)] == 0)
+	{
+		m_tileX += directionX;
+		m_tileY += directionY;
 
-	int newPosX = tileX * 8;
-	int newPosY = tileY * 8;
+		int newPosX = m_tileX * m_playerLength;
+		int newPosY = m_tileY * m_playerLength;
 
-	m_sprite.setPosition(newPosX, newPosY);
-	// +4 to align the shader with the middle of the sprite
-	shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + 4) * SCALE, (newPosY + 4) * SCALE));
+		m_sprite.setPosition(newPosX, newPosY);
+		// + half the player length to align the shader with the middle of the sprite
+		shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
+	}
 }
