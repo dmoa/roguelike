@@ -21,9 +21,7 @@ int main()
 #endif
 
 	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>();
-	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
-	// Use the screenScalingFactor
 	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "SFML works!");
 	platform.setIcon(window->getSystemHandle());
 
@@ -35,7 +33,7 @@ int main()
 	{
 
 		stateMachine.UpdateStates(deltaClock.restart(), window);
-		// Draw states
+
 		window->clear();
 		stateMachine.DrawStates(window);
 		window->display();

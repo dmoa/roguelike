@@ -9,5 +9,6 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 private:
 	int tileLength;
+	std::vector<int> gridData;
 	TileMapRenderer mapRenderer;
 };
