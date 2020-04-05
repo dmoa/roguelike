@@ -77,5 +77,5 @@ int Map::getMapTileLength()
 
 int Map::getTileID(int tileX, int tileY)
 {
-    return m_gridData[m_tileY * mapTileLength + m_tileX];
+    return m_gridData[tileY * m_mapTileLength + tileX];
 }
