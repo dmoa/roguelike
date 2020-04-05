@@ -27,12 +27,12 @@ void Player::Draw(sf::RenderTexture* renderTexture)
 void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 {
 	int possiblePosX = m_tileX + directionX;
-	int posibblePosY = m_tileY + directionY;
+	int possiblePosY = m_tileY + directionY;
 
-	if (map->getTileID(possiblePosX, possiblePosX) == 0)
+	if (map->getTileID(possiblePosX, possiblePosY) == 0)
 	{
 		m_tileX = possiblePosX;
-		m_tileY = posibblePosY;
+		m_tileY = possiblePosY;
 
 		int newPosX = m_tileX * m_playerLength;
 		int newPosY = m_tileY * m_playerLength;
