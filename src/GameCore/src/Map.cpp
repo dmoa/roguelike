@@ -65,15 +65,15 @@ void Map::Draw(sf::RenderTexture* renderTexture)
 	m_mapRenderer.Draw(renderTexture);
 }
 
-std::vector<int> Map::getGridData()
-{
-    return m_gridData;
-}
+// std::vector<int> Map::getGridData()
+// {
+//     return m_gridData;
+// }
 
-int Map::getMapTileLength()
-{
-    return m_mapTileLength;
-}
+// int Map::getMapTileLength()
+// {
+//     return m_mapTileLength;
+// }
 
 int Map::getTileID(int tileX, int tileY)
 {
