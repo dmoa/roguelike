@@ -9,6 +9,7 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	std::vector<int> getGridData();
 	int getMapTileLength();
+	int getTileID(int tileX, int tileY);
 private:
 	int m_tileLength;
 	std::vector<int> m_gridData;

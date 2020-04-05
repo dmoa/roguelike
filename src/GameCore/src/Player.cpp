@@ -24,12 +24,15 @@ void Player::Draw(sf::RenderTexture* renderTexture)
 	renderTexture->draw(m_sprite);
 }
 
-void Player::move(int directionX, int directionY, sf::Shader* shader, std::vector<int> gridData, int mapTileLength)
+void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 {
-	if (gridData[(m_tileY + directionY) * mapTileLength + (m_tileX + directionX)] == 0)
+	int possiblePosX = m_tileX + directionX;
+	int posibblePosY = m_tileY + directionY;
+
+	if (map->getTileID(possiblePosX, possiblePosX) == 0)
 	{
-		m_tileX += directionX;
-		m_tileY += directionY;
+		m_tileX = possiblePosX;
+		m_tileY = posibblePosY;
 
 		int newPosX = m_tileX * m_playerLength;
 		int newPosY = m_tileY * m_playerLength;

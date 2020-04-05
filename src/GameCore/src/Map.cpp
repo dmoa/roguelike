@@ -4,6 +4,9 @@
 
 extern const int SCALE;
 
+// get Value at gridData[x][y]
+// in player.move pass a pointer to Map Class
+
 Map::Map()
 {
 	m_tileLength = 8;
@@ -70,4 +73,9 @@ std::vector<int> Map::getGridData()
 int Map::getMapTileLength()
 {
     return m_mapTileLength;
+}
+
+int Map::getTileID(int tileX, int tileY)
+{
+    return m_gridData[m_tileY * mapTileLength + m_tileX];
 }
