@@ -39,6 +39,7 @@ Map::Map()
         0, 0, 1, 0, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
 		0, 0, 1, 0, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2
     };
+    m_tileNames = {"empty", "wall", "tree", "tree", "tree"};
 
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
@@ -78,4 +79,9 @@ void Map::Draw(sf::RenderTexture* renderTexture)
 int Map::getTileID(int tileX, int tileY)
 {
     return m_gridData[tileY * m_mapTileLength + tileX];
+}
+
+bool Map::tileIsType(int tileX, int tileY, std::string type)
+{
+    return m_tileNames[getTileID(tileX, tileY)] == type;
 }
