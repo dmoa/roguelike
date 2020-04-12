@@ -9,7 +9,6 @@ Player::Player()
 	m_playerLength = 8;
 	m_tileX = 12;
 	m_tileY = 12;
-	m_sprite.setPosition(m_tileX * m_playerLength, m_tileY * m_playerLength);
 	m_sprite.setTextureRect(sf::Rect(32, 8, m_playerLength, m_playerLength));
 }
 
@@ -43,9 +42,15 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 	}
 }
 
-void Player::setStartingPos(Map* map)
+void Player::setStartingPos(Map* map, sf::Shader* shader)
 {
 	std::vector starting_pos = map->getPlayerStartingPos();
+
 	m_tileX = starting_pos[0];
-	m_tileX = starting_pos[1];
+	m_tileY = starting_pos[1];
+	int newPosX = m_tileX * m_playerLength;
+	int newPosY = m_tileY * m_playerLength;
+
+	m_sprite.setPosition(newPosX, newPosY);
+	shader->setUniform("lights[0].position", sf::Glsl::Vec2((m_tileX * m_playerLength + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
 }

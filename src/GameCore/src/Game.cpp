@@ -17,7 +17,6 @@ Game::Game()
 	}
 	m_shader.setUniform("screen", sf::Glsl::Vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
 	m_shader.setUniform("num_lights", 1);
-	m_shader.setUniform("lights[0].position", sf::Glsl::Vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 	m_shader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
 	m_shader.setUniform("lights[0].power", 5.0f);
 
@@ -27,7 +26,7 @@ Game::Game()
 
 	m_tileSetTexture.loadFromFile("content/tileset.png");
 	m_player.setTexture(&m_tileSetTexture);
-	m_player.setStartingPos(&m_map);
+	m_player.setStartingPos(&m_map, &m_shader);
 }
 
 void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)

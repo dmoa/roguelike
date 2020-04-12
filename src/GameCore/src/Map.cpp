@@ -1,4 +1,5 @@
 #include <time.h>
+#include <math.h>
 
 #include "../include/Map.hpp"
 
@@ -51,11 +52,11 @@ Map::Map()
     }
 
     m_tileNames = {"empty", "wall", "tree", "tree", "tree"};
-    m_tileData[0] =  Tile("empty", true, false);
-    m_tileData[1] =  Tile("wall", false, false);
-    m_tileData[2] =  Tile("tree", true, false);
-    m_tileData[3] = m_tileData[2];
-    m_tileData[4] = m_tileData[2];
+    m_tileData[0] =  Tile("empty", "empty", true, false);
+    m_tileData[1] =  Tile("temp-wall", "wall", false, false);
+    m_tileData[2] =  Tile("tree-1", "tree", true, false);
+    m_tileData[3] =  Tile("tree-2", "tree", true, false);
+    m_tileData[4] =  Tile("tree-3", "tree", true, false);
 
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
@@ -82,16 +83,6 @@ void Map::Draw(sf::RenderTexture* renderTexture)
 	m_mapRenderer.Draw(renderTexture);
 }
 
-// std::vector<int> Map::getGridData()
-// {
-//     return m_gridData;
-// }
-
-// int Map::getMapTileLength()
-// {
-//     return m_mapTileLength;
-// }
-
 int Map::getTileID(int tileX, int tileY)
 {
     return m_gridData[tileY * m_mapTileLength + tileX];
@@ -99,10 +90,10 @@ int Map::getTileID(int tileX, int tileY)
 
 bool Map::tileIsType(int tileX, int tileY, std::string type)
 {
-    return m_tileNames[getTileID(tileX, tileY)] == type;
+    return m_tileData[getTileID(tileX, tileY)].getCategory() == type;
 }
 
 std::vector<int> Map::getPlayerStartingPos()
 {
-    return {m_mapTileLength % m_playerStartingPos, (m_playerStartingPos - m_mapTileLength % m_playerStartingPos) / m_mapTileLength};
+    return {m_playerStartingPos % m_mapTileLength, int(m_playerStartingPos / m_mapTileLength)};
 }
