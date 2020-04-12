@@ -28,7 +28,7 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 	int possiblePosX = m_tileX + directionX;
 	int possiblePosY = m_tileY + directionY;
 
-	if (map->tileIsType(possiblePosX, possiblePosY, "empty"))
+	if (map->getTile(possiblePosX, possiblePosY)->getCanWalkOver())
 	{
 		m_tileX = possiblePosX;
 		m_tileY = possiblePosY;

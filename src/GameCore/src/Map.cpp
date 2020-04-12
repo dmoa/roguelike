@@ -34,11 +34,11 @@ Map::Map()
         3,3,3,0,3,0,0,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3,2,105,3,
         3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,3,105,3,
         3,3,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0,3,3,3,3,105,3,
-        3,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,3,3,3,105,3,
+        3,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,5,3,3,105,3,
         3,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,3,105,3,
-        3,3,0,0,0,0,0,0,0,0,0,0,20,0,0,3,3,3,3,3,3,3,3,105,3,
+        3,3,0,0,0,0,0,0,0,0,0,0,20,0,0,3,3,3,5,3,3,3,3,105,3,
         3,3,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,3,105,3,
-        3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,105,3
+        3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,3,3,3,3,3,3,3,105,3
     };
     for (int i = 0; i < m_mapTileLength * m_mapTileLength; i++)
     {
@@ -51,12 +51,14 @@ Map::Map()
         }
     }
 
-    m_tileNames = {"empty", "wall", "tree", "tree", "tree"};
     m_tileData[0] =  Tile("empty", "empty", true, false);
     m_tileData[1] =  Tile("temp-wall", "wall", false, false);
-    m_tileData[2] =  Tile("tree-1", "tree", true, false);
-    m_tileData[3] =  Tile("tree-2", "tree", true, false);
-    m_tileData[4] =  Tile("tree-3", "tree", true, false);
+    m_tileData[2] =  Tile("tree-1", "tree", false, false);
+    m_tileData[3] =  Tile("tree-2", "tree", false, false);
+    m_tileData[4] =  Tile("tree-3", "tree", false, false);
+    m_tileData[81] =  Tile("arrow-h", "arrow", true, false);
+    m_tileData[83] =  Tile("arrow-right", "arrow", true, false);
+    m_tileData[56] =  Tile("sword", "weapon", true, true);
 
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
@@ -83,14 +85,14 @@ void Map::Draw(sf::RenderTexture* renderTexture)
 	m_mapRenderer.Draw(renderTexture);
 }
 
+Tile* Map::getTile(int tileX, int tileY)
+{
+    return &m_tileData[getTileID(tileX, tileY)];
+}
+
 int Map::getTileID(int tileX, int tileY)
 {
     return m_gridData[tileY * m_mapTileLength + tileX];
-}
-
-bool Map::tileIsType(int tileX, int tileY, std::string type)
-{
-    return m_tileData[getTileID(tileX, tileY)].getCategory() == type;
 }
 
 std::vector<int> Map::getPlayerStartingPos()
