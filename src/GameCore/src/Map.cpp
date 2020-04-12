@@ -41,8 +41,15 @@ Map::Map()
     };
     for (int i = 0; i < m_mapTileLength * m_mapTileLength; i++)
     {
+        // reshifting grid data due to tiled data being offset, blame tile editor
         m_gridData[i] = m_gridData[i] > 0 ? m_gridData[i] - 1: 0;
+        if (m_gridData[i] == 14)
+        {
+            m_playerStartingPos = i;
+            m_gridData[i] = 0;
+        }
     }
+
     m_tileNames = {"empty", "wall", "tree", "tree", "tree"};
 
     srand((unsigned)time(NULL));
@@ -88,4 +95,9 @@ int Map::getTileID(int tileX, int tileY)
 bool Map::tileIsType(int tileX, int tileY, std::string type)
 {
     return m_tileNames[getTileID(tileX, tileY)] == type;
+}
+
+std::vector<int> Map::getPlayerStartingPos()
+{
+    return {m_mapTileLength % m_playerStartingPos, (m_playerStartingPos - m_mapTileLength % m_playerStartingPos) / m_mapTileLength};
 }

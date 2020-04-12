@@ -27,6 +27,7 @@ Game::Game()
 
 	m_tileSetTexture.loadFromFile("content/tileset.png");
 	m_player.setTexture(&m_tileSetTexture);
+	m_player.setStartingPos(&m_map);
 }
 
 void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)

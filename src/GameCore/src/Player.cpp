@@ -42,3 +42,10 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 		shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
 	}
 }
+
+void Player::setStartingPos(Map* map)
+{
+	std::vector starting_pos = map->getPlayerStartingPos();
+	m_tileX = starting_pos[0];
+	m_tileX = starting_pos[1];
+}
