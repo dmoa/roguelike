@@ -51,9 +51,9 @@ Map::Map()
     }
 
     m_tileNames = {"empty", "wall", "tree", "tree", "tree"};
-    m_tileData[0] =  Tile("empty", true, false));
-    m_tileData[1] =  Tile("wall", false, false));
-    m_tileData[2] =  Tile("tree", true, false));
+    m_tileData[0] =  Tile("empty", true, false);
+    m_tileData[1] =  Tile("wall", false, false);
+    m_tileData[2] =  Tile("tree", true, false);
     m_tileData[3] = m_tileData[2];
     m_tileData[4] = m_tileData[2];
 

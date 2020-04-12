@@ -2,10 +2,10 @@
 
 class Tile {
 public:
-	Map(std::string name, bool canWalkOver, bool canPickUp);
-	std::string getName()
-	bool getCanWalkOver()
-	bool getCanPickUp()
+	Tile(std::string name, bool canWalkOver, bool canPickUp);
+	std::string getName();
+	bool getCanWalkOver();
+	bool getCanPickUp();
 private:
 	std::string m_name;
 	bool m_canWalkOver;
