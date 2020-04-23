@@ -25,7 +25,7 @@ Game::Game()
 	m_backgroundColor = sf::Color(34, 35, 35);
 
 	m_tileSetTexture.loadFromFile("content/tileset.png");
-	m_player.setTexture(&m_tileSetTexture);
+	m_player.setTextures(&m_tileSetTexture);
 	m_player.setStartingPos(&m_map, &m_shader);
 }
 

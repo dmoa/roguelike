@@ -12,15 +12,18 @@ Player::Player()
 	m_sprite.setTextureRect(sf::Rect(32, 8, m_playerLength, m_playerLength));
 }
 
-void Player::setTexture(sf::Texture* texture)
+void Player::setTextures(sf::Texture* texture)
 {
 	m_texture = texture;
 	m_sprite.setTexture(*m_texture, false);
+
+	m_inventory.setTileset(texture);
 }
 
 void Player::Draw(sf::RenderTexture* renderTexture)
 {
 	renderTexture->draw(m_sprite);
+	m_inventory.Draw(renderTexture);
 }
 
 void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)

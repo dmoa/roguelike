@@ -10,6 +10,7 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	Tile* getTile(int tileX, int tileY);
 	int getTileID(int tileX, int tileY);
+	// ADD GET TILE QUAD -> should be inside Tile.cpp/.hpp
 	std::vector<int> getPlayerStartingPos();
 private:
 	int m_tileLength;

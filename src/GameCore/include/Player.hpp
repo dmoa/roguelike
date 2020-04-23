@@ -1,10 +1,13 @@
+#pragma once
+
 #include "Map.hpp"
+#include "Inventory.hpp"
 
 class Player
 {
 public:
 	Player();
-	void setTexture(sf::Texture* texture);
+	void setTextures(sf::Texture* texture);
 	void Draw(sf::RenderTexture* renderTexture);
 	void move(int directionX, int directionY, sf::Shader* shader, Map* map);
 	void setStartingPos(Map* map, sf::Shader* shader);
@@ -14,4 +17,5 @@ private:
 	int m_playerLength;
 	int m_tileX;
 	int m_tileY;
+	Inventory m_inventory;
 };
