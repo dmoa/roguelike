@@ -49,15 +49,19 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 					default: break;
 
 					case sf::Keyboard::Left:
+					case sf::Keyboard::A:
 						m_player.move(-1, 0, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Right:
+					case sf::Keyboard::D:
 						m_player.move(1, 0, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Up:
+					case sf::Keyboard::W:
 						m_player.move(0, -1, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Down:
+					case sf::Keyboard::S:
 						m_player.move(0, 1, &m_shader, &m_map);
 						break;
 				}
