@@ -3,7 +3,7 @@
 class Tile {
 public:
 	Tile();
-	Tile(std::string name, std::string category, int tileID, int tileLength, int mapTileLength, bool canWalkOver, bool canPickUp);
+	Tile(std::string name, std::string category, int tileID, int tileLength, int mapTileLength, int tilesetWidth, bool canWalkOver, bool canPickUp);
 	std::string getName();
 	std::string getCategory();
 	sf::IntRect getQuad();

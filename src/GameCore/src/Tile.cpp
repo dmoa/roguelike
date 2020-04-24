@@ -2,13 +2,12 @@
 
 Tile::Tile(){}
 
-Tile::Tile(std::string name, std::string category, int tileID, int tileLength, int mapTileLength, bool canWalkOver, bool canPickUp)
+Tile::Tile(std::string name, std::string category, int tileID, int tileLength, int mapTileLength, int tilesetWidth, bool canWalkOver, bool canPickUp)
 {
 	m_name = name;
 	m_category = category;
-
 	int quadX = tileID % mapTileLength;
-    int quadY = floor(tileID / mapTileLength);
+    int quadY = floor(tileID * tileLength / tilesetWidth);
 	m_quad = sf::IntRect(quadX * tileLength, quadY * tileLength, tileLength, tileLength);
 
 	m_canWalkOver = canWalkOver;

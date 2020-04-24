@@ -19,5 +19,6 @@ private:
 	TileMapRenderer m_mapRenderer;
 	int m_mapTileLength;
 	int m_tileLength;
+	int m_tilesetWidth;
 	int m_playerStartingPos;
 };

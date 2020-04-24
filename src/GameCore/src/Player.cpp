@@ -48,7 +48,6 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 		// for now, game logic is that if you can pick it up, you are guaranteed to be able to walk over it
 		if (tile->getCanPickUp())
 		{
-			std::cout << "oof" << std::endl;
 			m_inventory.addItem(tile->getName(), tile->getQuad());
 			map->removeTile(m_tileX, m_tileY);
 		}
