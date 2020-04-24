@@ -43,6 +43,7 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 				QUIT = true;
 				break;
 
+			// sometimes there's input lag, not sure why
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
 				{

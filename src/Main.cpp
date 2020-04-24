@@ -22,7 +22,7 @@ int main()
 
 	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>();
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
-	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "SFML works!");
+	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "");
 	platform.setIcon(window->getSystemHandle());
 
 	sm::StateMachine stateMachine(std::make_shared<Game>());

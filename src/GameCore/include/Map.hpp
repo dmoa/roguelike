@@ -10,13 +10,13 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	Tile* getTile(int tileX, int tileY);
 	int getTileID(int tileX, int tileY);
-	// ADD GET TILE QUAD -> should be inside Tile.cpp/.hpp
+	sf::IntRect getTileQuad(int tileX, int tileY);
 	std::vector<int> getPlayerStartingPos();
 private:
-	int m_tileLength;
-	std::vector<int> m_gridData;
-	int m_mapTileLength;
-	TileMapRenderer m_mapRenderer;
-	int m_playerStartingPos;
 	std::map<int, Tile> m_tileData;
+	std::vector<int> m_gridData;
+	TileMapRenderer m_mapRenderer;
+	int m_mapTileLength;
+	int m_tileLength;
+	int m_playerStartingPos;
 };
