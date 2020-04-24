@@ -4,16 +4,30 @@ Inventory::Inventory() {}
 
 void Inventory::setTileset(sf::Texture* texture)
 {
-	m_tilesetTexture = texture;
+	m_texture = texture;
 }
 
-void Inventory::Draw(sf::RenderTexture renderTexture) {}
-
-void Inventory::addItem(sf::string name, sf::rect quad)
+void Inventory::Draw(sf::RenderTexture* renderTexture)
 {
-	// create sprite with texture m_tilesetTexture and set its bounds to the quad
+	for (auto item : m_items)
+	{
+		item.Draw(renderTexture);
+	}
 }
 
-void Inventory::removeItem(sf::string name, sf::rect quad)
+void Inventory::addItem(std::string name, sf::IntRect quad)
 {
+	Item item(name, quad, m_texture);
+	m_items.insert(m_items.end(), item);
+}
+
+void Inventory::removeItem(std::string name)
+{
+	for (unsigned int i = 0; i < m_items.size(); i++)
+	{
+    	if (m_items[i].getName() == name)
+    	{
+        	m_items.erase(m_items.begin() + i);
+    	}
+	}
 }
