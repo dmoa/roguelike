@@ -20,8 +20,10 @@ Game::Game()
 	m_shader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
 	m_shader.setUniform("lights[0].power", 5.0f);
 
-	m_renderTexture.create(GAME_WIDTH, GAME_HEIGHT);
+	m_renderTexture_noShader.create(GAME_WIDTH, GAME_HEIGHT);
+	m_renderTexture.create(100, 100);
 	m_sprite.setScale(SCALE, SCALE);
+	m_sprite_noShader.setScale(SCALE, SCALE);
 	m_backgroundColor = sf::Color(34, 35, 35);
 
 	m_tileSetTexture.loadFromFile("content/tileset.png");
@@ -73,11 +75,17 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 {
 	m_renderTexture.clear(m_backgroundColor);
+	m_renderTexture_noShader.clear();
 
 	m_map.Draw(&m_renderTexture);
-	m_player.Draw(&m_renderTexture);
+	m_player.Draw(&m_renderTexture, &m_renderTexture_noShader);
 
 	m_renderTexture.display();
+	m_renderTexture_noShader.display();
+
 	m_sprite.setTexture(m_renderTexture.getTexture());
+	m_sprite_noShader.setTexture(m_renderTexture_noShader.getTexture());
+
 	window->draw(m_sprite, &m_shader);
+	// window->draw(m_sprite_noShader);
 }

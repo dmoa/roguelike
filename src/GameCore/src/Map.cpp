@@ -91,7 +91,7 @@ Map::Map()
     }
 
 	if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
-        throw "Map Renderer not loaded!";
+        throw "Map Renderer could not loaded!";
 }
 
 // Update function contains state-specific logic
@@ -118,6 +118,14 @@ int Map::getTileID(int tileX, int tileY)
 sf::IntRect Map::getTileQuad(int tileX, int tileY)
 {
     return getTile(tileX, tileY)->getQuad();
+}
+
+void Map::removeTile(int tileX, int tileY)
+{
+    m_gridData[tileY * m_mapTileLength + tileX] = 0;
+    // reloading map renderer after changing grid data
+    if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
+        throw "Map Renderer could not loaded!";
 }
 
 std::vector<int> Map::getPlayerStartingPos()

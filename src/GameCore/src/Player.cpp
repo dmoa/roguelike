@@ -17,13 +17,13 @@ void Player::setTextures(sf::Texture* texture)
 	m_texture = texture;
 	m_sprite.setTexture(*m_texture, false);
 
-	m_inventory.setTileset(texture);
+	m_inventory.setTexture(texture);
 }
 
-void Player::Draw(sf::RenderTexture* renderTexture)
+void Player::Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader)
 {
 	renderTexture->draw(m_sprite);
-	m_inventory.Draw(renderTexture);
+	m_inventory.Draw(renderTexture_noShader);
 }
 
 void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
@@ -31,7 +31,9 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 	int possiblePosX = m_tileX + directionX;
 	int possiblePosY = m_tileY + directionY;
 
-	if (map->getTile(possiblePosX, possiblePosY)->getCanWalkOver())
+	Tile* tile = map->getTile(possiblePosX, possiblePosY);
+
+	if (tile->getCanWalkOver())
 	{
 		m_tileX = possiblePosX;
 		m_tileY = possiblePosY;
@@ -42,6 +44,14 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 		m_sprite.setPosition(newPosX, newPosY);
 		// + half the player length to align the shader with the middle of the sprite
 		shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
+
+		// for now, game logic is that if you can pick it up, you are guaranteed to be able to walk over it
+		if (tile->getCanPickUp())
+		{
+			std::cout << "oof" << std::endl;
+			m_inventory.addItem(tile->getName(), tile->getQuad());
+			map->removeTile(m_tileX, m_tileY);
+		}
 	}
 }
 

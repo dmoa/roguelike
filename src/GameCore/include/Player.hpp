@@ -8,7 +8,7 @@ class Player
 public:
 	Player();
 	void setTextures(sf::Texture* texture);
-	void Draw(sf::RenderTexture* renderTexture);
+	void Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader);
 	void move(int directionX, int directionY, sf::Shader* shader, Map* map);
 	void setStartingPos(Map* map, sf::Shader* shader);
 private:

@@ -11,6 +11,7 @@ public:
 	Tile* getTile(int tileX, int tileY);
 	int getTileID(int tileX, int tileY);
 	sf::IntRect getTileQuad(int tileX, int tileY);
+	void removeTile(int tileX, int tileY);
 	std::vector<int> getPlayerStartingPos();
 private:
 	std::map<int, Tile> m_tileData;

@@ -16,6 +16,3 @@ private:
 	bool m_canWalkOver;
 	bool m_canPickUp;
 };
-
-// add category as well as name
-// so I don't need to make it tree 1 tree 2 tree 3

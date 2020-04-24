@@ -2,22 +2,22 @@
 
 Inventory::Inventory() {}
 
-void Inventory::setTileset(sf::Texture* texture)
+void Inventory::setTexture(sf::Texture* texture)
 {
 	m_texture = texture;
 }
 
-void Inventory::Draw(sf::RenderTexture* renderTexture)
+void Inventory::Draw(sf::RenderTexture* renderTexture_noShader)
 {
 	for (auto item : m_items)
 	{
-		item.Draw(renderTexture);
+		item.Draw(renderTexture_noShader);
 	}
 }
 
 void Inventory::addItem(std::string name, sf::IntRect quad)
 {
-	Item item(name, quad, m_texture);
+	Item item(name, quad, m_texture, m_items.size());
 	m_items.insert(m_items.end(), item);
 }
 
