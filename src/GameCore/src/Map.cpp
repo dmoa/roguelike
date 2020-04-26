@@ -34,7 +34,7 @@ Map::Map()
         3,0,3,50,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,107,102,104,2,
         3,3,3,0,3,0,0,3,3,0,0,0,0,0,0,0,0,0,3,3,3,3,2,105,3,
         3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,3,105,3,
-        3,3,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0,3,3,3,3,105,3,
+        3,3,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,3,68,3,3,3,3,105,3,
         3,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,5,3,3,105,3,
         3,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,3,105,3,
         3,3,0,0,0,0,0,0,0,0,0,0,20,0,0,3,3,3,5,3,3,3,3,105,3,
@@ -53,33 +53,34 @@ Map::Map()
     }
 
     // indexes are one less than the map data
-    m_tileData[0] =  Tile("empty", "empty", 0, m_tileLength, m_mapTileLength, m_tilesetWidth, true, false);
-    m_tileData[1] =  Tile("temp-wall", "wall", 1, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
+    m_tileData[0] =  Tile("empty", "empty", 0, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[1] =  Tile("temp-wall", "wall", 1, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_tilesetWidth, true, true);
+    m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_tilesetWidth, true, true);
+    m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_tilesetWidth, true, true);
 
 
-    m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[13] =  Tile("top-right-wall", "wall", 13, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[20] =  Tile("left-wall", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[30] =  Tile("bottom-left-wall", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[33] =  Tile("bottom-right-wall", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[100] =  Tile("top-left-wall-2", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[101] =  Tile("top-wall-2", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[102] =  Tile("tunnel", "passage", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, true, false);
-    m_tileData[103] =  Tile("top-right-wall-2", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[104] =  Tile("side-wall", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[105] =  Tile("side-open-wall", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[106] =  Tile("bottom-left-wall-2", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[107] =  Tile("locked-door", "door", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[108] =  Tile("tunnel-2", "passage", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
-    m_tileData[109] =  Tile("bottom-right-wall-2", "wall", 4, m_tileLength, m_mapTileLength, m_tilesetWidth, false, false);
+    m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[13] =  Tile("top-right-wall", "wall", 13, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[20] =  Tile("left-wall", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[30] =  Tile("bottom-left-wall", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[33] =  Tile("bottom-right-wall", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[100] =  Tile("top-left-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[101] =  Tile("top-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[102] =  Tile("tunnel", "passage", 4, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[103] =  Tile("top-right-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[104] =  Tile("side-wall", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[105] =  Tile("side-open-wall", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[106] =  Tile("bottom-left-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[107] =  Tile("locked-door", "door", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[108] =  Tile("tunnel-2", "passage", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[109] =  Tile("bottom-right-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
 
-    m_tileData[81] =  Tile("arrow-h", "arrow", 81, m_tileLength, m_mapTileLength, m_tilesetWidth, true, false);
-    m_tileData[83] =  Tile("arrow-right", "arrow", 83, m_tileLength, m_mapTileLength, m_tilesetWidth, true, false);
-    m_tileData[56] =  Tile("sword", "weapon", 56, m_tileLength, m_mapTileLength, m_tilesetWidth, true, true);
+    m_tileData[81] =  Tile("arrow-h", "arrow", 81, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[83] =  Tile("arrow-right", "arrow", 83, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[56] =  Tile("sword", "weapon", 56, m_tileLength, m_tilesetWidth, true, true);
+    m_tileData[67] =  Tile("key", "key", 67, m_tileLength, m_tilesetWidth, true, true);
 
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
