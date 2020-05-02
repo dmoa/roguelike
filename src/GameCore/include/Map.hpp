@@ -1,6 +1,7 @@
 #pragma once
 
 #include <TileMapRenderer/TileMapRenderer.hpp>
+#include <MapLoader/MapLoader.hpp>
 #include "Tile.hpp"
 
 class Map {
