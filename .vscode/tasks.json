@@ -40,9 +40,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"problemMatcher": [
-				"$gcc"
-			],
 		},
 		{
 			"label": "Build: Release",
@@ -51,10 +48,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Run: Release",
@@ -63,10 +57,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Rebuild: Release",
@@ -75,10 +66,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Build & Run: Debug",
@@ -87,10 +75,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Build: Debug",
@@ -99,10 +84,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Run: Debug",
@@ -111,10 +93,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Rebuild: Debug",
@@ -123,10 +102,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Profile: Debug",
@@ -135,10 +111,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Build & Run: Tests",
@@ -147,10 +120,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Build: Tests",
@@ -159,10 +129,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Run: Tests",
@@ -171,10 +138,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Rebuild: Tests",
@@ -183,10 +147,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		},
 		{
 			"label": "Build: Production",
@@ -195,10 +156,7 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
+			}
 		}
 	]
 }

@@ -80,22 +80,22 @@ void Map::Draw(sf::RenderTexture* renderTexture)
 	m_mapRenderer.Draw(renderTexture);
 }
 
-Tile* Map::getTile(int tileX, int tileY)
+Tile* Map::GetTile(int tileX, int tileY)
 {
-    return &m_tileData[getTileID(tileX, tileY)];
+    return &m_tileData[GetTileID(tileX, tileY)];
 }
 
-int Map::getTileID(int tileX, int tileY)
+int Map::GetTileID(int tileX, int tileY)
 {
     return m_gridData[tileY * m_mapTileLength + tileX];
 }
 
-sf::IntRect Map::getTileQuad(int tileX, int tileY)
+sf::IntRect Map::GetTileQuad(int tileX, int tileY)
 {
-    return getTile(tileX, tileY)->getQuad();
+    return GetTile(tileX, tileY)->GetQuad();
 }
 
-void Map::removeTile(int tileX, int tileY)
+void Map::RemoveTile(int tileX, int tileY)
 {
     m_gridData[tileY * m_mapTileLength + tileX] = 0;
     // reloading map renderer after changing grid data
@@ -103,7 +103,7 @@ void Map::removeTile(int tileX, int tileY)
         throw "Map Renderer could not loaded!";
 }
 
-std::vector<int> Map::getPlayerStartingPos()
+std::vector<int> Map::GetPlayerStartingPos()
 {
     return {m_playerStartingPos % m_mapTileLength, int(m_playerStartingPos / m_mapTileLength)};
 }

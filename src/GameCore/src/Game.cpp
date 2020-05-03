@@ -27,8 +27,8 @@ Game::Game()
 	m_backgroundColor = sf::Color(34, 35, 35);
 
 	m_tileSetTexture.loadFromFile("content/tileset.png");
-	m_player.setTextures(&m_tileSetTexture);
-	m_player.setStartingPos(&m_map, &m_shader);
+	m_player.SetTextures(&m_tileSetTexture);
+	m_player.SetStartingPos(&m_map, &m_shader);
 }
 
 void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)
@@ -53,19 +53,19 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 
 					case sf::Keyboard::Left:
 					case sf::Keyboard::A:
-						m_player.move(-1, 0, &m_shader, &m_map);
+						m_player.Move(-1, 0, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Right:
 					case sf::Keyboard::D:
-						m_player.move(1, 0, &m_shader, &m_map);
+						m_player.Move(1, 0, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
-						m_player.move(0, -1, &m_shader, &m_map);
+						m_player.Move(0, -1, &m_shader, &m_map);
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
-						m_player.move(0, 1, &m_shader, &m_map);
+						m_player.Move(0, 1, &m_shader, &m_map);
 						break;
 				}
 		}

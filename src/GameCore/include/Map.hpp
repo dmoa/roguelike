@@ -9,11 +9,11 @@ public:
 	Map();
 	void Update();
 	void Draw(sf::RenderTexture* renderTexture);
-	Tile* getTile(int tileX, int tileY);
-	int getTileID(int tileX, int tileY);
-	sf::IntRect getTileQuad(int tileX, int tileY);
-	void removeTile(int tileX, int tileY);
-	std::vector<int> getPlayerStartingPos();
+	Tile* GetTile(int tileX, int tileY);
+	int GetTileID(int tileX, int tileY);
+	sf::IntRect GetTileQuad(int tileX, int tileY);
+	void RemoveTile(int tileX, int tileY);
+	std::vector<int> GetPlayerStartingPos();
 private:
 	std::map<int, Tile> m_tileData;
 	std::vector<int> m_gridData;

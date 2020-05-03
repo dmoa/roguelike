@@ -12,12 +12,12 @@ Player::Player()
 	m_sprite.setTextureRect(sf::Rect(32, 8, m_playerLength, m_playerLength));
 }
 
-void Player::setTextures(sf::Texture* texture)
+void Player::SetTextures(sf::Texture* texture)
 {
 	m_texture = texture;
 	m_sprite.setTexture(*m_texture, false);
 
-	m_inventory.setTexture(texture);
+	m_inventory.SetTexture(texture);
 }
 
 void Player::Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader)
@@ -26,14 +26,14 @@ void Player::Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTex
 	m_inventory.Draw(renderTexture_noShader);
 }
 
-void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
+void Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
 {
 	int possiblePosX = m_tileX + directionX;
 	int possiblePosY = m_tileY + directionY;
 
-	Tile* tile = map->getTile(possiblePosX, possiblePosY);
+	Tile* tile = map->GetTile(possiblePosX, possiblePosY);
 
-	if (tile->getCanWalkOver())
+	if (tile->GetCanWalkOver())
 	{
 		m_tileX = possiblePosX;
 		m_tileY = possiblePosY;
@@ -46,17 +46,17 @@ void Player::move(int directionX, int directionY, sf::Shader* shader, Map* map)
 		shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
 
 		// for now, game logic is that if you can pick it up, you are guaranteed to be able to walk over it
-		if (tile->getCanPickUp())
+		if (tile->GetCanPickUp())
 		{
-			m_inventory.addItem(tile->getName(), tile->getQuad());
-			map->removeTile(m_tileX, m_tileY);
+			m_inventory.AddItem(tile->GetName(), tile->GetQuad());
+			map->RemoveTile(m_tileX, m_tileY);
 		}
 	}
 }
 
-void Player::setStartingPos(Map* map, sf::Shader* shader)
+void Player::SetStartingPos(Map* map, sf::Shader* shader)
 {
-	std::vector starting_pos = map->getPlayerStartingPos();
+	std::vector starting_pos = map->GetPlayerStartingPos();
 
 	m_tileX = starting_pos[0];
 	m_tileY = starting_pos[1];
