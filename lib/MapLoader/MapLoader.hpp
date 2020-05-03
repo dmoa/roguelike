@@ -54,6 +54,25 @@ public:
 		return results;
 
 	}
+	static std::vector<int> GetShiftedData(std::vector<int> data, int shift)
+	{
+		for (unsigned int i = 0; i < data.size(); i++)
+    	{
+			data[i] = data[i] > 0 ? data[i] + shift: 0;
+		}
+		return data;
+	}
+	static int GetTileLocation(std::vector<int> data, int tileID)
+	{
+		for (unsigned int i = 0; i < data.size(); i++)
+		{
+			if (data[i] == tileID)
+        	{
+            	return i;
+        	}
+		}
+		return -1;
+	}
 private:
 	static inline std::string m_seperator = ",";
 };

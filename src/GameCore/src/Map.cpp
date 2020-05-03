@@ -5,25 +5,14 @@
 
 extern const int SCALE;
 
-// get Value at gridData[x][y]
-// in player.move pass a pointer to Map Class
 
 Map::Map()
 {
 	m_tileLength = 8;
     m_mapTileLength = 25;
     m_tilesetWidth = 80;
-    m_gridData = MapLoader::LoadMap("content/roguelike.tmx");
-    for (int i = 0; i < m_mapTileLength * m_mapTileLength; i++)
-    {
-        // reshifting grid data due to tiled data being offset, blame tile editor
-        m_gridData[i] = m_gridData[i] > 0 ? m_gridData[i] - 1: 0;
-        if (m_gridData[i] == 14)
-        {
-            m_playerStartingPos = i;
-            m_gridData[i] = 0;
-        }
-    }
+    m_gridData = MapLoader::GetShiftedData(MapLoader::LoadMap("content/roguelike.tmx"), -1);
+    m_playerStartingPos = MapLoader::GetTileLocation(m_gridData, 14);
 
     // indexes are one less than the map data
     m_tileData[0] =  Tile("empty", "empty", 0, m_tileLength, m_tilesetWidth, true, false);
@@ -31,7 +20,6 @@ Map::Map()
     m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_tilesetWidth, true, true);
     m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_tilesetWidth, true, true);
     m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_tilesetWidth, true, true);
-
 
     m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_tilesetWidth, false, false);
@@ -69,12 +57,8 @@ Map::Map()
         throw "Map Renderer could not loaded!";
 }
 
-// Update function contains state-specific logic
-void Map::Update()
-{
-}
+void Map::Update() {}
 
-// Draw function contains SFML draw calls
 void Map::Draw(sf::RenderTexture* renderTexture)
 {
 	m_mapRenderer.Draw(renderTexture);

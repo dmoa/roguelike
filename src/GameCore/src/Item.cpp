@@ -14,12 +14,9 @@ void Item::Draw(sf::RenderTexture* renderTexture_noShader)
 	renderTexture_noShader->draw(m_sprite);
 }
 
-std::string Item::GetName()
-{
-	return m_name;
-}
-
 void Item::SetItemPos(int itemPos)
 {
 	m_sprite.setPosition(m_sprite.getLocalBounds().width * itemPos, 0);
 }
+
+std::string Item::GetName() { return m_name; }

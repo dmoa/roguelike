@@ -2,10 +2,7 @@
 
 Inventory::Inventory() {}
 
-void Inventory::SetTexture(sf::Texture* texture)
-{
-	m_texture = texture;
-}
+void Inventory::SetTexture(sf::Texture* texture) { m_texture = texture; }
 
 void Inventory::Draw(sf::RenderTexture* renderTexture_noShader)
 {

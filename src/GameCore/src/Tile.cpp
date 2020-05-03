@@ -15,27 +15,8 @@ Tile::Tile(std::string name, std::string category, int tileID, int tileLength, i
 	m_canPickUp = canPickUp;
 }
 
-std::string Tile::GetName()
-{
-	return m_name;
-}
-
-std::string Tile::GetCategory()
-{
-	return m_category;
-}
-
-sf::IntRect Tile::GetQuad()
-{
-	return m_quad;
-}
-
-bool Tile::GetCanWalkOver()
-{
-	return m_canWalkOver;
-}
-
-bool Tile::GetCanPickUp()
-{
-	return m_canPickUp;
-}
+std::string Tile::GetName() { return m_name; }
+std::string Tile::GetCategory() { return m_category; }
+sf::IntRect Tile::GetQuad() { return m_quad; }
+bool Tile::GetCanWalkOver() { return m_canWalkOver; }
+bool Tile::GetCanPickUp() { return m_canPickUp; }
