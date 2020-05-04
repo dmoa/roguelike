@@ -7,7 +7,7 @@
 #include <sstream>
 
 
-class MapLoader
+class MapUtil
 {
 public:
 	static std::vector<int> LoadMap(std::string path)
@@ -36,7 +36,7 @@ public:
 			file.close();
 		} else
 		{
-			throw std::invalid_argument("Path to file not found. [MapLoader.hpp]");
+			throw std::invalid_argument("Path to file not found. [MapUtil.hpp]");
 		}
 
 		// filtering out commas and converting the string vector into an int vector
@@ -72,6 +72,10 @@ public:
         	}
 		}
 		return -1;
+	}
+	static std::vector<int> GetIntToVector(int index, int mapTileWidth, int mapTileHeight)
+	{
+		return {index % mapTileWidth, int(index / mapTileHeight)};
 	}
 private:
 	static inline std::string m_seperator = ",";
