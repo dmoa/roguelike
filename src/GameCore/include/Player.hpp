@@ -11,6 +11,8 @@ public:
 	void Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader);
 	void Move(int directionX, int directionY, sf::Shader* shader, Map* map);
 	void SetStartingPos(Map* map, sf::Shader* shader);
+	int GetX();
+	int GetY();
 private:
 	sf::Texture* m_texture;
 	sf::Sprite m_sprite;

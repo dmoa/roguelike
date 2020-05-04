@@ -30,7 +30,7 @@ Game::Game()
 	m_player.SetTextures(&m_tileSetTexture);
 	m_player.SetStartingPos(&m_map, &m_shader);
 
-	m_map.SetupEnemies(&m_tileSetTexture);
+	m_enemies.Setup(&m_tileSetTexture, &m_map);
 }
 
 void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)
@@ -56,18 +56,22 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 					case sf::Keyboard::Left:
 					case sf::Keyboard::A:
 						m_player.Move(-1, 0, &m_shader, &m_map);
+						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Right:
 					case sf::Keyboard::D:
 						m_player.Move(1, 0, &m_shader, &m_map);
+						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
 						m_player.Move(0, -1, &m_shader, &m_map);
+						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
 						m_player.Move(0, 1, &m_shader, &m_map);
+						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 				}
 		}
@@ -80,6 +84,7 @@ void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 	m_renderTexture_noShader.clear(sf::Color(0, 0, 0, 0));
 
 	m_map.Draw(&m_renderTexture);
+	m_enemies.Draw(&m_renderTexture);
 	m_player.Draw(&m_renderTexture, &m_renderTexture_noShader);
 
 	m_renderTexture.display();

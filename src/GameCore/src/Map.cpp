@@ -59,26 +59,9 @@ Map::Map()
         throw "Map Renderer could not loaded!";
 }
 
-void Map::SetupEnemies(sf::Texture* texture)
-{
-    for (unsigned int i = 0; i < m_gridData.size(); i++)
-    {
-        if (m_gridData[i] == 24)
-        {
-            RemoveTileByIndex(i, false);
-
-            sf::IntRect quad = MapUtil::GetQuadFromTileID(24, m_tilesetWidth, m_tileLength);
-            std::vector<int> pos = MapUtil::GetIntToVector(i, m_mapTileLength, m_mapTileLength);
-            m_enemies.AddEnemy(texture, quad, pos[0], pos[1], m_tileLength);
-        }
-    }
-    ReloadMapRenderer();
-}
-
 void Map::Draw(sf::RenderTexture* renderTexture)
 {
 	m_mapRenderer.Draw(renderTexture);
-    m_enemies.Draw(renderTexture);
 }
 
 void Map::ReloadMapRenderer()
@@ -127,4 +110,24 @@ void Map::RemoveTileByIndex(int index, bool reload)
 std::vector<int> Map::GetPlayerStartingPos()
 {
     return MapUtil::GetIntToVector(m_playerStartingPos, m_mapTileLength, m_mapTileLength);
+}
+
+std::vector<int> Map::GetGridData()
+{
+    return m_gridData;
+}
+
+int Map::GetTileLength()
+{
+    return m_tileLength;
+}
+
+int Map::GetTilesetWidth()
+{
+    return m_tilesetWidth;
+}
+
+int Map::GetMapTileLength()
+{
+    return m_mapTileLength;
 }

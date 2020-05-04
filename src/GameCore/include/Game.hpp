@@ -3,6 +3,7 @@
 #include <StateMachine/State.hpp>
 #include "Map.hpp"
 #include "Player.hpp"
+#include "Enemies.hpp"
 
 class Game final: public sm::State {
 public:
@@ -19,4 +20,5 @@ private:
 	sf::Texture m_tileSetTexture;
 	Map m_map;
 	Player m_player;
+	Enemies m_enemies;
 };

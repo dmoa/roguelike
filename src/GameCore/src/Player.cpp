@@ -66,3 +66,13 @@ void Player::SetStartingPos(Map* map, sf::Shader* shader)
 	m_sprite.setPosition(newPosX, newPosY);
 	shader->setUniform("lights[0].position", sf::Glsl::Vec2((m_tileX * m_playerLength + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
 }
+
+int Player::GetX()
+{
+	return m_tileX;
+}
+
+int Player::GetY()
+{
+	return m_tileY;
+}

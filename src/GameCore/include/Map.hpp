@@ -4,12 +4,10 @@
 #include <MapUtil/MapUtil.hpp>
 
 #include "Tile.hpp"
-#include "Enemies.hpp"
 
 class Map {
 public:
 	Map();
-	void SetupEnemies(sf::Texture* texture);
 	void Draw(sf::RenderTexture* renderTexture);
 	void ReloadMapRenderer();
 	Tile* GetTile(int tileX, int tileY);
@@ -18,6 +16,11 @@ public:
 	void RemoveTile(int tileX, int tileY, bool reload);
 	void RemoveTileByIndex(int index, bool reload);
 	std::vector<int> GetPlayerStartingPos();
+	void PlayerMoved(int playerX, int playerY);
+	std::vector<int> GetGridData();
+	int GetTileLength();
+	int GetTilesetWidth();
+	int GetMapTileLength();
 private:
 	std::map<int, Tile> m_tileData;
 	std::vector<int> m_gridData;
@@ -26,5 +29,4 @@ private:
 	int m_tileLength;
 	int m_tilesetWidth;
 	int m_playerStartingPos;
-	Enemies m_enemies;
 };
