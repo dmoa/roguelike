@@ -49,7 +49,7 @@ void Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
 		if (tile->GetCanPickUp())
 		{
 			m_inventory.AddItem(tile->GetName(), tile->GetQuad());
-			map->RemoveTile(m_tileX, m_tileY);
+			map->RemoveTile(m_tileX, m_tileY, true);
 		}
 	}
 }

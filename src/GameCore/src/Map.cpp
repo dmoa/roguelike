@@ -11,15 +11,16 @@ Map::Map()
 	m_tileLength = 8;
     m_mapTileLength = 25;
     m_tilesetWidth = 80;
-    m_gridData = MapLoader::GetShiftedData(MapLoader::LoadMap("content/roguelike.tmx"), -1);
-    m_playerStartingPos = MapLoader::GetTileLocation(m_gridData, 14);
+    m_gridData = MapUtil::GetShiftedData(MapUtil::LoadMap("content/roguelike.tmx"), -1);
+    m_playerStartingPos = MapUtil::GetTileLocation(m_gridData, 14);
+    RemoveTileByIndex(m_playerStartingPos, false);
 
     // indexes are one less than the map data
     m_tileData[0] =  Tile("empty", "empty", 0, m_tileLength, m_tilesetWidth, true, false);
     m_tileData[1] =  Tile("temp-wall", "wall", 1, m_tileLength, m_tilesetWidth, false, false);
-    m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_tilesetWidth, true, true);
-    m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_tilesetWidth, true, true);
-    m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_tilesetWidth, true, true);
+    m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_tilesetWidth, false, false);
 
     m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_tilesetWidth, false, false);
@@ -79,15 +80,29 @@ sf::IntRect Map::GetTileQuad(int tileX, int tileY)
     return GetTile(tileX, tileY)->GetQuad();
 }
 
-void Map::RemoveTile(int tileX, int tileY)
+void Map::RemoveTile(int tileX, int tileY, bool reload)
 {
     m_gridData[tileY * m_mapTileLength + tileX] = 0;
     // reloading map renderer after changing grid data
-    if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
-        throw "Map Renderer could not loaded!";
+    if (reload)
+    {
+        if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
+            throw "Map Renderer could not loaded!";
+    }
+}
+
+void Map::RemoveTileByIndex(int index, bool reload)
+{
+    m_gridData[index] = 0;
+    // reloading map renderer after changing grid data
+    if (reload)
+    {
+        if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
+            throw "Map Renderer could not loaded!";
+    }
 }
 
 std::vector<int> Map::GetPlayerStartingPos()
 {
-    return {m_playerStartingPos % m_mapTileLength, int(m_playerStartingPos / m_mapTileLength)};
+    return MapUtil::GetIntToVector(m_playerStartingPos, m_mapTileLength, m_mapTileLength);
 }

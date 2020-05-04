@@ -1,7 +1,7 @@
 #pragma once
 
 #include <TileMapRenderer/TileMapRenderer.hpp>
-#include <MapLoader/MapLoader.hpp>
+#include <MapUtil/MapUtil.hpp>
 #include "Tile.hpp"
 
 class Map {
@@ -12,7 +12,8 @@ public:
 	Tile* GetTile(int tileX, int tileY);
 	int GetTileID(int tileX, int tileY);
 	sf::IntRect GetTileQuad(int tileX, int tileY);
-	void RemoveTile(int tileX, int tileY);
+	void RemoveTile(int tileX, int tileY, bool reload);
+	void RemoveTileByIndex(int index, bool reload);
 	std::vector<int> GetPlayerStartingPos();
 private:
 	std::map<int, Tile> m_tileData;
