@@ -2,13 +2,16 @@
 
 #include <TileMapRenderer/TileMapRenderer.hpp>
 #include <MapUtil/MapUtil.hpp>
+
 #include "Tile.hpp"
+#include "Enemies.hpp"
 
 class Map {
 public:
 	Map();
-	void Update();
+	void SetupEnemies(sf::Texture* texture);
 	void Draw(sf::RenderTexture* renderTexture);
+	void ReloadMapRenderer();
 	Tile* GetTile(int tileX, int tileY);
 	int GetTileID(int tileX, int tileY);
 	sf::IntRect GetTileQuad(int tileX, int tileY);
@@ -23,4 +26,5 @@ private:
 	int m_tileLength;
 	int m_tilesetWidth;
 	int m_playerStartingPos;
+	Enemies m_enemies;
 };

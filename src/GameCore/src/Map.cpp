@@ -12,6 +12,7 @@ Map::Map()
     m_mapTileLength = 25;
     m_tilesetWidth = 80;
     m_gridData = MapUtil::GetShiftedData(MapUtil::LoadMap("content/roguelike.tmx"), -1);
+
     m_playerStartingPos = MapUtil::GetTileLocation(m_gridData, 14);
     RemoveTileByIndex(m_playerStartingPos, false);
 
@@ -58,11 +59,32 @@ Map::Map()
         throw "Map Renderer could not loaded!";
 }
 
-void Map::Update() {}
+void Map::SetupEnemies(sf::Texture* texture)
+{
+    for (unsigned int i = 0; i < m_gridData.size(); i++)
+    {
+        if (m_gridData[i] == 24)
+        {
+            RemoveTileByIndex(i, false);
+
+            sf::IntRect quad = MapUtil::GetQuadFromTileID(24, m_tilesetWidth, m_tileLength);
+            std::vector<int> pos = MapUtil::GetIntToVector(i, m_mapTileLength, m_mapTileLength);
+            m_enemies.AddEnemy(texture, quad, pos[0], pos[1], m_tileLength);
+        }
+    }
+    ReloadMapRenderer();
+}
 
 void Map::Draw(sf::RenderTexture* renderTexture)
 {
 	m_mapRenderer.Draw(renderTexture);
+    m_enemies.Draw(renderTexture);
+}
+
+void Map::ReloadMapRenderer()
+{
+    if (!m_mapRenderer.load("content/tileset.png", sf::Vector2u(m_tileLength, m_tileLength), m_gridData, m_mapTileLength, m_mapTileLength))
+        throw "Map Renderer could not loaded!";
 }
 
 Tile* Map::GetTile(int tileX, int tileY)

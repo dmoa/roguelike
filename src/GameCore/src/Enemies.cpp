@@ -10,8 +10,8 @@ void Enemies::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemies::AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int length)
+void Enemies::AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int mapLength)
 {
-	Enemy enemy(texture, quad, tileX, tileY, length);
+	Enemy enemy(texture, quad, tileX, tileY, mapLength);
 	m_enemies.insert(m_enemies.begin(), enemy);
 }

@@ -77,6 +77,12 @@ public:
 	{
 		return {index % mapTileWidth, int(index / mapTileHeight)};
 	}
+	static sf::IntRect GetQuadFromTileID(int ID, int tilesetWidth, int tileLength)
+	{
+		int quadX = ID % (tilesetWidth / tileLength);
+    	int quadY = floor(ID * tileLength / tilesetWidth);
+		return sf::IntRect(quadX * tileLength, quadY * tileLength, tileLength, tileLength);
+	}
 private:
 	static inline std::string m_seperator = ",";
 };
