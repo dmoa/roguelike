@@ -13,7 +13,7 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	void AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int mapLength);
 	// RemoveEnemy();
-	void UpdatePos(int playerX, int playerY, Map* map);
+	void Update(int playerX, int playerY, Map* map);
 private:
 	std::vector<Enemy> m_enemies;
 };

@@ -18,7 +18,7 @@ Game::Game()
 	m_shader.setUniform("screen", sf::Glsl::Vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
 	m_shader.setUniform("num_lights", 1);
 	m_shader.setUniform("lights[0].diffuse", sf::Glsl::Vec3(1.0, 1.0, 1.0));
-	m_shader.setUniform("lights[0].power", 5.0f);
+	m_shader.setUniform("lights[0].power", 20.0f);
 
 	m_renderTexture_noShader.create(GAME_WIDTH, GAME_HEIGHT);
 	m_renderTexture.create(GAME_WIDTH, GAME_HEIGHT);
@@ -56,22 +56,22 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 					case sf::Keyboard::Left:
 					case sf::Keyboard::A:
 						m_player.Move(-1, 0, &m_shader, &m_map);
-						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
+						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Right:
 					case sf::Keyboard::D:
 						m_player.Move(1, 0, &m_shader, &m_map);
-						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
+						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
 						m_player.Move(0, -1, &m_shader, &m_map);
-						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
+						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
 						m_player.Move(0, 1, &m_shader, &m_map);
-						m_enemies.UpdatePos(m_player.GetX(), m_player.GetY(), &m_map);
+						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
 				}
 		}

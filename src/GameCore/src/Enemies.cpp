@@ -32,10 +32,11 @@ void Enemies::AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int ti
 	m_enemies.insert(m_enemies.begin(), enemy);
 }
 
-void Enemies::UpdatePos(int playerX, int playerY, Map* map)
+void Enemies::Update(int playerX, int playerY, Map* map)
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i].UpdatePos(playerX, playerY, map);
+		m_enemies[i].InformAboutPlayerPos(playerX, playerY, map);
+        m_enemies[i].Move(map->GetTileLength());
 	}
 }
