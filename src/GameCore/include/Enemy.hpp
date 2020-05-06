@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PathChecker.hpp"
+
 #include "Map.hpp"
 #include "Tile.hpp"
 

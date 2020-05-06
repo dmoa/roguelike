@@ -32,7 +32,10 @@ void Enemy::InformAboutPlayerPos(int playerX, int playerY, Map* map)
 
 void Enemy::Move(int tileLength)
 {
+	int changeInX = std::clamp(m_destinationX - m_tileX, -1, 1);
 	int changeInY = std::clamp(m_destinationY - m_tileY, -1, 1);
+
+	m_tileX += changeInX;
 	m_tileY += changeInY;
 
 	m_sprite.setPosition(m_tileX * tileLength, m_tileY * tileLength);
@@ -40,15 +43,5 @@ void Enemy::Move(int tileLength)
 
 bool Enemy::CanSeePlayer(int playerX, int playerY, Map* map)
 {
-	if (playerX != m_tileX) { return false; }
-
-	for (int i = std::min(m_tileY, playerY); i < std::max(m_tileY, playerY); i++)
-	{
-		Tile* checkingTile = map->GetTile(m_tileX, i);
-		if (!checkingTile->GetCanWalkOver())
-		{
-			return false;
-		}
-	}
-	return true;
+	return PathChecker::IsPathClear(m_tileX, m_tileY, playerX, playerY, map, "horizontal");
 }
