@@ -25,7 +25,6 @@ void Enemy::InformAboutPlayerPos(int playerX, int playerY, Map* map)
 	// this gets overrided if it sees the player in a different position
 	if (CanSeePlayer(playerX, playerY, map))
 	{
-		printf("found player\n");
 		m_destinationX = playerX;
 		m_destinationY = playerY;
 	}
@@ -43,7 +42,7 @@ bool Enemy::CanSeePlayer(int playerX, int playerY, Map* map)
 {
 	if (playerX != m_tileX) { return false; }
 
-	for (int i = m_tileY; i < playerY; i++)
+	for (int i = std::min(m_tileY, playerY); i < std::max(m_tileY, playerY); i++)
 	{
 		Tile* checkingTile = map->GetTile(m_tileX, i);
 		if (!checkingTile->GetCanWalkOver())
