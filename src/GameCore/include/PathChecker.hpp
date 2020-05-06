@@ -16,6 +16,10 @@ public:
 		{
 			return horizontal(x1, y1, x2, y2, map);
 		}
+		else if (viewType == "rook")
+		{
+			return horizontal(x1, y1, x2, y2, map) || vertical(x1, y1, x2, y2, map);
+		}
 		else
 		{
 			throw std::invalid_argument("View Type not valid");

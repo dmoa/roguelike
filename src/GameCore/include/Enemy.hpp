@@ -8,7 +8,7 @@
 class Enemy
 {
 public:
-	Enemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int mapLength);
+	Enemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength);
 	void Draw(sf::RenderTexture* renderTexture);
 	void InformAboutPlayerPos(int playerX, int playerY, Map* map);
 	void Move(int tileLength);
