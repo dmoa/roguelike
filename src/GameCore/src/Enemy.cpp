@@ -1,7 +1,9 @@
 #include "../include/Enemy.hpp"
 
-Enemy::Enemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength)
+Enemy::Enemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength)
 {
+	m_type = type;
+
 	m_texture = texture;
 	m_tileX = tileX;
 	m_tileY = tileY;
@@ -43,5 +45,5 @@ void Enemy::Move(int tileLength)
 
 bool Enemy::CanSeePlayer(int playerX, int playerY, Map* map)
 {
-	return PathChecker::IsPathClear(m_tileX, m_tileY, playerX, playerY, map, "horizontal");
+	return PathChecker::IsPathClear(m_tileX, m_tileY, playerX, playerY, map, m_type);
 }

@@ -14,7 +14,7 @@ public:
 	// RemoveEnemy();
 	void Update(int playerX, int playerY, Map* map);
 private:
-	void AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int mapLength);
+	void AddEnemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int mapLength);
 	std::vector<Enemy> m_enemies;
-	//std::
+	std::map<int, std::string> m_enemyVersions;
 };

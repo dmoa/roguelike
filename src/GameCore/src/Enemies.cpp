@@ -1,18 +1,25 @@
 #include "../include/Enemies.hpp"
 
-Enemies::Enemies() {}
+Enemies::Enemies()
+{
+    // indexes are accoding to tileID on map
+    m_enemyVersions[24] = "vertical";
+    m_enemyVersions[1] = "horizontal";
+}
 
 void Enemies::Setup(sf::Texture* texture, Map* map)
 {
     for (unsigned int i = 0; i < map->GetGridData().size(); i++)
     {
-        if (map->GetGridData()[i] == 24)
+        int tileID = map->GetGridData()[i];
+        // if the tileID is a enemy tile, make the enemy
+        if (m_enemyVersions.count(tileID) > 0)
         {
             map->RemoveTileByIndex(i, false);
 
-            sf::IntRect quad = MapUtil::GetQuadFromTileID(24, map->GetTilesetWidth(), map->GetTileLength());
+            sf::IntRect quad = MapUtil::GetQuadFromTileID(tileID, map->GetTilesetWidth(), map->GetTileLength());
             std::vector<int> pos = MapUtil::GetIntToVector(i, map->GetMapTileLength(), map->GetMapTileLength());
-            AddEnemy(texture, quad, pos[0], pos[1], map->GetTileLength());
+            AddEnemy(m_enemyVersions[tileID], texture, quad, pos[0], pos[1], map->GetTileLength());
         }
     }
     map->ReloadMapRenderer();
@@ -26,9 +33,9 @@ void Enemies::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemies::AddEnemy(sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength)
+void Enemies::AddEnemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength)
 {
-	Enemy enemy(texture, quad, tileX, tileY, tileLength);
+	Enemy enemy(type, texture, quad, tileX, tileY, tileLength);
 	m_enemies.insert(m_enemies.begin(), enemy);
 }
 

@@ -18,10 +18,9 @@ Map::Map()
 
     // indexes are one less than the map data
     m_tileData[0] =  Tile("empty", "empty", 0, m_tileLength, m_tilesetWidth, true, false);
-    m_tileData[1] =  Tile("temp-wall", "wall", 1, m_tileLength, m_tilesetWidth, false, false);
-    m_tileData[2] =  Tile("tree-1", "tree", 2, m_tileLength, m_tilesetWidth, false, false);
-    m_tileData[3] =  Tile("tree-2", "tree", 3, m_tileLength, m_tilesetWidth, false, false);
-    m_tileData[4] =  Tile("tree-3", "tree", 4, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[64] =  Tile("tree-1", "tree", 64, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[65] =  Tile("tree-2", "tree", 65, m_tileLength, m_tilesetWidth, false, false);
+    m_tileData[66] =  Tile("tree-3", "tree", 66, m_tileLength, m_tilesetWidth, false, false);
 
     m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_tilesetWidth, false, false);
@@ -48,10 +47,10 @@ Map::Map()
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
     {
-        if (tile == 2)
+        if (tile == 64)
         {
-            int random = rand() % 3 + 2;
-            tile = random;
+            int random = rand() % 3;
+            tile += random;
         }
     }
 
