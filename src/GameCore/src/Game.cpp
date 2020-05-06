@@ -73,6 +73,14 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 						m_player.Move(0, 1, &m_shader, &m_map);
 						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
 						break;
+					case sf::Keyboard::Space:
+						m_map = Map();
+						m_enemies = Enemies();
+						m_player = Player();
+						m_player.SetTextures(&m_tileSetTexture);
+						m_player.SetStartingPos(&m_map, &m_shader);
+						m_enemies.Setup(&m_tileSetTexture, &m_map, m_player.GetX(), m_player.GetY());
+						break;
 				}
 		}
 	}

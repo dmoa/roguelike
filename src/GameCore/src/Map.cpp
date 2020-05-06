@@ -22,6 +22,9 @@ Map::Map()
     m_tileData[65] =  Tile("tree-2", "tree", 65, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[66] =  Tile("tree-3", "tree", 66, m_tileLength, m_tilesetWidth, false, false);
 
+    m_tileData[54] =  Tile("gravel", "ground", 54, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[55] =  Tile("grass", "ground", 55, m_tileLength, m_tilesetWidth, true, false);
+
     m_tileData[10] =  Tile("top-left-wall", "wall", 10, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[11] =  Tile("top-wall", "wall", 11, m_tileLength, m_tilesetWidth, false, false);
     m_tileData[13] =  Tile("top-right-wall", "wall", 13, m_tileLength, m_tilesetWidth, false, false);
@@ -40,10 +43,12 @@ Map::Map()
     m_tileData[109] =  Tile("bottom-right-wall-2", "wall", 4, m_tileLength, m_tilesetWidth, false, false);
 
     m_tileData[81] =  Tile("arrow-h", "arrow", 81, m_tileLength, m_tilesetWidth, true, false);
+    m_tileData[73] =  Tile("small-arrow", "arrow", 73, m_tileLength, m_tilesetWidth, true, false);
     m_tileData[83] =  Tile("arrow-right", "arrow", 83, m_tileLength, m_tilesetWidth, true, false);
     m_tileData[56] =  Tile("sword", "weapon", 56, m_tileLength, m_tilesetWidth, true, true);
     m_tileData[67] =  Tile("key", "key", 67, m_tileLength, m_tilesetWidth, true, true);
 
+    // random tree picker
     srand((unsigned)time(NULL));
     for (auto &tile : m_gridData)
     {
