@@ -34,13 +34,6 @@ void Enemies::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemies::AddEnemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, Map* map, int playerX, int playerY)
-{
-	Enemy enemy(type, texture, quad, tileX, tileY, map->GetTileLength());
-    enemy.InformAboutPlayerPos(playerX, playerY, map);
-	m_enemies.insert(m_enemies.begin(), enemy);
-}
-
 void Enemies::Update(int playerX, int playerY, Map* map)
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
@@ -49,4 +42,11 @@ void Enemies::Update(int playerX, int playerY, Map* map)
         m_enemies[i].Move(map->GetTileLength());
         m_enemies[i].InformAboutPlayerPos(playerX, playerY, map);
 	}
+}
+
+void Enemies::AddEnemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, Map* map, int playerX, int playerY)
+{
+	Enemy enemy(type, texture, quad, tileX, tileY, map->GetTileLength());
+    enemy.InformAboutPlayerPos(playerX, playerY, map);
+	m_enemies.insert(m_enemies.begin(), enemy);
 }

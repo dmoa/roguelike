@@ -9,7 +9,7 @@ public:
 	Player();
 	void SetTextures(sf::Texture* texture);
 	void Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader);
-	void Move(int directionX, int directionY, sf::Shader* shader, Map* map);
+	bool Move(int directionX, int directionY, sf::Shader* shader, Map* map);
 	void SetStartingPos(Map* map, sf::Shader* shader);
 	int GetX();
 	int GetY();

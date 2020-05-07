@@ -26,7 +26,7 @@ void Player::Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTex
 	m_inventory.Draw(renderTexture_noShader);
 }
 
-void Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
+bool Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
 {
 	int possiblePosX = m_tileX + directionX;
 	int possiblePosY = m_tileY + directionY;
@@ -51,7 +51,9 @@ void Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
 			m_inventory.AddItem(tile->GetName(), tile->GetQuad());
 			map->RemoveTile(m_tileX, m_tileY, true);
 		}
+		return true;
 	}
+	return false;
 }
 
 void Player::SetStartingPos(Map* map, sf::Shader* shader)

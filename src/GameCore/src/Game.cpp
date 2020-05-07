@@ -35,6 +35,28 @@ Game::Game()
 
 void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)
 {
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	// {
+	// 	m_player.Move(-1, 0, &m_shader, &m_map);
+	// 	m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
+	// }
+	// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	// {
+	// 	m_player.Move(1, 0, &m_shader, &m_map);
+	// 	m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
+	// }
+	// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	// {
+	// 	m_player.Move(0, 1, &m_shader, &m_map);
+	// 	m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
+	// }
+	// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	// {
+	// 	m_player.Move(1, -1, &m_shader, &m_map);
+	// 	m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
+	// }
+
+	// we aren't doing anything with dt right now but we will need it later
 	deltaTime.asMilliseconds();
 	sf::Event event;
 	while (window->pollEvent(event))
@@ -52,27 +74,6 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 				switch (event.key.code)
 				{
 					default: break;
-
-					case sf::Keyboard::Left:
-					case sf::Keyboard::A:
-						m_player.Move(-1, 0, &m_shader, &m_map);
-						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
-						break;
-					case sf::Keyboard::Right:
-					case sf::Keyboard::D:
-						m_player.Move(1, 0, &m_shader, &m_map);
-						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
-						break;
-					case sf::Keyboard::Up:
-					case sf::Keyboard::W:
-						m_player.Move(0, -1, &m_shader, &m_map);
-						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
-						break;
-					case sf::Keyboard::Down:
-					case sf::Keyboard::S:
-						m_player.Move(0, 1, &m_shader, &m_map);
-						m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
-						break;
 					case sf::Keyboard::Space:
 						m_map = Map();
 						m_enemies = Enemies();
@@ -80,6 +81,23 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 						m_player.SetTextures(&m_tileSetTexture);
 						m_player.SetStartingPos(&m_map, &m_shader);
 						m_enemies.Setup(&m_tileSetTexture, &m_map, m_player.GetX(), m_player.GetY());
+						break;
+
+					case sf::Keyboard::Left:
+					case sf::Keyboard::A:
+						PlayerMoveAttempt(m_player.Move(-1, 0, &m_shader, &m_map));
+						break;
+					case sf::Keyboard::Right:
+					case sf::Keyboard::D:
+						PlayerMoveAttempt(m_player.Move(1, 0, &m_shader, &m_map));
+						break;
+					case sf::Keyboard::Up:
+					case sf::Keyboard::W:
+						PlayerMoveAttempt(m_player.Move(0, -1, &m_shader, &m_map));
+						break;
+					case sf::Keyboard::Down:
+					case sf::Keyboard::S:
+						PlayerMoveAttempt(m_player.Move(0, 1, &m_shader, &m_map));
 						break;
 				}
 		}
@@ -103,4 +121,12 @@ void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 
 	window->draw(m_sprite, &m_shader);
 	window->draw(m_sprite_noShader);
+}
+
+void Game::PlayerMoveAttempt(bool playerDidMove)
+{
+	if (playerDidMove)
+	{
+		m_enemies.Update(m_player.GetX(), m_player.GetY(), &m_map);
+	}
 }

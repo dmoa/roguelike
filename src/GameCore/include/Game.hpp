@@ -11,6 +11,7 @@ public:
 private:
 	void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window);
 	void Draw(const std::shared_ptr<sf::RenderWindow>& window);
+	void PlayerMoveAttempt(bool playerDidMove);
 	sf::RenderTexture m_renderTexture;
 	sf::RenderTexture m_renderTexture_noShader;
 	sf::Color m_backgroundColor;
