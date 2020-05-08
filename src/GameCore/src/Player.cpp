@@ -1,80 +1,59 @@
 #include "../include/Player.hpp"
 
-extern const int GAME_WIDTH;
-extern const int GAME_HEIGHT;
-extern const int SCALE;
+extern const int WINDOWS_WIDTH;
+extern const int WINDOWS_HEIGHT;
 
 Player::Player()
 {
-	m_playerLength = 8;
-	m_tileX = 12;
-	m_tileY = 12;
-	m_sprite.setTextureRect(sf::Rect(32, 8, m_playerLength, m_playerLength));
+	m_ID = 2;
+	m_playerLength = 40;
+	m_drawable.setSize(sf::Vector2f(m_playerLength, m_playerLength));
+	m_drawable.setFillColor(sf::Color::Green);
 }
 
-void Player::SetTextures(sf::Texture* texture)
+void Player::Draw(sf::RenderTexture* renderTexture)
 {
-	m_texture = texture;
-	m_sprite.setTexture(*m_texture, false);
-
-	m_inventory.SetTexture(texture);
+	renderTexture->draw(m_drawable);
 }
 
-void Player::Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader)
+bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManager* levelManager)
 {
-	renderTexture->draw(m_sprite);
-	m_inventory.Draw(renderTexture_noShader);
-}
+	sf::Vector2f possiblePos(m_pos.x + directionX, m_pos.y + directionY);
 
-bool Player::Move(int directionX, int directionY, sf::Shader* shader, Map* map)
-{
-	int possiblePosX = m_tileX + directionX;
-	int possiblePosY = m_tileY + directionY;
-
-	Tile* tile = map->GetTile(possiblePosX, possiblePosY);
+	Tile* tile = levelManager->GetTile(possiblePos);
 
 	if (tile->GetCanWalkOver())
 	{
-		m_tileX = possiblePosX;
-		m_tileY = possiblePosY;
+		m_pos = possiblePos;
 
-		int newPosX = m_tileX * m_playerLength;
-		int newPosY = m_tileY * m_playerLength;
+		ResetRenderPos(shader);
 
-		m_sprite.setPosition(newPosX, newPosY);
-		// + half the player length to align the shader with the middle of the sprite
-		shader->setUniform("lights[0].position", sf::Glsl::Vec2((newPosX + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
-
-		// for now, game logic is that if you can pick it up, you are guaranteed to be able to walk over it
-		if (tile->GetCanPickUp())
-		{
-			m_inventory.AddItem(tile->GetName(), tile->GetQuad());
-			map->RemoveTile(m_tileX, m_tileY, true);
-		}
 		return true;
 	}
 	return false;
 }
 
-void Player::SetStartingPos(Map* map, sf::Shader* shader)
+void Player::SetStartingPos(LevelManager* levelManager, sf::Shader* shader)
 {
-	std::vector starting_pos = map->GetPlayerStartingPos();
+	m_pos = levelManager->GetTileLocations(m_ID)[0];
+	ResetRenderPos(shader);
+}
 
-	m_tileX = starting_pos[0];
-	m_tileY = starting_pos[1];
-	int newPosX = m_tileX * m_playerLength;
-	int newPosY = m_tileY * m_playerLength;
+void Player::ResetRenderPos(sf::Shader* shader)
+{
+	int newPosX = m_pos.x * m_playerLength;
+	int newPosY = m_pos.y * m_playerLength;
 
-	m_sprite.setPosition(newPosX, newPosY);
-	shader->setUniform("lights[0].position", sf::Glsl::Vec2((m_tileX * m_playerLength + m_playerLength / 2) * SCALE, (newPosY + m_playerLength / 2) * SCALE));
+	m_drawable.setPosition(newPosX, newPosY);
+	shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
 }
 
 int Player::GetX()
 {
-	return m_tileX;
+	return m_pos.x;
 }
 
 int Player::GetY()
 {
-	return m_tileY;
+	return m_pos.y;
 }

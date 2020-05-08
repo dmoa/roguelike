@@ -1,23 +1,21 @@
 #pragma once
 
-#include "Map.hpp"
-#include "Inventory.hpp"
+#include "LevelManager.hpp"
 
 class Player
 {
 public:
 	Player();
 	void SetTextures(sf::Texture* texture);
-	void Draw(sf::RenderTexture* renderTexture, sf::RenderTexture* renderTexture_noShader);
-	bool Move(int directionX, int directionY, sf::Shader* shader, Map* map);
-	void SetStartingPos(Map* map, sf::Shader* shader);
+	void Draw(sf::RenderTexture* renderTexture);
+	bool Move(int directionX, int directionY, sf::Shader* shader, LevelManager* levelManager);
+	void SetStartingPos(LevelManager* levelManager, sf::Shader* shader);
+	void ResetRenderPos(sf::Shader* shader);
 	int GetX();
 	int GetY();
 private:
-	sf::Texture* m_texture;
-	sf::Sprite m_sprite;
+	int m_ID;
+	sf::RectangleShape m_drawable;
 	int m_playerLength;
-	int m_tileX;
-	int m_tileY;
-	Inventory m_inventory;
+	sf::Vector2f m_pos;
 };

@@ -8,9 +8,6 @@ bool QUIT = false;
 
 extern const int WINDOW_WIDTH = 1000;
 extern const int WINDOW_HEIGHT = 1000;
-extern const int GAME_WIDTH = 200;
-extern const int GAME_HEIGHT = 200;
-extern const int SCALE = WINDOW_WIDTH / GAME_WIDTH;
 
 int main()
 {
