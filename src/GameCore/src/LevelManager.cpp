@@ -15,8 +15,6 @@ LevelManager::LevelManager()
 
     m_tileData[0] = Tile("ground", true);
     m_tileData[1] = Tile("wall", false);
-
-    ReloadRenderer();
 }
 
 // Draws everything except the player and enemies
@@ -33,33 +31,53 @@ void LevelManager::ReloadRenderer()
     m_tiles.clear();
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
     {
-        if (m_currentLevel.tileData[i] < 2)
+        int ID = m_currentLevel.tileData[i];
+        if (ID < 2)
         {
             sf::RectangleShape shape(sf::Vector2f(m_tileLength, m_tileLength));
             sf::Vector2f pos = MapUtil::GetIntToVector(i, m_currentLevel.width);
             shape.setPosition(pos.x * m_tileLength, pos.y * m_tileLength);
-            shape.setFillColor(sf::Color::White);
+            shape.setOutlineColor(sf::Color(250, 150, 100));
+            shape.setOutlineThickness(2);
+            if (ID == 0)
+            {
+                shape.setFillColor(sf::Color(216, 222, 233));
+            }
+            else if (ID == 1)
+            {
+                shape.setFillColor(sf::Color(129,161,193));
+            }
             m_tiles.push_back(shape);
         }
     }
 }
 
-std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
+std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID, bool remove)
 {
+    bool found = false;
     std::vector<sf::Vector2f> results;
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
     {
         if (m_currentLevel.tileData[i] == ID)
         {
+            found = true;
             results.push_back(MapUtil::GetIntToVector(i, m_currentLevel.width));
+            if (remove)
+            {
+                m_currentLevel.tileData[i] = 0;
+            }
         }
+    }
+    if (!found)
+    {
+        throw std::invalid_argument("Tile not found! [LevelManager.cpp]");
     }
     return results;
 }
 
 Tile* LevelManager::GetTile(sf::Vector2f pos)
 {
-    return &m_tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)];
+    return &m_tileData[m_currentLevel.tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)]];
 }
 
 // void LevelManager::RemoveTile(int tileX, int tileY, bool reload)

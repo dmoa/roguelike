@@ -20,7 +20,7 @@ public:
 	// Draws everything except the player and enemies
 	void Draw(sf::RenderTexture* renderTexture);
 	void ReloadRenderer();
-	std::vector<sf::Vector2f> GetTileLocations(int ID);
+	std::vector<sf::Vector2f> GetTileLocations(int ID, bool remove);
 	Tile* GetTile(sf::Vector2f pos);
 private:
 	int m_currentLevelIndex;

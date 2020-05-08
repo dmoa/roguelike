@@ -3,7 +3,7 @@
 #include <StateMachine/State.hpp>
 
 #include "LevelManager.hpp"
-// #include "Player.hpp"
+#include "Player.hpp"
 // #include "Enemies.hpp"
 
 class Game final: public sm::State
@@ -22,6 +22,6 @@ private:
 	sf::Sprite m_sprite_noShader;
 	sf::Texture m_tileSetTexture;
 	LevelManager m_levelManager;
-	// Player m_player;
+	Player m_player;
 	// Enemies m_enemies;
 };

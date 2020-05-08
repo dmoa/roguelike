@@ -20,7 +20,8 @@ Game::Game()
 	m_renderTexture.create(WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_backgroundColor = sf::Color(34, 35, 35);
 
-	// m_player.SetStartingPos(&m_levelManager, &m_shader);
+	m_player.SetStartingPos(&m_levelManager, &m_shader);
+	m_levelManager.ReloadRenderer();
 	// m_enemies.Setup(&m_levelManager, m_player.GetX(), m_player.GetY());
 }
 
@@ -53,22 +54,22 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 					// 	m_enemies.Setup(&m_tileSetTexture, &m_levelManager, m_player.GetX(), m_player.GetY());
 					// 	break;
 
-					// case sf::Keyboard::Left:
-					// case sf::Keyboard::A:
-					// 	PlayerMoveAttempt(m_player.Move(-1, 0, &m_shader, &m_levelManager));
-					// 	break;
-					// case sf::Keyboard::Right:
-					// case sf::Keyboard::D:
-					// 	PlayerMoveAttempt(m_player.Move(1, 0, &m_shader, &m_levelManager));
-					// 	break;
-					// case sf::Keyboard::Up:
-					// case sf::Keyboard::W:
-					// 	PlayerMoveAttempt(m_player.Move(0, -1, &m_shader, &m_levelManager));
-					// 	break;
-					// case sf::Keyboard::Down:
-					// case sf::Keyboard::S:
-					// 	PlayerMoveAttempt(m_player.Move(0, 1, &m_shader, &m_levelManager));
-					// 	break;
+					case sf::Keyboard::Left:
+					case sf::Keyboard::A:
+						PlayerMoveAttempt(m_player.Move(-1, 0, &m_shader, &m_levelManager));
+						break;
+					case sf::Keyboard::Right:
+					case sf::Keyboard::D:
+						PlayerMoveAttempt(m_player.Move(1, 0, &m_shader, &m_levelManager));
+						break;
+					case sf::Keyboard::Up:
+					case sf::Keyboard::W:
+						PlayerMoveAttempt(m_player.Move(0, -1, &m_shader, &m_levelManager));
+						break;
+					case sf::Keyboard::Down:
+					case sf::Keyboard::S:
+						PlayerMoveAttempt(m_player.Move(0, 1, &m_shader, &m_levelManager));
+						break;
 				}
 		}
 	}
@@ -81,7 +82,7 @@ void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
 
 	m_levelManager.Draw(&m_renderTexture);
 	// m_enemies.Draw(&m_renderTexture);
-	// m_player.Draw(&m_renderTexture);
+	m_player.Draw(&m_renderTexture);
 
 	m_renderTexture.display();
 	// m_renderTexture_noShader.display();

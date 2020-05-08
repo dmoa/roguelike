@@ -25,7 +25,6 @@ bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManag
 	if (tile->GetCanWalkOver())
 	{
 		m_pos = possiblePos;
-
 		ResetRenderPos(shader);
 
 		return true;
@@ -35,7 +34,7 @@ bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManag
 
 void Player::SetStartingPos(LevelManager* levelManager, sf::Shader* shader)
 {
-	m_pos = levelManager->GetTileLocations(m_ID)[0];
+	m_pos = levelManager->GetTileLocations(m_ID, true)[0];
 	ResetRenderPos(shader);
 }
 
