@@ -18,4 +18,6 @@ private:
 	sf::RectangleShape m_drawable;
 	int m_playerLength;
 	sf::Vector2f m_pos;
+	int* m_levelTileLength;
+	int* m_levelLineThickness;
 };

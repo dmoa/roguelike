@@ -35,13 +35,15 @@ bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManag
 void Player::SetStartingPos(LevelManager* levelManager, sf::Shader* shader)
 {
 	m_pos = levelManager->GetTileLocations(m_ID, true)[0];
+	m_levelTileLength = levelManager->GetTileLength();
+	m_levelLineThickness = levelManager->GetLineThickness();
 	ResetRenderPos(shader);
 }
 
 void Player::ResetRenderPos(sf::Shader* shader)
 {
-	int newPosX = m_pos.x * m_playerLength;
-	int newPosY = m_pos.y * m_playerLength;
+	int newPosX = m_pos.x * *m_levelTileLength + *m_levelLineThickness;
+	int newPosY = m_pos.y * *m_levelTileLength + *m_levelLineThickness;
 
 	m_drawable.setPosition(newPosX, newPosY);
 	shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
