@@ -6,8 +6,8 @@
 extern bool QUIT;
 bool QUIT = false;
 
-extern const int WINDOW_WIDTH = 1000;
-extern const int WINDOW_HEIGHT = 1000;
+int WINDOW_WIDTH = 1000;
+int WINDOW_HEIGHT = 1000;
 
 int main()
 {
@@ -17,6 +17,7 @@ int main()
 	std::cout << "Hello World!" << std::endl;
 #endif
 
+
 	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>();
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
 	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "");
@@ -25,6 +26,7 @@ int main()
 	sm::StateMachine stateMachine(std::make_shared<Game>());
 
 	sf::Clock deltaClock;
+
 
 	while (!QUIT)
 	{

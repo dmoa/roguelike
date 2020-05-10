@@ -11,7 +11,7 @@ struct Render
 {
 	sf::RenderTexture texture;
 	sf::Color bg;
-	int scale;
+	float scale;
 	sf::Sprite sprite;
 };
 

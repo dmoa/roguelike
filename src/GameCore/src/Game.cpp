@@ -2,14 +2,14 @@
 
 extern bool QUIT;
 
-extern const int WINDOW_WIDTH;
-extern const int WINDOW_HEIGHT;
+extern int WINDOW_WIDTH;
+extern int WINDOW_HEIGHT;
 
 Game::Game()
 {
 	m_levelRender.texture.create(WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_levelRender.bg = sf::Color(34, 35, 35);
-	m_levelRender.scale = 2;
+	m_levelRender.scale = 2.5;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
@@ -29,9 +29,20 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 			default: break;
 
 			case sf::Event::Closed:
+			{
 				QUIT = true;
 				break;
-
+			}
+			case sf::Event::Resized:
+			{
+				WINDOW_WIDTH = event.size.width;
+				WINDOW_HEIGHT = event.size.height;
+				m_levelRender.scale = std::min(WINDOW_WIDTH / 400, WINDOW_HEIGHT / 400);
+				m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
+        		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+        		window->setView(sf::View(visibleArea));
+				break;
+			}
 			// sometimes there's input lag, not sure why
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
