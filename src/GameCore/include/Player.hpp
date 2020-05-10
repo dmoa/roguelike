@@ -11,8 +11,7 @@ public:
 	bool Move(int directionX, int directionY, sf::Shader* shader, LevelManager* levelManager);
 	void SetStartingPos(LevelManager* levelManager, sf::Shader* shader);
 	void ResetRenderPos(sf::Shader* shader);
-	int GetX();
-	int GetY();
+	sf::Vector2f GetPos();
 private:
 	int m_ID;
 	sf::RectangleShape m_drawable;

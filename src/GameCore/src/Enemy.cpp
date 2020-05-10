@@ -1,49 +1,42 @@
-// #include "../include/Enemy.hpp"
+#include "../include/Enemy.hpp"
 
-// Enemy::Enemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength)
-// {
-// 	m_type = type;
+Enemy::Enemy(EnemyProperties properties, sf::Vector2f pos, int* tileLength)
+{
+	m_properties = properties;
+	m_pos = pos;
+	m_destinationPos = pos;
+	m_properties.shape.setPosition(m_pos.x * *tileLength, m_pos.y * *tileLength);
+}
 
-// 	m_texture = texture;
-// 	m_tileX = tileX;
-// 	m_tileY = tileY;
-// 	m_destinationX = tileX;
-// 	m_destinationY = tileY;
+void Enemy::Draw(sf::RenderTexture* renderTexture)
+{
+	renderTexture->draw(m_properties.shape);
+}
 
-// 	m_sprite.setTextureRect(quad);
-// 	m_sprite.setTexture(*m_texture);
-// 	m_sprite.setPosition(tileX * tileLength, tileY * tileLength);
-// }
+void Enemy::InformAboutPlayerPos(sf::Vector2f playerPos, LevelManager* levelManager)
+{
+	// destination X and Y are where the enemy is going -> this can be over several turns
+	// if the enemy seees the player in view, it sets the player position to the destination
+	// this gets overrided if it sees the player in a different position
+	if (CanSeePlayer(playerPos, levelManager))
+	{
+		m_destinationPos.x = playerPos.x;
+		m_destinationPos.y = playerPos.y;
+	}
+}
 
-// void Enemy::Draw(sf::RenderTexture* renderTexture)
-// {
-// 	renderTexture->draw(m_sprite);
-// }
+void Enemy::Move(int* tileLength)
+{
+	int changeInX = std::clamp(int(m_destinationPos.x - m_pos.x), -1, 1);
+	int changeInY = std::clamp(int(m_destinationPos.y - m_pos.y), -1, 1);
 
-// void Enemy::InformAboutPlayerPos(int playerX, int playerY, Map* map)
-// {
-// 	// destination X and Y are where the enemy is going -> this can be over several turns
-// 	// if the enemy seees the player in view, it sets the player position to the destination
-// 	// this gets overrided if it sees the player in a different position
-// 	if (CanSeePlayer(playerX, playerY, map))
-// 	{
-// 		m_destinationX = playerX;
-// 		m_destinationY = playerY;
-// 	}
-// }
+	m_pos.x += changeInX;
+	m_pos.y += changeInY;
 
-// void Enemy::Move(int tileLength)
-// {
-// 	int changeInX = std::clamp(m_destinationX - m_tileX, -1, 1);
-// 	int changeInY = std::clamp(m_destinationY - m_tileY, -1, 1);
+	m_properties.shape.setPosition(m_pos.x * *tileLength, m_pos.y * *tileLength);
+}
 
-// 	m_tileX += changeInX;
-// 	m_tileY += changeInY;
-
-// 	m_sprite.setPosition(m_tileX * tileLength, m_tileY * tileLength);
-// }
-
-// bool Enemy::CanSeePlayer(int playerX, int playerY, Map* map)
-// {
-// 	return PathChecker::IsPathClear(m_tileX, m_tileY, playerX, playerY, map, m_type);
-// }
+bool Enemy::CanSeePlayer(sf::Vector2f playerPos, LevelManager* levelManager)
+{
+	return PathChecker::IsPathClear(m_pos, playerPos, levelManager, m_properties.viewType);
+}

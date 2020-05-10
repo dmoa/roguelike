@@ -1,24 +1,21 @@
-// #pragma once
+#pragma once
 
-// #include "PathChecker.hpp"
+#include "PathChecker.hpp"
 
-// #include "Map.hpp"
-// #include "Tile.hpp"
+#include "EnemyProperties.hpp"
+#include "LevelManager.hpp"
+#include "Tile.hpp"
 
-// class Enemy
-// {
-// public:
-// 	Enemy(std::string type, sf::Texture* texture, sf::IntRect quad, int tileX, int tileY, int tileLength);
-// 	void Draw(sf::RenderTexture* renderTexture);
-// 	void InformAboutPlayerPos(int playerX, int playerY, Map* map);
-// 	void Move(int tileLength);
-// 	bool CanSeePlayer(int playerX, int playerY, Map* map);
-// private:
-// 	std::string m_type;
-// 	sf::Texture* m_texture;
-// 	sf::Sprite m_sprite;
-// 	int m_tileX;
-// 	int m_tileY;
-// 	int m_destinationX;
-// 	int m_destinationY;
-// };
+class Enemy
+{
+public:
+	Enemy(EnemyProperties properties, sf::Vector2f pos, int* tileLength);
+	void Draw(sf::RenderTexture* renderTexture);
+	void InformAboutPlayerPos(sf::Vector2f playerPos, LevelManager* levelManager);
+	void Move(int* tileLength);
+	bool CanSeePlayer(sf::Vector2f playerPos, LevelManager* levelManager);
+private:
+	EnemyProperties m_properties;
+	sf::Vector2f m_pos;
+	sf::Vector2f m_destinationPos;
+};

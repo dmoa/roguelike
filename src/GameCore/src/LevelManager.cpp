@@ -11,15 +11,13 @@ LevelManager::LevelManager()
     m_currentLevel.width = std::get<0>(loadedData);
     m_currentLevel.height = std::get<1>(loadedData);
     m_currentLevel.tileData = std::get<2>(loadedData);
-    m_tileLength = 42;
+    m_tileLength = 41;
     m_lineThickness = 1;
 
     m_gridLineColor = sf::Color(46, 52, 64);
-    m_emptyTileColor = sf::Color(216, 222, 233);
-    m_wallTileColor = sf::Color(129,161,193);
 
-    m_tileData[0] = Tile("ground", true);
-    m_tileData[1] = Tile("wall", false);
+    m_tileData[0] = Tile("ground", sf::Color(216, 222, 233), true);
+    m_tileData[1] = Tile("wall", sf::Color(129,161,193), false);
 }
 
 // Draws everything except the player and enemies
@@ -29,7 +27,7 @@ void LevelManager::Draw(sf::RenderTexture* renderTexture)
     {
         renderTexture->draw(m_tiles[i]);
     }
-    for (int i = 0; i < m_currentLevel.width; i++)
+    for (int i = 0; i < m_currentLevel.width + m_currentLevel.height; i++)
     {
         renderTexture->draw(m_gridLines[i]);
     }
@@ -46,13 +44,13 @@ void LevelManager::ReloadRenderer()
         line.setFillColor(m_gridLineColor);
         m_gridLines.push_back(line);
     }
-    // for (int i = 0; i < m_currentLevel.height; i++)
-    // {
-    //     sf::RectangleShape line(sf::Vector2f(m_currentLevel.width * m_tileLength, m_lineThickness));
-    //     line.setPosition(0, i * m_tileLength);
-    //     line.setFillColor(m_gridLineColor);
-    //     m_gridLines.push_back(line);
-    // }
+    for (int i = 0; i < m_currentLevel.height; i++)
+    {
+        sf::RectangleShape line(sf::Vector2f(m_currentLevel.width * m_tileLength, m_lineThickness));
+        line.setPosition(0, i * m_tileLength);
+        line.setFillColor(m_gridLineColor);
+        m_gridLines.push_back(line);
+    }
     // setting render of level objects other than enemy and player
     m_tiles.clear();
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
@@ -63,16 +61,7 @@ void LevelManager::ReloadRenderer()
             sf::RectangleShape shape(sf::Vector2f(m_tileLength, m_tileLength));
             sf::Vector2f pos = MapUtil::GetIntToVector(i, m_currentLevel.width);
             shape.setPosition(pos.x * m_tileLength, pos.y * m_tileLength);
-            // shape.setOutlineColor(sf::Color(46, 52, 64));
-            // shape.setOutlineThickness(2);
-            if (ID == 0)
-            {
-                shape.setFillColor(m_emptyTileColor);
-            }
-            else if (ID == 1)
-            {
-                shape.setFillColor(m_wallTileColor);
-            }
+            shape.setFillColor(m_tileData[ID].GetColor());
             m_tiles.push_back(shape);
         }
     }
@@ -80,13 +69,11 @@ void LevelManager::ReloadRenderer()
 
 std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID, bool remove)
 {
-    bool found = false;
     std::vector<sf::Vector2f> results;
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
     {
         if (m_currentLevel.tileData[i] == ID)
         {
-            found = true;
             results.push_back(MapUtil::GetIntToVector(i, m_currentLevel.width));
             if (remove)
             {
@@ -94,35 +81,14 @@ std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID, bool remove)
             }
         }
     }
-    if (!found)
-    {
-        throw std::invalid_argument("Tile not found! [LevelManager.cpp]");
-    }
     return results;
 }
 
-Tile* LevelManager::GetTile(sf::Vector2f pos)
+Tile* LevelManager::GetTile(sf::Vector2f pos, bool remove)
 {
+    if (remove) { m_currentLevel.tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)] = 0; }
     return &m_tileData[m_currentLevel.tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)]];
 }
-
-// void LevelManager::RemoveTile(int tileX, int tileY, bool reload)
-// {
-//     m_currentLevel.tileData[tileY * m_currentLevel.width + tileX] = 0;
-//     if (reload)
-//     {
-//         ReloadRenderer();
-//     }
-// }
-
-// void LevelManager::RemoveTileByIndex(int index, bool reload)
-// {
-//     m_currentLevel.tileData[index] = 0;
-//     if (reload)
-//     {
-//         ReloadRenderer();
-//     }
-// }
 
 int* LevelManager::GetTileLength()
 {
@@ -134,4 +100,22 @@ int* LevelManager::GetLineThickness()
     return &m_lineThickness;
 }
 
+int LevelManager::GetLevelWidth()
+{
+    return m_currentLevel.width * m_tileLength;
+}
 
+int LevelManager::GetLevelHeight()
+{
+    return m_currentLevel.height * m_tileLength;
+}
+
+int LevelManager::GetLevelTileWidth()
+{
+    return m_currentLevel.width;
+}
+
+int LevelManager::GetLevelTileHeight()
+{
+    return m_currentLevel.height;
+}

@@ -21,9 +21,13 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	void ReloadRenderer();
 	std::vector<sf::Vector2f> GetTileLocations(int ID, bool remove);
-	Tile* GetTile(sf::Vector2f pos);
+	Tile* GetTile(sf::Vector2f pos, bool remove);
 	int* GetTileLength();
 	int* GetLineThickness();
+	int GetLevelWidth();
+	int GetLevelHeight();
+	int GetLevelTileWidth();
+	int GetLevelTileHeight();
 private:
 	int m_currentLevelIndex;
 	LevelData m_currentLevel;
@@ -33,6 +37,4 @@ private:
 	int m_lineThickness;
 	std::vector<sf::RectangleShape> m_gridLines;
 	sf::Color m_gridLineColor;
-	sf::Color m_emptyTileColor;
-	sf::Color m_wallTileColor;
 };

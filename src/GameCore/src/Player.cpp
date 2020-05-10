@@ -19,8 +19,9 @@ void Player::Draw(sf::RenderTexture* renderTexture)
 bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManager* levelManager)
 {
 	sf::Vector2f possiblePos(m_pos.x + directionX, m_pos.y + directionY);
+	if (possiblePos.x > levelManager->GetLevelTileWidth() - 1 || possiblePos.y > levelManager->GetLevelTileHeight() - 1 || possiblePos.x < 0 || possiblePos.y < 0) { return false; }
 
-	Tile* tile = levelManager->GetTile(possiblePos);
+	Tile* tile = levelManager->GetTile(possiblePos, false);
 
 	if (tile->GetCanWalkOver())
 	{
@@ -49,12 +50,7 @@ void Player::ResetRenderPos(sf::Shader* shader)
 	shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
 }
 
-int Player::GetX()
+sf::Vector2f Player::GetPos()
 {
-	return m_pos.x;
-}
-
-int Player::GetY()
-{
-	return m_pos.y;
+	return m_pos;
 }
