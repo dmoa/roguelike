@@ -2,36 +2,43 @@
 
 #include "LevelManager.hpp"
 #include "EnemyProperties.hpp"
+#include "ViewType.hpp"
 #include "Tile.hpp"
+
+// The logic is that pos1 is looking for pos2
 
 class PathChecker
 {
 public:
-	static bool IsPathClear(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager, std::string viewType)
+	static bool IsPathClear(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager, VIEW_TYPE viewType)
 	{
-		if (viewType == "vertical")
+		switch (viewType)
 		{
-			return vertical(pos1, pos2, levelManager);
-		}
-		else if (viewType == "horizontal")
-		{
-			return horizontal(pos1, pos2, levelManager);
-		}
-		else if (viewType == "rook")
-		{
-			return horizontal(pos1, pos2, levelManager) || vertical(pos1, pos2, levelManager);
-		}
-		else
-		{
-			throw std::invalid_argument("View Type not valid");
+			case Up:
+				return up(pos1, pos2, levelManager);
+			case Down:
+				return down(pos1, pos2, levelManager);
+			case Left:
+				return left(pos1, pos2, levelManager);
+			case Right:
+				return right(pos1, pos2, levelManager);
+			case Vertical:
+				return up(pos1, pos2, levelManager) || down(pos1, pos2, levelManager);
+			case Horizontal:
+				return left(pos1, pos2, levelManager) || right(pos1, pos2, levelManager);
+			case Rook:
+				return up(pos1, pos2, levelManager) || down(pos1, pos2, levelManager) || left(pos1, pos2, levelManager) || right(pos1, pos2, levelManager);
+			default:
+				throw std::invalid_argument("View Type not valid");
 		}
 	}
 private:
-	static bool vertical(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
+	static bool up(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
 	{
 		if (pos1.x != pos2.x) { return false; }
+		if (pos1.y < pos2.y) { return false; }
 
-		for (int i = std::min(pos1.y, pos2.y); i < std::max(pos1.y, pos2.y); i++)
+		for (int i = pos2.y; i < pos1.y; i++)
 		{
 			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(pos1.x, i), false);
 			if (!checkingTile->GetCanWalkOver())
@@ -41,11 +48,42 @@ private:
 		}
 		return true;
 	}
-	static bool horizontal(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
+	static bool down(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
+	{
+		if (pos1.x != pos2.x) { return false; }
+		if (pos1.y > pos2.y) { return false; }
+
+		for (int i = pos1.y; i < pos2.y; i++)
+		{
+			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(pos1.x, i), false);
+			if (!checkingTile->GetCanWalkOver())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	static bool left(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
 	{
 		if (pos1.y != pos2.y) { return false; }
+		if (pos2.x > pos1.x) { return false; }
 
-		for (int i = std::min(pos1.x, pos2.x); i < std::max(pos1.x, pos2.x); i++)
+		for (int i = pos2.x; i < pos1.x; i++)
+		{
+			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(i, pos1.y), false);
+			if (!checkingTile->GetCanWalkOver())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	static bool right(sf::Vector2f pos1, sf::Vector2f pos2, LevelManager* levelManager)
+	{
+		if (pos1.y != pos2.y) { return false; }
+		if (pos2.x < pos1.x) { return false; }
+
+		for (int i = pos1.x; i < pos2.x; i++)
 		{
 			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(i, pos1.y), false);
 			if (!checkingTile->GetCanWalkOver())

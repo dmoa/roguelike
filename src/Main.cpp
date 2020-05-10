@@ -33,7 +33,7 @@ int main()
 
 		stateMachine.UpdateStates(deltaClock.restart(), window);
 
-		window->clear();
+		window->clear(sf::Color(46,52,64));
 		stateMachine.DrawStates(window);
 		window->display();
 	}

@@ -1,7 +1,9 @@
 #pragma once
 
+#include "ViewType.hpp"
+
 struct EnemyProperties
 {
 	sf::ConvexShape shape;
-	std::string viewType;
+	VIEW_TYPE viewType;
 };

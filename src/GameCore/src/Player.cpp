@@ -11,17 +11,24 @@ Player::Player()
 	m_drawable.setFillColor(sf::Color::Green);
 }
 
+void Player::SetStartingPos(LevelManager* levelManager, sf::Shader* shader)
+{
+	m_levelManager = levelManager;
+	m_pos = levelManager->GetTileLocations(m_ID, true)[0];
+	ResetRenderPos(shader);
+}
+
 void Player::Draw(sf::RenderTexture* renderTexture)
 {
 	renderTexture->draw(m_drawable);
 }
 
-bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManager* levelManager)
+bool Player::Move(int directionX, int directionY, sf::Shader* shader)
 {
 	sf::Vector2f possiblePos(m_pos.x + directionX, m_pos.y + directionY);
-	if (possiblePos.x > levelManager->GetLevelTileWidth() - 1 || possiblePos.y > levelManager->GetLevelTileHeight() - 1 || possiblePos.x < 0 || possiblePos.y < 0) { return false; }
+	if (possiblePos.x > m_levelManager->GetLevelTileWidth() - 1 || possiblePos.y > m_levelManager->GetLevelTileHeight() - 1 || possiblePos.x < 0 || possiblePos.y < 0) { return false; }
 
-	Tile* tile = levelManager->GetTile(possiblePos, false);
+	Tile* tile = m_levelManager->GetTile(possiblePos, false);
 
 	if (tile->GetCanWalkOver())
 	{
@@ -33,18 +40,10 @@ bool Player::Move(int directionX, int directionY, sf::Shader* shader, LevelManag
 	return false;
 }
 
-void Player::SetStartingPos(LevelManager* levelManager, sf::Shader* shader)
-{
-	m_pos = levelManager->GetTileLocations(m_ID, true)[0];
-	m_levelTileLength = levelManager->GetTileLength();
-	m_levelLineThickness = levelManager->GetLineThickness();
-	ResetRenderPos(shader);
-}
-
 void Player::ResetRenderPos(sf::Shader* shader)
 {
-	int newPosX = m_pos.x * *m_levelTileLength + *m_levelLineThickness;
-	int newPosY = m_pos.y * *m_levelTileLength + *m_levelLineThickness;
+	int newPosX = m_pos.x * *m_levelManager->GetTileLength() + *m_levelManager->GetLineThickness();;
+	int newPosY = m_pos.y * *m_levelManager->GetTileLength() + *m_levelManager->GetLineThickness();;
 
 	m_drawable.setPosition(newPosX, newPosY);
 	shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));

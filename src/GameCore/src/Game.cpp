@@ -26,8 +26,6 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 	{
 		switch (event.type)
 		{
-			default: break;
-
 			case sf::Event::Closed:
 			{
 				QUIT = true;
@@ -59,21 +57,22 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 
 					case sf::Keyboard::Left:
 					case sf::Keyboard::A:
-						PlayerMoveAttempt(m_player.Move(-1, 0, m_shader.GetShader(), &m_levelManager));
+						PlayerMoveAttempt(m_player.Move(-1, 0, m_shader.GetShader()));
 						break;
 					case sf::Keyboard::Right:
 					case sf::Keyboard::D:
-						PlayerMoveAttempt(m_player.Move(1, 0, m_shader.GetShader(), &m_levelManager));
+						PlayerMoveAttempt(m_player.Move(1, 0, m_shader.GetShader()));
 						break;
 					case sf::Keyboard::Up:
 					case sf::Keyboard::W:
-						PlayerMoveAttempt(m_player.Move(0, -1, m_shader.GetShader(), &m_levelManager));
+						PlayerMoveAttempt(m_player.Move(0, -1, m_shader.GetShader()));
 						break;
 					case sf::Keyboard::Down:
 					case sf::Keyboard::S:
-						PlayerMoveAttempt(m_player.Move(0, 1, m_shader.GetShader(), &m_levelManager));
+						PlayerMoveAttempt(m_player.Move(0, 1, m_shader.GetShader()));
 						break;
 				}
+			default: break;
 		}
 	}
 }
@@ -99,6 +98,6 @@ void Game::PlayerMoveAttempt(bool playerDidMove)
 {
 	if (playerDidMove)
 	{
-		m_enemies.Update(m_player.GetPos(), &m_levelManager);
+		m_enemies.Update(m_player.GetPos());
 	}
 }
