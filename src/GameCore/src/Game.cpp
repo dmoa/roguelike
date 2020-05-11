@@ -2,14 +2,14 @@
 
 extern bool QUIT;
 
-extern int WINDOW_WIDTH;
-extern int WINDOW_HEIGHT;
+extern float WINDOW_WIDTH;
+extern float WINDOW_HEIGHT;
 
 Game::Game()
 {
 	m_levelRender.texture.create(WINDOW_WIDTH, WINDOW_HEIGHT);
 	m_levelRender.bg = sf::Color(34, 35, 35);
-	m_levelRender.scale = 2.5;
+	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
@@ -35,9 +35,9 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 			{
 				WINDOW_WIDTH = event.size.width;
 				WINDOW_HEIGHT = event.size.height;
-				m_levelRender.scale = std::min(WINDOW_WIDTH / 400, WINDOW_HEIGHT / 400);
+				m_levelRender.scale = std::min(WINDOW_WIDTH / 1000, WINDOW_HEIGHT / 1000);
 				m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
-        		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+        		sf::FloatRect visibleArea(0, 0, event.size.width, WINDOW_HEIGHT);
         		window->setView(sf::View(visibleArea));
 				break;
 			}

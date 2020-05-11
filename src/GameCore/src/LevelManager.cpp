@@ -11,8 +11,8 @@ LevelManager::LevelManager()
     m_currentLevel.width = std::get<0>(loadedData);
     m_currentLevel.height = std::get<1>(loadedData);
     m_currentLevel.tileData = std::get<2>(loadedData);
-    m_tileLength = 42;
-    m_lineThickness = 1;
+    m_lineThickness = 2;
+    m_tileLength = 100 + m_lineThickness;
 
     m_gridLineColor = sf::Color(46, 52, 64);
 
@@ -31,8 +31,6 @@ void LevelManager::Draw(sf::RenderTexture* renderTexture)
 
 void LevelManager::ReloadRenderer()
 {
-    // grid lines
-    m_gridLines.clear();
     // setting render of level objects other than enemy and player
     m_tiles.clear();
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
@@ -42,9 +40,10 @@ void LevelManager::ReloadRenderer()
         {
             sf::RectangleShape shape(sf::Vector2f(m_tileLength, m_tileLength));
             sf::Vector2f pos = MapUtil::GetIntToVector(i, m_currentLevel.width);
-            shape.setPosition(pos.x * m_tileLength + m_lineThickness, pos.y * m_tileLength + m_lineThickness);
+            shape.setPosition(pos.x * m_tileLength + m_lineThickness / 2, pos.y * m_tileLength + m_lineThickness / 2);
             shape.setFillColor(m_tileData[ID].GetColor());
-            shape.setOutlineThickness(- m_lineThickness);
+            // dividing by 2, since the border of two squares will double the line thickness
+            shape.setOutlineThickness(- m_lineThickness / 2);
             shape.setOutlineColor(m_gridLineColor);
             m_tiles.push_back(shape);
         }
@@ -86,12 +85,12 @@ int* LevelManager::GetLineThickness()
 
 int LevelManager::GetLevelWidth()
 {
-    return m_currentLevel.width * m_tileLength + m_lineThickness * 2;
+    return m_currentLevel.width * m_tileLength + m_lineThickness;
 }
 
 int LevelManager::GetLevelHeight()
 {
-    return m_currentLevel.height * m_tileLength + m_lineThickness * 2;
+    return m_currentLevel.height * m_tileLength + m_lineThickness;
 }
 
 int LevelManager::GetLevelTileWidth()

@@ -6,8 +6,8 @@
 extern bool QUIT;
 bool QUIT = false;
 
-int WINDOW_WIDTH = 1000;
-int WINDOW_HEIGHT = 1000;
+float WINDOW_WIDTH = 1000.0;
+float WINDOW_HEIGHT = 1000.0;
 
 int main()
 {

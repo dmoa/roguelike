@@ -6,7 +6,8 @@ Enemy::Enemy(EnemyProperties properties, sf::Vector2f pos, LevelManager* levelMa
 	m_pos = pos;
 	m_destinationPos = pos;
 	m_levelManager = levelManager;
-	m_properties.shape.setPosition(m_pos.x * *m_levelManager->GetTileLength(), m_pos.y * *m_levelManager->GetTileLength());
+	m_properties.shape.setPosition(m_pos.x * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - m_properties.width) / 2 + *m_levelManager->GetLineThickness() / 2,
+								   m_pos.y * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - m_properties.height) / 2 + *m_levelManager->GetLineThickness() / 2);
 }
 
 void Enemy::Draw(sf::RenderTexture* renderTexture)
@@ -34,7 +35,8 @@ void Enemy::Move()
 	m_pos.x += changeInX;
 	m_pos.y += changeInY;
 
-	m_properties.shape.setPosition(m_pos.x * *m_levelManager->GetTileLength(), m_pos.y * *m_levelManager->GetTileLength());
+	m_properties.shape.setPosition(m_pos.x * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - m_properties.width) / 2 + *m_levelManager->GetLineThickness() / 2,
+								   m_pos.y * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - m_properties.height) / 2 + *m_levelManager->GetLineThickness() / 2);
 }
 
 bool Enemy::CanSeePlayer(sf::Vector2f playerPos)
