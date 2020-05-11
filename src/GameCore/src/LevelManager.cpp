@@ -11,7 +11,7 @@ LevelManager::LevelManager()
     m_currentLevel.width = std::get<0>(loadedData);
     m_currentLevel.height = std::get<1>(loadedData);
     m_currentLevel.tileData = std::get<2>(loadedData);
-    m_tileLength = 41;
+    m_tileLength = 42;
     m_lineThickness = 1;
 
     m_gridLineColor = sf::Color(46, 52, 64);
@@ -27,30 +27,12 @@ void LevelManager::Draw(sf::RenderTexture* renderTexture)
     {
         renderTexture->draw(m_tiles[i]);
     }
-    for (int i = 0; i < m_currentLevel.width + m_currentLevel.height; i++)
-    {
-        renderTexture->draw(m_gridLines[i]);
-    }
 }
 
 void LevelManager::ReloadRenderer()
 {
     // grid lines
     m_gridLines.clear();
-    for (int i = 0; i < m_currentLevel.width; i++)
-    {
-        sf::RectangleShape line(sf::Vector2f(m_lineThickness, m_currentLevel.height * m_tileLength));
-        line.setPosition(i * m_tileLength, 0);
-        line.setFillColor(m_gridLineColor);
-        m_gridLines.push_back(line);
-    }
-    for (int i = 0; i < m_currentLevel.height; i++)
-    {
-        sf::RectangleShape line(sf::Vector2f(m_currentLevel.width * m_tileLength, m_lineThickness));
-        line.setPosition(0, i * m_tileLength);
-        line.setFillColor(m_gridLineColor);
-        m_gridLines.push_back(line);
-    }
     // setting render of level objects other than enemy and player
     m_tiles.clear();
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
@@ -60,8 +42,10 @@ void LevelManager::ReloadRenderer()
         {
             sf::RectangleShape shape(sf::Vector2f(m_tileLength, m_tileLength));
             sf::Vector2f pos = MapUtil::GetIntToVector(i, m_currentLevel.width);
-            shape.setPosition(pos.x * m_tileLength, pos.y * m_tileLength);
+            shape.setPosition(pos.x * m_tileLength + m_lineThickness, pos.y * m_tileLength + m_lineThickness);
             shape.setFillColor(m_tileData[ID].GetColor());
+            shape.setOutlineThickness(- m_lineThickness);
+            shape.setOutlineColor(m_gridLineColor);
             m_tiles.push_back(shape);
         }
     }
@@ -102,12 +86,12 @@ int* LevelManager::GetLineThickness()
 
 int LevelManager::GetLevelWidth()
 {
-    return m_currentLevel.width * m_tileLength;
+    return m_currentLevel.width * m_tileLength + m_lineThickness * 2;
 }
 
 int LevelManager::GetLevelHeight()
 {
-    return m_currentLevel.height * m_tileLength;
+    return m_currentLevel.height * m_tileLength + m_lineThickness * 2;
 }
 
 int LevelManager::GetLevelTileWidth()
