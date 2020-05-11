@@ -6,15 +6,50 @@ Enemies::Enemies()
     m_enemyTypes[3].shape = sf::ConvexShape(3);
     m_enemyTypes[3].shape.setPoint(0, sf::Vector2f(21, 0));
     m_enemyTypes[3].shape.setPoint(1, sf::Vector2f(41, 41));
-    m_enemyTypes[3].shape.setPoint(2, sf::Vector2f(0, 41));
+    m_enemyTypes[3].shape.setPoint(2, sf::Vector2f(1, 41));
     m_enemyTypes[3].shape.setFillColor(sf::Color(191,97,106));
 
-    m_enemyTypes[4].viewType = Rook;
+    m_enemyTypes[4].viewType = Down;
     m_enemyTypes[4].shape = sf::ConvexShape(3);
-    m_enemyTypes[4].shape.setPoint(0, sf::Vector2f(0, 0));
-    m_enemyTypes[4].shape.setPoint(1, sf::Vector2f(0, 41));
-    m_enemyTypes[4].shape.setPoint(2, sf::Vector2f(41, 21));
+    m_enemyTypes[4].shape.setPoint(0, sf::Vector2f(1, 1));
+    m_enemyTypes[4].shape.setPoint(1, sf::Vector2f(41, 1));
+    m_enemyTypes[4].shape.setPoint(2, sf::Vector2f(21, 42));
     m_enemyTypes[4].shape.setFillColor(sf::Color(191,97,106));
+
+    m_enemyTypes[5].viewType = Left;
+    m_enemyTypes[5].shape = sf::ConvexShape(3);
+    m_enemyTypes[5].shape.setPoint(0, sf::Vector2f(0, 21));
+    m_enemyTypes[5].shape.setPoint(1, sf::Vector2f(41, 1));
+    m_enemyTypes[5].shape.setPoint(2, sf::Vector2f(41, 41));
+    m_enemyTypes[5].shape.setFillColor(sf::Color(191,97,106));
+
+    m_enemyTypes[6].viewType = Right;
+    m_enemyTypes[6].shape = sf::ConvexShape(3);
+    m_enemyTypes[6].shape.setPoint(0, sf::Vector2f(21, 0));
+    m_enemyTypes[6].shape.setPoint(1, sf::Vector2f(41, 41));
+    m_enemyTypes[6].shape.setPoint(2, sf::Vector2f(1, 41));
+    m_enemyTypes[6].shape.setFillColor(sf::Color(191,97,106));
+
+    m_enemyTypes[7].viewType = Vertical;
+    m_enemyTypes[7].shape = sf::ConvexShape(3);
+    m_enemyTypes[7].shape.setPoint(0, sf::Vector2f(21, 0));
+    m_enemyTypes[7].shape.setPoint(1, sf::Vector2f(41, 41));
+    m_enemyTypes[7].shape.setPoint(2, sf::Vector2f(1, 41));
+    m_enemyTypes[7].shape.setFillColor(sf::Color(191,97,106));
+
+    m_enemyTypes[8].viewType = Horizontal;
+    m_enemyTypes[8].shape = sf::ConvexShape(3);
+    m_enemyTypes[8].shape.setPoint(0, sf::Vector2f(21, 0));
+    m_enemyTypes[8].shape.setPoint(1, sf::Vector2f(41, 41));
+    m_enemyTypes[8].shape.setPoint(2, sf::Vector2f(1, 41));
+    m_enemyTypes[8].shape.setFillColor(sf::Color(191,97,106));
+
+    m_enemyTypes[9].viewType = Rook;
+    m_enemyTypes[9].shape = sf::ConvexShape(3);
+    m_enemyTypes[9].shape.setPoint(0, sf::Vector2f(21, 0));
+    m_enemyTypes[9].shape.setPoint(1, sf::Vector2f(41, 41));
+    m_enemyTypes[9].shape.setPoint(2, sf::Vector2f(1, 41));
+    m_enemyTypes[9].shape.setFillColor(sf::Color(191,97,106));
 }
 
 void Enemies::Setup(LevelManager* levelManager, sf::Vector2f playerPos)
