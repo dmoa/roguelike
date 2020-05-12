@@ -4,7 +4,7 @@
 
 struct EnemyProperties
 {
-	sf::ConvexShape shape;
+	std::vector<sf::ConvexShape> shapes;
 	VIEW_TYPE viewType;
 	int width;
 	int height;

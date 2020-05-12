@@ -14,6 +14,7 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	void InformAboutPlayerPos(sf::Vector2f playerPos);
 	void Move();
+	void SetRenderPos();
 	bool CanSeePlayer(sf::Vector2f playerPos);
 private:
 	EnemyProperties m_properties;
