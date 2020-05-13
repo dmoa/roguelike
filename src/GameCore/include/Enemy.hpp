@@ -10,14 +10,14 @@
 class Enemy
 {
 public:
-	Enemy(EnemyProperties properties, sf::Vector2f pos, LevelManager* levelManager);
+	Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager);
 	void Draw(sf::RenderTexture* renderTexture);
 	void InformAboutPlayerPos(sf::Vector2f playerPos);
 	void Move();
 	void SetRenderPos();
 	bool CanSeePlayer(sf::Vector2f playerPos);
 private:
-	EnemyProperties m_properties;
+	EnemyProperties* m_properties;
 	sf::Vector2f m_pos;
 	sf::Vector2f m_destinationPos;
 	LevelManager* m_levelManager;

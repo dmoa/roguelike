@@ -85,7 +85,7 @@ void Enemies::Setup(LevelManager* levelManager, sf::Vector2f playerPos)
         int tileID = i->first;
         for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID, true))
         {
-            AddEnemy(m_enemyTypes[tileID], pos, playerPos);
+            AddEnemy(&m_enemyTypes[tileID], pos, playerPos);
         }
     }
 }
@@ -108,7 +108,7 @@ void Enemies::Update(sf::Vector2f playerPos)
 	}
 }
 
-void Enemies::AddEnemy(EnemyProperties enemyType, sf::Vector2f pos, sf::Vector2f playerPos)
+void Enemies::AddEnemy(EnemyProperties* enemyType, sf::Vector2f pos, sf::Vector2f playerPos)
 {
 	Enemy enemy(enemyType, pos, m_levelManager);
     enemy.InformAboutPlayerPos(playerPos);
