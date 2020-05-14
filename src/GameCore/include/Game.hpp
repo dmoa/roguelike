@@ -15,13 +15,13 @@ struct Render
 	sf::Sprite sprite;
 };
 
-class Game final: public sm::State
+class Game
 {
 public:
 	Game();
+	void Update(sf::Int32* dt, sf::RenderWindow* window);
+	void Draw(sf::RenderWindow* window);
 private:
-	void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window);
-	void Draw(const std::shared_ptr<sf::RenderWindow>& window);
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
 	// sf::RenderTexture m_renderTexture_noShader;

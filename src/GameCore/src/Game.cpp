@@ -17,10 +17,10 @@ Game::Game()
 	m_levelManager.ReloadRenderer();
 }
 
-void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window)
+void Game::Update(sf::Int32* dt, sf::RenderWindow* window)
 {
 	// we aren't doing anything with dt right now but we will need it later
-	deltaTime.asMilliseconds();
+	dt = 0;
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
@@ -77,7 +77,7 @@ void Game::Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& w
 	}
 }
 
-void Game::Draw(const std::shared_ptr<sf::RenderWindow>& window)
+void Game::Draw(sf::RenderWindow* window)
 {
 	m_levelRender.texture.clear(m_levelRender.bg);
 

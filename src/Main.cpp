@@ -1,5 +1,4 @@
 #include "Platform/PlatformHelper.hpp"
-#include <StateMachine/StateMachine.hpp>
 
 #include "GameCore/include/Game.hpp"
 
@@ -13,29 +12,38 @@ int main()
 {
 	PlatformHelper platform;
 
-#if defined(_DEBUG)
-	std::cout << "Hello World!" << std::endl;
-#endif
+	sf::RenderWindow window;
+	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
+	window.setFramerateLimit(60);
+	window.create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "");
+	platform.setIcon(window.getSystemHandle());
 
-
-	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>();
-	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
-	window->create(sf::VideoMode(WINDOW_WIDTH * screenScalingFactor, WINDOW_HEIGHT * screenScalingFactor), "");
-	platform.setIcon(window->getSystemHandle());
-
-	sm::StateMachine stateMachine(std::make_shared<Game>());
-
+	Game game;
 	sf::Clock deltaClock;
 
+	enum States
+	{
+		InGame, LevelEditor, StartingScreen
+	};
+	States currentState = InGame;
 
 	while (!QUIT)
 	{
+		window.clear(sf::Color(46,52,64));
+		sf::Int32 dt = deltaClock.restart().asMilliseconds();
 
-		stateMachine.UpdateStates(deltaClock.restart(), window);
+		switch (currentState)
+		{
+			case InGame:
+				game.Draw(&window);
+				game.Update(&dt, &window);
+				break;
 
-		window->clear(sf::Color(46,52,64));
-		stateMachine.DrawStates(window);
-		window->display();
+			default:
+				break;
+		}
+
+		window.display();
 	}
 
 	return 0;
