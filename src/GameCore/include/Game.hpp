@@ -1,7 +1,5 @@
 #pragma once
 
-#include <StateMachine/State.hpp>
-
 #include "Shader.hpp"
 #include "LevelManager.hpp"
 #include "Player.hpp"
@@ -24,6 +22,8 @@ public:
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
+	int* m_windowWidth;
+	int* m_windowHeight;
 	// sf::RenderTexture m_renderTexture_noShader;
 	sf::Color m_backgroundColor;
 	Shader m_shader;

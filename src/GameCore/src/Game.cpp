@@ -1,13 +1,10 @@
 #include "../include/Game.hpp"
 
-extern bool QUIT;
-
-extern float WINDOW_WIDTH;
-extern float WINDOW_HEIGHT;
-
-Game::Game()
+Game::Game(int* windowWidth, int* windowHeight)
 {
-	m_levelRender.texture.create(WINDOW_WIDTH, WINDOW_HEIGHT);
+	m_windowWidth = windowWidth;
+	m_windowHeight = windowHeight;
+	m_levelRender.texture.create(*m_windowWidth, *m_windowHeight);
 	m_levelRender.bg = sf::Color(34, 35, 35);
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
@@ -21,26 +18,12 @@ void Game::Update(sf::Int32* dt, sf::RenderWindow* window)
 {
 	// we aren't doing anything with dt right now but we will need it later
 	dt = 0;
-	sf::Event event;
-	while (window->pollEvent(event))
-	{
-		switch (event.type)
-		{
-			case sf::Event::Closed:
-			{
-				QUIT = true;
-				break;
-			}
 			case sf::Event::Resized:
 			{
 				WINDOW_WIDTH = event.size.width;
 				WINDOW_HEIGHT = event.size.height;
 				m_levelRender.scale = std::min(WINDOW_WIDTH / 1000, WINDOW_HEIGHT / 1000);
 				m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
-        		sf::FloatRect visibleArea(0, 0, event.size.width, WINDOW_HEIGHT);
-        		window->setView(sf::View(visibleArea));
-				break;
-			}
 			// sometimes there's input lag, not sure why
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
