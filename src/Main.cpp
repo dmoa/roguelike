@@ -35,6 +35,7 @@ void Update(sf::RenderWindow* window, int* window_width, int* window_height, Gam
 			}
 		}
 	}
+	// here the event is still filled with keys that were pressed
 
 	// draw & update
 	window->clear(sf::Color(46,52,64));
@@ -88,3 +89,25 @@ int main()
 
 	return 0;
 }
+
+
+
+
+
+
+// the scenarios for storing things in the stack
+
+// menu, game
+// game
+// victory animation, game
+// paused menu, victory animation, game
+// level editor, game
+
+// stateMachine->push(game(&window_width, &window_height));
+// stateMachine->push(startingMenu());
+// presses play
+// stateMachine->pop();
+
+// stateMachine->draw() -> gets the top item in the stack -> game->draw(window);
+// stateMachine->updateResolution() -> ONLY update the top item
+// when you pop another item, then you could update all the resolutions
