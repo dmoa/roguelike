@@ -67,7 +67,7 @@ int main()
 	// stack
 	sm::StateStack stateStack(&window);
 	Game game(&window_width, &window_height);
-	stateStack.Push(game);
+	stateStack.Push(std::make_unique<Game>(&window_width, &window_height));
 
 	// where shit gets real
 	Init(&window, &window_width, &window_height);

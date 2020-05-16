@@ -19,10 +19,9 @@ namespace sm
 				m_stateStack[i]->Draw(m_window);
 			}
 		}
-		void Push(State newState)
+		void Push(std::unique_ptr<State>&& newState)
 		{
-			// m_stateStack.push_back(newState);
-			newState.Draw(m_window);
+			m_stateStack.push_back(std::move(newState));
 		}
 		void Pop()
 		{
