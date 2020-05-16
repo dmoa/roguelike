@@ -1,5 +1,7 @@
 #pragma once
 
+#include <StateMachine/State.hpp>
+
 #include "Shader.hpp"
 #include "LevelManager.hpp"
 #include "Player.hpp"
@@ -13,17 +15,17 @@ struct Render
 	sf::Sprite sprite;
 };
 
-class Game
+class Game : public sm::State
 {
 public:
-	Game();
-	void Update(sf::Int32* dt, sf::RenderWindow* window);
+	Game(float* windowWidth, float* windowHeight);
+	void Update(sf::Int32* dt, sf::Event* event);
 	void Draw(sf::RenderWindow* window);
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
-	int* m_windowWidth;
-	int* m_windowHeight;
+	float* m_windowWidth;
+	float* m_windowHeight;
 	// sf::RenderTexture m_renderTexture_noShader;
 	sf::Color m_backgroundColor;
 	Shader m_shader;

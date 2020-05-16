@@ -1,4 +1,0 @@
-namespace sm
-{
-	class StateMachine {};
-}
