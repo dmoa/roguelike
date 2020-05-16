@@ -17,7 +17,7 @@ Game::Game(float* windowWidth, float* windowHeight)
 }
 
 
-void Game::Update(sf::Int32* dt, sf::Event* event)
+void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
 {
 	// we aren't doing anything with dt right now but we will need it later
 	dt = 0;
@@ -28,37 +28,40 @@ void Game::Update(sf::Int32* dt, sf::Event* event)
 			// 	m_levelRender.scale = std::min(*window_width / 1000, WINDOW_HEIGHT / 1000);
 			// 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 			// // sometimes there's input lag, not sure why
-	if ((*event).type == sf::Event::KeyPressed)
+	for (unsigned int i = 0; i < events->size(); i++)
 	{
-		switch ((*event).key.code)
+		if ((*events)[i].type == sf::Event::KeyPressed)
 		{
-			// case sf::Keyboard::Space:
-			// 	m_levelManager = Map();
-			// 	m_enemies = Enemies();
-			// 	m_player = Player();
-			// 	m_player.SetTextures(&m_tileSetTexture);
-			// 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
-			// 	m_enemies.Setup(&m_tileSetTexture, &m_levelManager, m_player.GetX(), m_player.GetY());
-			// 	break;
+			switch ((*events)[i].key.code)
+			{
+				// case sf::Keyboard::Space:
+				// 	m_levelManager = Map();
+				// 	m_enemies = Enemies();
+				// 	m_player = Player();
+				// 	m_player.SetTextures(&m_tileSetTexture);
+				// 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
+				// 	m_enemies.Setup(&m_tileSetTexture, &m_levelManager, m_player.GetX(), m_player.GetY());
+				// 	break;
 
-			case sf::Keyboard::Left:
-			case sf::Keyboard::A:
-				PlayerMoveAttempt(m_player.Move(-1, 0, m_shader.GetShader()));
-				break;
-			case sf::Keyboard::Right:
-			case sf::Keyboard::D:
-				PlayerMoveAttempt(m_player.Move(1, 0, m_shader.GetShader()));
-				break;
-			case sf::Keyboard::Up:
-			case sf::Keyboard::W:
-				PlayerMoveAttempt(m_player.Move(0, -1, m_shader.GetShader()));
-				break;
-			case sf::Keyboard::Down:
-			case sf::Keyboard::S:
-				PlayerMoveAttempt(m_player.Move(0, 1, m_shader.GetShader()));
-				break;
+				case sf::Keyboard::Left:
+				case sf::Keyboard::A:
+					PlayerMoveAttempt(m_player.Move(-1, 0, m_shader.GetShader()));
+					break;
+				case sf::Keyboard::Right:
+				case sf::Keyboard::D:
+					PlayerMoveAttempt(m_player.Move(1, 0, m_shader.GetShader()));
+					break;
+				case sf::Keyboard::Up:
+				case sf::Keyboard::W:
+					PlayerMoveAttempt(m_player.Move(0, -1, m_shader.GetShader()));
+					break;
+				case sf::Keyboard::Down:
+				case sf::Keyboard::S:
+					PlayerMoveAttempt(m_player.Move(0, 1, m_shader.GetShader()));
+					break;
 
-			default: break;
+				default: break;
+			}
 		}
 	}
 }

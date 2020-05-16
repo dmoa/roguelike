@@ -22,6 +22,7 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
 
 	// input
 	sf::Event event;
+	std::vector<sf::Event> otherEvents; // non core related events passed to state stack
 	while (window->pollEvent(event))
 	{
 		switch (event.type)
@@ -39,7 +40,11 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
         		window->setView(sf::View(visibleArea));
 				break;
 			}
-			default: break;
+			default:
+			{
+				otherEvents.push_back(event);
+				break;
+			}
 		}
 	}
 	// here the event is still filled with keys that were pressed and other game event stuff,
@@ -48,7 +53,7 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
 	// draw & update
 	window->clear(sf::Color(46,52,64));
 
-	stateStack->Update(&dt, &event);
+	stateStack->Update(&dt, &otherEvents);
 
 	window->display();
 }
