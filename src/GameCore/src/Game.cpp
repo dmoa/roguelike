@@ -16,6 +16,7 @@ Game::Game(float* windowWidth, float* windowHeight)
 	m_levelManager.ReloadRenderer();
 }
 
+
 void Game::Update(sf::Int32* dt, sf::Event* event)
 {
 	// we aren't doing anything with dt right now but we will need it later

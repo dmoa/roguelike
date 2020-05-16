@@ -66,7 +66,8 @@ int main()
 
 	// stack
 	sm::StateStack stateStack(&window);
-	stateStack.Push(Game(&window_width, &window_height));
+	Game game(&window_width, &window_height);
+	stateStack.Push(game);
 
 	// where shit gets real
 	Init(&window, &window_width, &window_height);

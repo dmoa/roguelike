@@ -19,8 +19,8 @@ class Game : public sm::State
 {
 public:
 	Game(float* windowWidth, float* windowHeight);
-	void Update(sf::Int32* dt, sf::Event* event);
-	void Draw(sf::RenderWindow* window);
+	void Update(sf::Int32* dt, sf::Event* event) override;
+	void Draw(sf::RenderWindow* window) override;
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
