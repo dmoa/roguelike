@@ -13,7 +13,7 @@ namespace sm
 		}
 		void Update(sf::Int32* dt, std::vector<sf::Event>* events)
 		{
-			if (!m_stateStack.back()->Update(dt, events)) { Pop(); } // if the state no longer wants to be updated, it's removed.
+			if (m_stateStack.back()->Update(dt, events) == sm::DELETE_SELF) { Pop(); } // if the state no longer wants to be updated, it's removed.
 			for (unsigned int i = 0; i < m_stateStack.size(); i++)
 			{
 				m_stateStack[i]->Draw(m_window);

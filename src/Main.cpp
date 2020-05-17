@@ -93,7 +93,11 @@ int main()
 
 // the scenarios for storing things in the stack
 
-// menu, game
+// 1 menu -> return false -> pop menu, 0 game
+// game
+
+// loadingScreen (we don't have to add any keybindings), game (press escape -> open menu)
+
 // game
 // victory animation, game
 // paused menu, victory animation, game

@@ -9,7 +9,8 @@
 // {
 // public:
 // private:
-// 	void Draw(const std::shared_ptr<sf::RenderWindow>& window);
-// 	void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window);
+// 	Game(float* windowWidth, float* windowHeight);
+// 	sm::ReturnCode Update(sf::Int32* dt, std::vector<sf::Event>* events);
+// 	void Draw(sf::RenderWindow* window);
 // 	sf::Vector2f player_pos;
 // };

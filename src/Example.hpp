@@ -15,9 +15,9 @@ public:
 		text.setPosition(100.f, 200.f);
 
 		bg.setSize(sf::Vector2f(1000, 1000));
-		bg.setFillColor(sf::Color(0, 0, 0, 230));
+		bg.setFillColor(sf::Color(0, 0, 0, 200));
 	}
-	bool Update(sf::Int32* dt, std::vector<sf::Event>* events)
+	sm::ReturnCode Update(sf::Int32* dt, std::vector<sf::Event>* events)
 	{
 		dt += 0;
 		for (unsigned int i = 0; i < events->size(); i++)
@@ -26,15 +26,15 @@ public:
 			{
 				if ((*events)[i].key.code == sf::Keyboard::Escape)
 				{
-					return false;
+					return sm::DELETE_SELF;
 				}
 			}
 		}
-		return true;
+		return sm::CONTINUE;
 	}
 	void Draw(sf::RenderWindow* window)
 	{
-		window->draw(bg);
+		// window->draw(bg);
 		window->draw(text);
 	}
 private:

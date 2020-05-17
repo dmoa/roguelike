@@ -19,7 +19,7 @@ class Game : public sm::State
 {
 public:
 	Game(float* windowWidth, float* windowHeight);
-	bool Update(sf::Int32* dt, std::vector<sf::Event>* events);
+	sm::ReturnCode Update(sf::Int32* dt, std::vector<sf::Event>* events);
 	void Draw(sf::RenderWindow* window);
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
