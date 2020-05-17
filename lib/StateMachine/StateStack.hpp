@@ -13,7 +13,7 @@ namespace sm
 		}
 		void Update(sf::Int32* dt, std::vector<sf::Event>* events)
 		{
-			m_stateStack[0]->Update(dt, events);
+			if (!m_stateStack.back()->Update(dt, events)) { Pop(); } // if the state no longer wants to be updated, it's removed.
 			for (unsigned int i = 0; i < m_stateStack.size(); i++)
 			{
 				m_stateStack[i]->Draw(m_window);
@@ -26,7 +26,7 @@ namespace sm
 		}
 		void Pop()
 		{
-			m_stateStack.erase(m_stateStack.end());
+			m_stateStack.pop_back();
 		}
 	private:
 		std::vector<std::unique_ptr<State> > m_stateStack; // yes it's a vector not a stack. It's so that we can index all values.

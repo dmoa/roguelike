@@ -4,6 +4,7 @@
 #include <StateMachine/State.hpp>
 
 #include "GameCore/include/Game.hpp"
+#include "Example.hpp"
 
 // Init, only for window for now.
 void Init(sf::RenderWindow* window, float* window_width, float* window_height)
@@ -73,6 +74,7 @@ int main()
 	sm::StateStack stateStack(&window);
 	Game game(&window_width, &window_height);
 	stateStack.Push(std::make_unique<Game>(&window_width, &window_height));
+	stateStack.Push(std::make_unique<Example>());
 
 	// where shit gets real
 	Init(&window, &window_width, &window_height);

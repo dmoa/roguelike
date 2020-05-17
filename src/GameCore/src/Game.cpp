@@ -17,7 +17,7 @@ Game::Game(float* windowWidth, float* windowHeight)
 }
 
 
-void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
+bool Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
 {
 	// we aren't doing anything with dt right now but we will need it later
 	dt = 0;
@@ -64,6 +64,7 @@ void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
 			}
 		}
 	}
+	return true;
 }
 
 void Game::Draw(sf::RenderWindow* window)
