@@ -1,6 +1,6 @@
 #include "../include/Game.hpp"
 
-Game::Game(float* windowWidth, float* windowHeight)
+Game::Game(float* windowWidth, float* windowHeight, Assets* assets)
 {
 	m_windowWidth = windowWidth;
 	m_windowHeight = windowHeight;
@@ -11,8 +11,10 @@ Game::Game(float* windowWidth, float* windowHeight)
 
 	m_shader.Init(m_windowWidth, m_windowHeight);
 
+	m_assets = assets;
+
 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
-	m_enemies.Setup(&m_levelManager, m_player.GetPos());
+	m_enemies.Setup(assets, &m_levelManager, m_player.GetPos());
 	m_levelManager.ReloadRenderer();
 }
 
@@ -82,6 +84,11 @@ void Game::Draw(sf::RenderWindow* window)
 	m_levelRender.sprite.setPosition((*m_windowWidth - m_levelManager.GetLevelWidth() * m_levelRender.scale) / 2, (*m_windowHeight - m_levelManager.GetLevelHeight() * m_levelRender.scale) / 2);
 
 	window->draw(m_levelRender.sprite, m_shader.GetShader());
+}
+
+LevelManager* GetLevelManager()
+{
+	return m_leve
 }
 
 void Game::PlayerMoveAttempt(bool playerDidMove)

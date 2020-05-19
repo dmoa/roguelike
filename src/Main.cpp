@@ -3,6 +3,7 @@
 #include <StateMachine/StateStack.hpp>
 #include <StateMachine/State.hpp>
 
+#include "Assets.hpp"
 #include "GameCore/include/Game.hpp"
 #include "Example.hpp"
 
@@ -70,10 +71,12 @@ int main()
 	float window_width = 1000.0;
 	float window_height = 1000.0;
 
+	// Assets (only enemy and player for now)
+	Assets assets;
+
 	// stack
 	sm::StateStack stateStack(&window);
-	Game game(&window_width, &window_height);
-	stateStack.Push(std::make_unique<Game>(&window_width, &window_height));
+	stateStack.Push(std::make_unique<Game>(&window_width, &window_height, &assets));
 	stateStack.Push(std::make_unique<Example>());
 
 	// where shit gets real

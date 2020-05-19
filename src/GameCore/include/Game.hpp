@@ -2,6 +2,7 @@
 
 #include <StateMachine/State.hpp>
 
+#include "../../Assets.hpp"
 #include "Shader.hpp"
 #include "LevelManager.hpp"
 #include "Player.hpp"
@@ -18,9 +19,10 @@ struct Render
 class Game : public sm::State
 {
 public:
-	Game(float* windowWidth, float* windowHeight);
+	Game(float* windowWidth, float* windowHeight, Assets* assets);
 	sm::ReturnCode Update(sf::Int32* dt, std::vector<sf::Event>* events);
 	void Draw(sf::RenderWindow* window);
+	LevelManager* GetLevelManager();
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
@@ -31,7 +33,7 @@ private:
 	Shader m_shader;
 	sf::Sprite m_sprite;
 	sf::Sprite m_sprite_noShader;
-	sf::Texture m_tileSetTexture;
+	Assets* m_assets;
 	LevelManager m_levelManager;
 	Player m_player;
 	Enemies m_enemies;

@@ -1,9 +1,8 @@
-// #include "LevelMaker.hpp"
+#include "LevelMaker.hpp"
 
-// LevelMaker::LevelMaker() {}
+LevelMaker::LevelMaker() {}
 
-// void LevelMaker::Draw(c)
-// {}
+void LevelMaker::Draw(c)
+{}
 
-// void LevelMaker::Update(sf::Time deltaTime, )
-// {}
+void LevelMaker::Update(sf::Time deltaTime, ) {}
