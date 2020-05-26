@@ -4,6 +4,7 @@ Enemy::Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelM
 {
 	m_properties = properties;
 	m_pos = pos;
+	m_startingPos = pos;
 	m_destinationPos = pos;
 	m_levelManager = levelManager;
 	SetRenderPos();
@@ -52,4 +53,10 @@ void Enemy::SetRenderPos()
 bool Enemy::CanSeePlayer(sf::Vector2f playerPos)
 {
 	return PathChecker::IsPathClear(m_pos, playerPos, m_levelManager, (*m_properties).viewType);
+}
+
+void Enemy::Reset()
+{
+	m_pos = m_startingPos;
+	SetRenderPos();
 }

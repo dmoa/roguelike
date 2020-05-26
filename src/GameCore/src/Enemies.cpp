@@ -79,6 +79,8 @@ Enemies::Enemies()
 
 void Enemies::Setup(LevelManager* levelManager, sf::Vector2f playerPos)
 {
+	std::cout << "hoi" << std::endl;
+	m_enemies.clear();
     m_levelManager = levelManager;
     for (auto i = m_enemyTypes.begin(); i != m_enemyTypes.end(); i++)
     {
@@ -118,4 +120,12 @@ void Enemies::AddEnemy(EnemyProperties* enemyType, sf::Vector2f pos, sf::Vector2
 std::map<int, EnemyProperties> Enemies::GetEnemyTypes()
 {
     return m_enemyTypes;
+}
+
+void Enemies::Reset()
+{
+	for (unsigned int i = 0; i < m_enemies.size(); i++)
+	{
+		m_enemies[i].Reset();
+	}
 }

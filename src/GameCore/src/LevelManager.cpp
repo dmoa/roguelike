@@ -1,8 +1,5 @@
 #include "../include/LevelManager.hpp"
 
-extern const int WINDOW_WIDTH;
-extern const int WINDOW_HEIGHT;
-
 LevelManager::LevelManager()
 {
     m_currentLevelIndex = 1;

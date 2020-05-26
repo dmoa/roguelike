@@ -16,9 +16,11 @@ public:
 	void Move();
 	void SetRenderPos();
 	bool CanSeePlayer(sf::Vector2f playerPos);
+	void Reset();
 private:
 	EnemyProperties* m_properties;
 	sf::Vector2f m_pos;
+	sf::Vector2f m_startingPos;
 	sf::Vector2f m_destinationPos;
 	LevelManager* m_levelManager;
 };
