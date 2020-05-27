@@ -1,10 +1,9 @@
 #include "../include/Game.hpp"
 
-Game::Game(float* windowWidth, float* windowHeight, LevelManager* levelManager, Player* player, Enemies* enemies)
+Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies)
 {
-	m_windowWidth = windowWidth;
-	m_windowHeight = windowHeight;
-	m_levelRender.texture.create(*m_windowWidth, *m_windowHeight);
+	m_window = window;
+	m_levelRender.texture.create(m_window->getSize().x, m_window->getSize().y);
 	m_levelRender.bg = sf::Color(34, 35, 35);
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
@@ -67,8 +66,7 @@ void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
 					break;
 
 				case sf::Keyboard::R:
-					m_player->Reset();
-					m_enemies->Reset();
+					ResetLevel();
 					break;
 
 				default: break;
@@ -77,7 +75,7 @@ void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
 	}
 }
 
-void Game::Draw(sf::RenderWindow* window)
+void Game::Draw()
 {
 	m_levelRender.texture.clear(m_levelRender.bg);
 
@@ -89,9 +87,9 @@ void Game::Draw(sf::RenderWindow* window)
 
 	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture());
 	m_levelRender.sprite.setTextureRect(sf::IntRect(0, 0, m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()));
-	m_levelRender.sprite.setPosition((*m_windowWidth - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (*m_windowHeight - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
+	m_levelRender.sprite.setPosition((m_window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (m_window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
 
-	window->draw(m_levelRender.sprite, m_shader.GetShader());
+	m_window->draw(m_levelRender.sprite, m_shader.GetShader());
 }
 
 void Game::PlayerMoveAttempt(bool playerDidMove)
@@ -100,4 +98,10 @@ void Game::PlayerMoveAttempt(bool playerDidMove)
 	{
 		m_enemies->Update(m_player->GetPos());
 	}
+}
+
+void Game::ResetLevel()
+{
+	m_player->Reset();
+	m_enemies->Reset();
 }
