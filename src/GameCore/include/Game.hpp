@@ -10,14 +10,14 @@
 class Game
 {
 public:
-	Game(float* windowWidth, float* windowHeight, LevelManager* levelManager, Player* player, Enemies* enemies);
+	Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies);
 	void Update(sf::Int32* dt, std::vector<sf::Event>* events);
-	void Draw(sf::RenderWindow* window);
+	void Draw();
+	void ResetLevel();
 private:
 	void PlayerMoveAttempt(bool playerDidMove);
 	Render m_levelRender;
-	float* m_windowWidth;
-	float* m_windowHeight;
+	sf::RenderWindow* m_window;
 	// sf::RenderTexture m_renderTexture_noShader;
 	sf::Color m_backgroundColor;
 	Shader m_shader;

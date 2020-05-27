@@ -11,12 +11,12 @@ enum States
 };
 
 // Init, only for window for now.
-void Init(sf::RenderWindow* window, float* window_width, float* window_height)
+void InitWindow(sf::RenderWindow* window, float* initial_window_width, float* initial_window_height)
 {
 	PlatformHelper platform;
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
 	window->setFramerateLimit(60);
-	window->create(sf::VideoMode(*window_width * screenScalingFactor, *window_height * screenScalingFactor), "");
+	window->create(sf::VideoMode(*initial_window_width * screenScalingFactor, *initial_window_height * screenScalingFactor), "");
 	platform.setIcon(window->getSystemHandle());
 }
 
@@ -27,7 +27,7 @@ void Init(sf::RenderWindow* window, float* window_width, float* window_height)
 // create program.cpp/.hpp
 
 // main loop
-void Update(sf::RenderWindow* window, float* window_width, float* window_height, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelMaker* levelMaker)
+void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelMaker* levelMaker)
 {
 	// input
 	std::vector<sf::Event> events;
@@ -41,6 +41,7 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
 				if (event.key.code == sf::Keyboard::Space)
 				{
 					*currentState = (*currentState == InGame) ? LevelEditor : InGame;
+					game->ResetLevel();
 				}
 				else
 				{
@@ -55,10 +56,7 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
 			}
 			case sf::Event::Resized:
 			{
-				// sf::RenderWindow* window =
-				*window_width = event.size.width;
-				*window_height = event.size.height;
-        		sf::FloatRect visibleArea(0, 0, *window_width, *window_height);
+        		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
         		window->setView(sf::View(visibleArea)); // game->getRenderWindow()->setView(sf::vView(visibleArea))
 				// game->resize(window_width, window_height);
 				break;
@@ -80,11 +78,11 @@ void Update(sf::RenderWindow* window, float* window_width, float* window_height,
 	{
 		case InGame:
 			game->Update(&dt, &events);
-			game->Draw(window);
+			game->Draw();
 			break;
 		case LevelEditor:
-			// levelMaker->Update(&dt, &events);
-			levelMaker->Draw(window);
+			levelMaker->Update(&events);
+			levelMaker->Draw();
 
 		default:
 			break;
@@ -100,25 +98,26 @@ int main()
 
 	// window
 	sf::RenderWindow window;
-	float window_width = 1000.0;
-	float window_height = 1000.0;
+	float initial_window_width = 1000.0;
+	float initial_window_height = 1000.0;
 	sf::Clock deltaClock;
+
+	// where shit gets real
+	InitWindow(&window, &initial_window_width, &initial_window_height);
 
 	// game related
 	LevelManager levelManager;
 	Player player;
 	Enemies enemies;
-	Game game(&window_width, &window_height, &levelManager, &player, &enemies);
-	LevelMaker levelMaker(&window_width, &window_height, &levelManager, &player, &enemies);
+	Game game(&window, &levelManager, &player, &enemies);
+	LevelMaker levelMaker(&window, &levelManager, &player, &enemies);
 
 	// "game" states
 	States currentState = InGame;
 
-	// where shit gets real
-	Init(&window, &window_width, &window_height);
 	while (!QUIT)
 	{
-		Update(&window, &window_width, &window_height, &QUIT, &deltaClock, &currentState, &game, &levelMaker);
+		Update(&window, &QUIT, &deltaClock, &currentState, &game, &levelMaker);
 	}
 
 	return 0;

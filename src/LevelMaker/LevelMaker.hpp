@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Collision/Collision.hpp>
+
 #include "GameCore/include/LevelManager.hpp"
 #include "GameCore/include/EnemyProperties.hpp"
 #include "GameCore/include/Enemies.hpp"
@@ -7,17 +9,23 @@
 
 #include "../Render.hpp"
 
+enum CursorModes
+{
+	Pencil, Eraser
+};
+
 class LevelMaker
 {
 public:
-	LevelMaker(float* windowWidth, float* windowHeight, LevelManager* levelManager, Player* player, Enemies* enemies);
-	void Draw(sf::RenderWindow* window);
-	// void Update(sf::Time deltaTime, const std::shared_ptr<sf::RenderWindow>& window);
+	LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies);
+	void Draw();
+	void Update(std::vector<sf::Event>* events);
 private:
+	sf::RenderWindow* m_window;
 	Render m_levelRender;
-	float* m_windowWidth;
-	float* m_windowHeight;
+	CursorModes m_cursorMode;
 	LevelManager* m_levelManager;
 	Player* m_player;
 	Enemies* m_enemies;
+	sf::RectangleShape temp_shape;
 };
