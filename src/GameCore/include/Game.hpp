@@ -11,7 +11,7 @@ class Game
 {
 public:
 	Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies);
-	void Update(sf::Int32* dt, std::vector<sf::Event>* events);
+	void Update(std::vector<sf::Event>* events);
 	void Draw();
 	void ResetLevel();
 private:
