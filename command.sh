@@ -1,1 +1,1 @@
-bash ./build.sh buildrun Release vscode
+bash ./build.sh buildrun Debug vcode

@@ -15,7 +15,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_cursorMode = Pencil;
 
 	temp_shape.setSize(sf::Vector2f(100, 50));
-	temp_shape.setPosition(50, 50);
+	temp_shape.setPosition(50, 150);
 	temp_shape.setFillColor(sf::Color::White);
 }
 
@@ -28,12 +28,19 @@ void LevelMaker::Draw()
 	m_player->Draw(&m_levelRender.texture);
 
 	// drawing enemy options to choose from
-	//for (int i = 0; i < enemies->GetEnemyTypes()->size(); i++)
-	//{
-		// EnemyProperties tempEnemy = *(enemies->GetEnemyTypes)[i];
-		// tempEnemy.shape.setPosition(i * tempShape.width + 5, 5);
-		// m_window->draw(tempEnemy);
-	//}
+	for (unsigned int i = 0; i < m_enemies->GetEnemyTypes()->size(); i++)
+	{
+		EnemyProperties tempEnemy = (*(m_enemies->GetEnemyTypes()))[i];
+		for (unsigned int j = 0; j < tempEnemy.shapes.size(); j ++)
+		{
+			// meh fix
+			// i - 3 because the map actually starts indexing at 9
+			// might be good to add k variable if we get lots of enemies
+			tempEnemy.shapes[j].setPosition((i - 3) * (tempEnemy.width + 15) + 15, 15);
+			m_window->draw(tempEnemy.shapes[j]);
+		}
+
+	}
 
 	m_levelRender.texture.display();
 
@@ -51,7 +58,7 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 		if ((*events)[i].type == sf::Event::MouseButtonPressed)
 		{
 			printf("mouse pressed\n");
-			if (Collision::PointInRect(sf::Vector2f(sf::Mouse::getPosition(*m_window)), sf::IntRect(50, 50, 100, 50)))
+			if (Collision::PointInRect(sf::Vector2f(sf::Mouse::getPosition(*m_window)), sf::IntRect(50, 150, 100, 50)))
 			{
 				temp_shape.setFillColor(temp_shape.getFillColor() == sf::Color::Green ? sf::Color::White : sf::Color::Green);
 				printf("collision!\n");
