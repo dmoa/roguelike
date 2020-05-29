@@ -27,6 +27,14 @@ void LevelMaker::Draw()
 	m_enemies->Draw(&m_levelRender.texture);
 	m_player->Draw(&m_levelRender.texture);
 
+	// drawing enemy options to choose from
+	//for (int i = 0; i < enemies->GetEnemyTypes()->size(); i++)
+	//{
+		// EnemyProperties tempEnemy = *(enemies->GetEnemyTypes)[i];
+		// tempEnemy.shape.setPosition(i * tempShape.width + 5, 5);
+		// m_window->draw(tempEnemy);
+	//}
+
 	m_levelRender.texture.display();
 
 	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture());
