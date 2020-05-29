@@ -116,10 +116,10 @@ void Enemies::AddEnemy(EnemyProperties* enemyType, sf::Vector2f pos, sf::Vector2
 	m_enemies.insert(m_enemies.begin(), enemy);
 }
 
-std::map<int, EnemyProperties> Enemies::GetEnemyTypes()
-{
-    return m_enemyTypes;
-}
+// std::map<int, EnemyProperties>* Enemies::GetEnemyTypes()
+// {
+//     return &m_enemyTypes;
+// }
 
 void Enemies::Reset()
 {

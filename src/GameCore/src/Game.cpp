@@ -22,10 +22,10 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 }
 
 
-void Game::Update(sf::Int32* dt, std::vector<sf::Event>* events)
+void Game::Update(std::vector<sf::Event>* events)
 {
 	// we aren't doing anything with dt right now but we will need it later
-	dt = 0;
+	//dt = 0;
 			// case sf::Event::Resized:
 			// {
 			// 	*window_width = event.size.width;

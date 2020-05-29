@@ -11,7 +11,7 @@ enum States
 };
 
 // Init, only for window for now.
-void InitWindow(sf::RenderWindow* window, float* initial_window_width, float* initial_window_height)
+inline void InitWindow(sf::RenderWindow* window, float* initial_window_width, float* initial_window_height)
 {
 	PlatformHelper platform;
 	float screenScalingFactor = platform.getScreenScalingFactor(window->getSystemHandle());
@@ -19,15 +19,9 @@ void InitWindow(sf::RenderWindow* window, float* initial_window_width, float* in
 	window->create(sf::VideoMode(*initial_window_width * screenScalingFactor, *initial_window_height * screenScalingFactor), "");
 	platform.setIcon(window->getSystemHandle());
 }
-
-// create game->ResizeGlobalDimensions()
-// uses the reference giving earlier to resize the window
-// means passing less stuff in Update.
-
-// create program.cpp/.hpp
-
 // main loop
-void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelMaker* levelMaker)
+
+inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelMaker* levelMaker)
 {
 	// input
 	std::vector<sf::Event> events;
@@ -72,12 +66,13 @@ void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States*
 
 	// draw & update
 	window->clear(sf::Color(46,52,64));
-	sf::Int32 dt = deltaClock->restart().asMilliseconds();
+	// sf::Int32 dt =
+	deltaClock->restart();
 
 	switch (*currentState)
 	{
 		case InGame:
-			game->Update(&dt, &events);
+			game->Update(&events);
 			game->Draw();
 			break;
 		case LevelEditor:
