@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <algorithm>
-#include <boost/algorithm/string.hpp>
 #include <Collision/Collision.hpp>
 
 #include "GameCore/include/LevelManager.hpp"
@@ -14,7 +11,7 @@
 
 enum CursorModes
 {
-	Pencil, Eraser
+	Drawing, Erase
 };
 
 class LevelMaker
@@ -24,6 +21,8 @@ public:
 	void Draw();
 	void Update(std::vector<sf::Event>* events);
 private:
+	void UpdateToolsRender();
+	std::vector<std::string> Split(std::string str, char delim = '\n');
 	sf::RenderWindow* m_window;
 	Render m_levelRender;
 	CursorModes m_cursorMode;

@@ -12,7 +12,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
-	m_cursorMode = Pencil;
+	m_cursorMode = Drawing;
 	m_selectedItemIndex = 1;
 
 	temp_shape.setSize(sf::Vector2f(100, 50));
@@ -66,13 +66,35 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 	{
 		if ((*events)[i].type == sf::Event::MouseButtonPressed)
 		{
-			printf("mouse pressed\n");
 			if (Collision::PointInRect(sf::Vector2f(sf::Mouse::getPosition(*m_window)), temp_shape))
 			{
-				temp_shape.setFillColor(temp_shape.getFillColor() == sf::Color::Yellow ? sf::Color::White : sf::Color::Yellow);
-				
-				printf("collision!\n");
+				m_cursorMode = (m_cursorMode == Drawing) ? Erase : Drawing;
+				UpdateToolsRender();
 			}
 		}
 	}
+}
+
+void LevelMaker::UpdateToolsRender()
+{
+	temp_shape.setFillColor(m_cursorMode == Drawing ? sf::Color::Yellow : sf::Color::White);
+
+	std::string new_string = "mode: ";
+	new_string += (m_cursorMode == Drawing) ? "draw" : "erase";
+	new_string += "\n";
+	new_string += "selected: " + std::to_string(m_selectedItemIndex);
+	m_details.setString(new_string);
+}
+
+
+// I needed this, then turns out I didn't, but I'm still not sure yet
+std::vector<std::string> LevelMaker::Split(std::string str, char delim)
+{
+    std::stringstream ss(str);
+    std::string token;
+	std::vector<std::string> stats;
+    while (std::getline(ss, token, delim)) {
+        stats.push_back(token);
+    }
+	return stats;
 }
