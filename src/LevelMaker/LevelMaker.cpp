@@ -13,10 +13,18 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
 	m_cursorMode = Pencil;
+	m_selectedItemIndex = 1;
 
 	temp_shape.setSize(sf::Vector2f(100, 50));
-	temp_shape.setPosition(50, 150);
-	temp_shape.setFillColor(sf::Color::White);
+	temp_shape.setPosition(15, 180);
+	temp_shape.setFillColor(sf::Color::Yellow);
+
+	m_font.loadFromFile("content/fonts/stats.ttf");
+	m_details.setFont(m_font);
+	m_details.setCharacterSize(18);
+	m_details.setPosition(15, 130);
+	m_details.setString("mode: draw\nselected: " + std::to_string(m_selectedItemIndex));
+	m_details.setFillColor(sf::Color::White);
 }
 
 void LevelMaker::Draw()
@@ -49,6 +57,7 @@ void LevelMaker::Draw()
 
 	m_window->draw(m_levelRender.sprite);
 	m_window->draw(temp_shape);
+	m_window->draw(m_details);
 }
 
 void LevelMaker::Update(std::vector<sf::Event>* events)
@@ -58,9 +67,10 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 		if ((*events)[i].type == sf::Event::MouseButtonPressed)
 		{
 			printf("mouse pressed\n");
-			if (Collision::PointInRect(sf::Vector2f(sf::Mouse::getPosition(*m_window)), sf::IntRect(50, 150, 100, 50)))
+			if (Collision::PointInRect(sf::Vector2f(sf::Mouse::getPosition(*m_window)), temp_shape))
 			{
-				temp_shape.setFillColor(temp_shape.getFillColor() == sf::Color::Green ? sf::Color::White : sf::Color::Green);
+				temp_shape.setFillColor(temp_shape.getFillColor() == sf::Color::Yellow ? sf::Color::White : sf::Color::Yellow);
+				
 				printf("collision!\n");
 			}
 		}
