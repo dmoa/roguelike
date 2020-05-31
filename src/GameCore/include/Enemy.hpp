@@ -10,11 +10,11 @@
 class Enemy
 {
 public:
-	Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager);
+	Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager, sf::Vector2f* playerPos);
 	void Draw(sf::RenderTexture* renderTexture);
-	void InformAboutPlayerPos(sf::Vector2f playerPos);
+	void InformAboutPlayerPos();
 	void Move();
-	bool CanSeePlayer(sf::Vector2f playerPos);
+	bool CanSeePlayer();
 	void Reset();
 	sf::Vector2f GetPos();
 	EnemyProperties* m_properties;
@@ -23,4 +23,5 @@ private:
 	sf::Vector2f m_startingPos;
 	sf::Vector2f m_destinationPos;
 	LevelManager* m_levelManager;
+	sf::Vector2f* m_playerPos;
 };

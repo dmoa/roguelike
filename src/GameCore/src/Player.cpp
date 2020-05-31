@@ -55,9 +55,9 @@ void Player::ResetRenderPos()
 	m_shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
 }
 
-sf::Vector2f Player::GetPos()
+sf::Vector2f* Player::GetPos()
 {
-	return m_pos;
+	return &m_pos;
 }
 
 void Player::Reset()

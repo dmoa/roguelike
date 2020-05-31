@@ -1,12 +1,13 @@
 #include "../include/Enemy.hpp"
 
-Enemy::Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager)
+Enemy::Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager, sf::Vector2f* playerPos)
 {
 	m_properties = properties;
 	m_pos = pos;
 	m_startingPos = pos;
 	m_destinationPos = pos;
 	m_levelManager = levelManager;
+	m_playerPos = playerPos;
 }
 
 void Enemy::Draw(sf::RenderTexture* renderTexture)
@@ -21,15 +22,15 @@ void Enemy::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemy::InformAboutPlayerPos(sf::Vector2f playerPos)
+void Enemy::InformAboutPlayerPos()
 {
 	// destination X and Y are where the enemy is going -> this can be over several turns
 	// if the enemy seees the player in view, it sets the player position to the destination
 	// this gets overrided if it sees the player in a different position
-	if (CanSeePlayer(playerPos))
+	if (CanSeePlayer())
 	{
-		m_destinationPos.x = playerPos.x;
-		m_destinationPos.y = playerPos.y;
+		m_destinationPos.x = m_playerPos->x;
+		m_destinationPos.y = m_playerPos->y;
 	}
 }
 
@@ -42,16 +43,18 @@ void Enemy::Move()
 	m_pos.y += changeInY;
 }
 
-bool Enemy::CanSeePlayer(sf::Vector2f playerPos)
+bool Enemy::CanSeePlayer()
 {
 	printf("path check\n");
-	return PathChecker::IsPathClear(m_pos, playerPos, m_levelManager, (*m_properties).viewType);
+	return PathChecker::IsPathClear(m_pos, *m_playerPos, m_levelManager, (*m_properties).viewType);
 	printf("path check done\n");
 }
 
 void Enemy::Reset()
 {
 	m_pos = m_startingPos;
+	m_destinationPos = m_pos;
+	InformAboutPlayerPos();
 }
 
 sf::Vector2f Enemy::GetPos()

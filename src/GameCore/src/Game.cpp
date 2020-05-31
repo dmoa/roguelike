@@ -100,12 +100,13 @@ void Game::PlayerMoveAttempt(bool playerDidMove)
 {
 	if (playerDidMove)
 	{
-		m_enemies->Update(m_player->GetPos());
+		m_enemies->Update();
 	}
 }
 
 void Game::ResetLevel()
 {
+	printf("--------------------level reset\n");
 	m_player->Reset();
 	m_enemies->Reset();
 }

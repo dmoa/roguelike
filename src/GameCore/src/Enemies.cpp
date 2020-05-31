@@ -86,7 +86,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().height = 80;
 }
 
-void Enemies::Setup(sf::Vector2f playerPos)
+void Enemies::Setup(sf::Vector2f* playerPos)
 {
 	m_enemies.clear();
     for (unsigned int i = 0; i < m_enemyTypes.size(); i++)
@@ -109,22 +109,20 @@ void Enemies::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemies::Update(sf::Vector2f playerPos)
+void Enemies::Update()
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i].InformAboutPlayerPos(playerPos);
+		m_enemies[i].InformAboutPlayerPos();
         m_enemies[i].Move();
-        m_enemies[i].InformAboutPlayerPos(playerPos);
+        m_enemies[i].InformAboutPlayerPos();
 	}
 }
 
-void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f playerPos)
+void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f* playerPos)
 {
 	printf("4-6\n");
-	Enemy enemy(&(m_enemyTypes[enemyType]), pos, m_levelManager);
-	printf("4-7\n");
-    enemy.InformAboutPlayerPos(playerPos);
+	Enemy enemy(&(m_enemyTypes[enemyType]), pos, m_levelManager, playerPos);
 	printf("4-8\n");
 	m_enemies.insert(m_enemies.begin(), enemy);
 	printf("4-9\n");

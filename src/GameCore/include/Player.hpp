@@ -12,7 +12,7 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	bool Move(int directionX, int directionY);
 	void ResetRenderPos();
-	sf::Vector2f GetPos();
+	sf::Vector2f* GetPos();
 	void Reset();
 private:
 	int m_ID;
