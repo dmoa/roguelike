@@ -9,15 +9,20 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
 	// m_shader.Init(m_windowWidth, m_windowHeight);
-
 	m_levelManager = levelManager;
 	m_player = player;
 	m_enemies = enemies;
 
 	m_player->GiveShader(m_shader.GetShader());
+	printf("4-111111\n");
 	m_player->SetStartingPos(m_levelManager);
+	printf("4-222222\n");
 	m_enemies->Setup(m_player->GetPos());
+	printf("4-33333\n");
+	printf("reload\n");
 	m_levelManager->ReloadRenderer();
+	printf("reload done\n");
+	printf("4-444444\n");
 }
 
 

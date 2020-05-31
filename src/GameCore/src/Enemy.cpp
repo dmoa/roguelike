@@ -7,14 +7,17 @@ Enemy::Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelM
 	m_startingPos = pos;
 	m_destinationPos = pos;
 	m_levelManager = levelManager;
-	SetRenderPos();
 }
 
 void Enemy::Draw(sf::RenderTexture* renderTexture)
 {
-	for (auto &shape: (*m_properties).shapes)
+	sf::ConvexShape iter_shape;
+	for (unsigned int i = 0; i < (*m_properties).shapes.size(); i++)
 	{
-		renderTexture->draw(shape);
+		iter_shape = (*m_properties).shapes[i];
+		iter_shape.setPosition(m_pos.x * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).width) / 2 + *m_levelManager->GetLineThickness() / 2,
+								   	   m_pos.y * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).height) / 2 + *m_levelManager->GetLineThickness() / 2);
+		renderTexture->draw(iter_shape);
 	}
 }
 
@@ -37,26 +40,21 @@ void Enemy::Move()
 
 	m_pos.x += changeInX;
 	m_pos.y += changeInY;
-
-	SetRenderPos();
-}
-
-void Enemy::SetRenderPos()
-{
-	for (unsigned int i = 0; i < (*m_properties).shapes.size(); i++)
-	{
-		(*m_properties).shapes[i].setPosition(m_pos.x * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).width) / 2 + *m_levelManager->GetLineThickness() / 2,
-								   	   m_pos.y * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).height) / 2 + *m_levelManager->GetLineThickness() / 2);
-	}
 }
 
 bool Enemy::CanSeePlayer(sf::Vector2f playerPos)
 {
+	printf("path check\n");
 	return PathChecker::IsPathClear(m_pos, playerPos, m_levelManager, (*m_properties).viewType);
+	printf("path check done\n");
 }
 
 void Enemy::Reset()
 {
 	m_pos = m_startingPos;
-	SetRenderPos();
+}
+
+sf::Vector2f Enemy::GetPos()
+{
+	return m_pos;
 }

@@ -88,6 +88,7 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 		sf::Event event = (*events)[i];
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
+			// checking if clicking toggling mode box
 			if (Collision::PointInRect(mouse_pos, m_modeSelectorShape.getGlobalBounds()))
 			{
 				ToggleMode();
@@ -104,6 +105,13 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 						SelectEnemy(i);
 					}
 				}
+			}
+			// calculating where the cursor is going if "inside the level"
+			if (Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds()))
+			{
+				int x = (mouse_pos.x - m_levelRender.sprite.getPosition().x) / *(m_levelManager->GetTileLength());
+				int y = (mouse_pos.y - m_levelRender.sprite.getPosition().y) / *(m_levelManager->GetTileLength());
+				HandleTile(sf::Vector2f(x, y));
 			}
 		}
 		else if (event.type == sf::Event::KeyPressed)
@@ -190,6 +198,26 @@ void LevelMaker::UpdateText()
 	new_string += "\n";
 	new_string += "selected: " + std::to_string(m_selectedItemIndex);
 	m_details.setString(new_string);
+}
+
+void LevelMaker::HandleTile(sf::Vector2f pos)
+{
+	// if that tile is not the player (player is special, you cannot delet it or add duplicates)
+	if (m_cursorMode == Drawing)
+	{
+		// if choosing enemy
+		if (m_levelManager->IsBaseTile(m_levelManager->GetTileIndex(pos)))
+		{
+			// add enemy in that position
+			// remove a wall if it's there, i.e. set base_tile to empty
+		}
+		else
+		{
+			// change enemy type in that position, maybe add methodd there?
+			m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedItemIndex));
+			m_enemies->ChangeEnemy(pos, m_selectedItemIndex);
+		}
+	}
 }
 
 // @TODO

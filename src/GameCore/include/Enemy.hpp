@@ -14,11 +14,11 @@ public:
 	void Draw(sf::RenderTexture* renderTexture);
 	void InformAboutPlayerPos(sf::Vector2f playerPos);
 	void Move();
-	void SetRenderPos();
 	bool CanSeePlayer(sf::Vector2f playerPos);
 	void Reset();
-private:
+	sf::Vector2f GetPos();
 	EnemyProperties* m_properties;
+private:
 	sf::Vector2f m_pos;
 	sf::Vector2f m_startingPos;
 	sf::Vector2f m_destinationPos;

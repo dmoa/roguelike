@@ -40,7 +40,7 @@ private:
 
 		for (int i = pos2.y; i < pos1.y; i++)
 		{
-			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(pos1.x, i), false);
+			Tile* checkingTile = levelManager->GetBaseTile(sf::Vector2f(pos1.x, i));
 			if (!checkingTile->GetCanWalkOver())
 			{
 				return false;
@@ -55,7 +55,7 @@ private:
 
 		for (int i = pos1.y; i < pos2.y; i++)
 		{
-			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(pos1.x, i), false);
+			Tile* checkingTile = levelManager->GetBaseTile(sf::Vector2f(pos1.x, i));
 			if (!checkingTile->GetCanWalkOver())
 			{
 				return false;
@@ -70,7 +70,7 @@ private:
 
 		for (int i = pos2.x; i < pos1.x; i++)
 		{
-			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(i, pos1.y), false);
+			Tile* checkingTile = levelManager->GetBaseTile(sf::Vector2f(i, pos1.y));
 			if (!checkingTile->GetCanWalkOver())
 			{
 				return false;
@@ -85,7 +85,7 @@ private:
 
 		for (int i = pos1.x; i < pos2.x; i++)
 		{
-			Tile* checkingTile = levelManager->GetTile(sf::Vector2f(i, pos1.y), false);
+			Tile* checkingTile = levelManager->GetBaseTile(sf::Vector2f(i, pos1.y));
 			if (!checkingTile->GetCanWalkOver())
 			{
 				return false;

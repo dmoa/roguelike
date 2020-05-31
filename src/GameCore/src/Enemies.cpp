@@ -92,9 +92,11 @@ void Enemies::Setup(sf::Vector2f playerPos)
     for (unsigned int i = 0; i < m_enemyTypes.size(); i++)
     {
         int tileID = i + 3;
-        for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID, true))
+        for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID))
         {
-            AddEnemy(tileID - 3, pos, playerPos);
+			printf("4-5\n");
+            AddEnemy(i, pos, playerPos);
+			printf("4-6\n");
         }
     }
 }
@@ -119,9 +121,13 @@ void Enemies::Update(sf::Vector2f playerPos)
 
 void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f playerPos)
 {
+	printf("4-6\n");
 	Enemy enemy(&(m_enemyTypes[enemyType]), pos, m_levelManager);
+	printf("4-7\n");
     enemy.InformAboutPlayerPos(playerPos);
+	printf("4-8\n");
 	m_enemies.insert(m_enemies.begin(), enemy);
+	printf("4-9\n");
 }
 
 std::vector<EnemyProperties>* Enemies::GetEnemyTypes()
@@ -134,5 +140,21 @@ void Enemies::Reset()
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies[i].Reset();
+	}
+}
+
+int Enemies::GetID(int index)
+{
+	return index + 3;
+}
+
+void Enemies::ChangeEnemy(sf::Vector2f pos, int type)
+{
+	for (unsigned int i = 0; i < m_enemies.size(); i++)
+	{
+		if (m_enemies[i].GetPos() == pos)
+		{
+			m_enemies[i].m_properties = &(m_enemyTypes[type]);
+		}
 	}
 }

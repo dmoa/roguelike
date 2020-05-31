@@ -19,7 +19,7 @@ void Player::GiveShader(sf::Shader* shader)
 void Player::SetStartingPos(LevelManager* levelManager)
 {
 	m_levelManager = levelManager;
-	m_pos = levelManager->GetTileLocations(m_ID, true)[0];
+	m_pos = levelManager->GetTileLocations(m_ID)[0];
 	m_startingPos = m_pos;
 	ResetRenderPos();
 }
@@ -34,7 +34,7 @@ bool Player::Move(int directionX, int directionY)
 	sf::Vector2f possiblePos(m_pos.x + directionX, m_pos.y + directionY);
 	if (possiblePos.x > m_levelManager->GetLevelTileWidth() - 1 || possiblePos.y > m_levelManager->GetLevelTileHeight() - 1 || possiblePos.x < 0 || possiblePos.y < 0) { return false; }
 
-	Tile* tile = m_levelManager->GetTile(possiblePos, false);
+	Tile* tile = m_levelManager->GetBaseTile(possiblePos);
 
 	if (tile->GetCanWalkOver())
 	{

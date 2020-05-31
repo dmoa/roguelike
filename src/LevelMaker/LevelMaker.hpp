@@ -34,6 +34,7 @@ private:
 	void SetEraseMode();
 	void SelectEnemy(int index = -1);
 	void UpdateText();
+	void HandleTile(sf::Vector2f pos);
 	Render m_levelRender;
 	sf::RenderWindow* m_window;
 	LevelManager* m_levelManager;
