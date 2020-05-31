@@ -125,8 +125,8 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 	// updating the tool renderer to the cursor's position
 	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
 	{
-		int x = mouse_pos.x - m_toolRenderer.shapes[i].getGlobalBounds().width / 2;
-		int y = mouse_pos.y - m_toolRenderer.shapes[i].getGlobalBounds().height / 2;
+		int x = mouse_pos.x - m_toolRenderer.width / 2;
+		int y = mouse_pos.y - m_toolRenderer.height / 2;
 		m_toolRenderer.shapes[i].setPosition(x, y);
 	}
 }
