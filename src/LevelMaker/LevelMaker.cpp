@@ -18,6 +18,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 
 	m_commonBorder = 30;
 	m_enemySelectorWidth = (*m_enemyTypes)[0].width + m_commonBorder;
+
 	m_modeSelectorShape.setSize(sf::Vector2f(100, 50));
 	m_modeSelectorShape.setPosition(m_commonBorder, 180);
 	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
@@ -32,6 +33,11 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_details.setPosition(m_commonBorder, 130);
 	m_details.setString("mode: draw\nselected: " + std::to_string(m_selectedItemIndex));
 	m_details.setFillColor(sf::Color::White);
+
+	m_toolRenderer.shapes = (*m_enemyTypes)[0].shapes;
+	m_toolRenderer.width = (*m_enemyTypes)[0].width;
+	m_toolRenderer.height = (*m_enemyTypes)[0].height;
+	m_toolRenderer.should_draw = false; // doesn't matter what we set it here because it calculates every frame
 }
 
 void LevelMaker::Draw()
@@ -51,7 +57,6 @@ void LevelMaker::Draw()
 			tempEnemy.shapes[j].setPosition(i * m_enemySelectorWidth + m_commonBorder * 1.5, m_commonBorder);
 			m_window->draw(tempEnemy.shapes[j]);
 		}
-
 	}
 
 	m_levelRender.texture.display();
@@ -63,15 +68,26 @@ void LevelMaker::Draw()
 	m_window->draw(m_modeSelectorShape);
 	m_window->draw(m_details);
 	m_window->draw(m_selectedShapeOutline);
+
+	if (m_toolRenderer.should_draw)
+	{
+		for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
+		{
+			m_window->draw(m_toolRenderer.shapes[i]);
+		}
+	}
 }
 
 void LevelMaker::Update(std::vector<sf::Event>* events)
 {
+	sf::Vector2f mouse_pos = sf::Vector2f(sf::Mouse::getPosition(*m_window));
+
+	// handling events
 	for (unsigned int i = 0; i < events->size(); i++)
 	{
-		if ((*events)[i].type == sf::Event::MouseButtonPressed)
+		sf::Event event = (*events)[i];
+		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			sf::Vector2f mouse_pos = sf::Vector2f(sf::Mouse::getPosition(*m_window));
 			if (Collision::PointInRect(mouse_pos, m_modeSelectorShape.getGlobalBounds()))
 			{
 				m_cursorMode = (m_cursorMode == Drawing) ? Erase : Drawing;
@@ -86,12 +102,32 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 					EnemyProperties ep = (*m_enemyTypes)[i];
 					if (Collision::PointInRect(mouse_pos, sf::FloatRect(m_commonBorder + m_enemySelectorWidth * i, m_commonBorder, m_enemySelectorWidth, (*m_enemyTypes)[i].height)))
 					{
-						m_selectedItemIndex = i;
-						UpdateToolsRender();
+						SelectEnemy(i);
 					}
 				}
 			}
 		}
+		else if (event.type == sf::Event::KeyPressed)
+		{
+			switch (event.key.code)
+			{
+				case sf::Keyboard::D:
+					SelectEnemy((m_selectedItemIndex + 1) % m_enemyTypes->size());
+					break;
+				case sf::Keyboard::A:
+					SelectEnemy((m_selectedItemIndex + m_enemyTypes->size() - 1) % m_enemyTypes->size());
+					break;
+				default: break;
+			}
+		}
+	}
+	m_toolRenderer.should_draw = Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds());
+	// updating the tool renderer to the cursor's position
+	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
+	{
+		int x = mouse_pos.x - m_toolRenderer.shapes[i].getGlobalBounds().width / 2;
+		int y = mouse_pos.y - m_toolRenderer.shapes[i].getGlobalBounds().height / 2;
+		m_toolRenderer.shapes[i].setPosition(x, y);
 	}
 }
 
@@ -105,6 +141,16 @@ void LevelMaker::UpdateToolsRender()
 	new_string += "\n";
 	new_string += "selected: " + std::to_string(m_selectedItemIndex);
 	m_details.setString(new_string);
+}
+
+void LevelMaker::SelectEnemy(int index)
+{
+	m_selectedItemIndex = index;
+	UpdateToolsRender();
+
+	m_toolRenderer.shapes = (*m_enemyTypes)[m_selectedItemIndex].shapes;
+	m_toolRenderer.width = (*m_enemyTypes)[m_selectedItemIndex].width;
+	m_toolRenderer.height = (*m_enemyTypes)[m_selectedItemIndex].height;
 }
 
 

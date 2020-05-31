@@ -14,6 +14,14 @@ enum CursorModes
 	Drawing, Erase
 };
 
+struct Tool
+{
+	std::vector<sf::ConvexShape> shapes;
+	int width;
+	int height;
+	bool should_draw;
+};
+
 class LevelMaker
 {
 public:
@@ -22,6 +30,7 @@ public:
 	void Update(std::vector<sf::Event>* events);
 private:
 	void UpdateToolsRender();
+	void SelectEnemy(int index);
 	std::vector<std::string> Split(std::string str, char delim = '\n');
 	Render m_levelRender;
 	sf::RenderWindow* m_window;
@@ -37,4 +46,5 @@ private:
 	sf::Text m_details;
 	sf::RectangleShape m_modeSelectorShape;
 	sf::RectangleShape m_selectedShapeOutline;
+	Tool m_toolRenderer;
 };

@@ -10,7 +10,6 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 
 	// m_shader.Init(m_windowWidth, m_windowHeight);
 
-
 	m_levelManager = levelManager;
 	m_player = player;
 	m_enemies = enemies;
