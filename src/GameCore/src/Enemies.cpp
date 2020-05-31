@@ -1,7 +1,9 @@
 #include "../include/Enemies.hpp"
 
-Enemies::Enemies()
+Enemies::Enemies(LevelManager* levelManager)
 {
+    m_levelManager = levelManager;
+
 	m_enemyTypes.push_back(EnemyProperties());
 	m_enemyTypes.back().viewType = Up;
 	m_enemyTypes.back().shapes.push_back(sf::ConvexShape(3));
@@ -84,10 +86,9 @@ Enemies::Enemies()
 	m_enemyTypes.back().height = 80;
 }
 
-void Enemies::Setup(LevelManager* levelManager, sf::Vector2f playerPos)
+void Enemies::Setup(sf::Vector2f playerPos)
 {
 	m_enemies.clear();
-    m_levelManager = levelManager;
     for (unsigned int i = 0; i < m_enemyTypes.size(); i++)
     {
         int tileID = i + 3;

@@ -16,7 +16,7 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 
 	m_player->GiveShader(m_shader.GetShader());
 	m_player->SetStartingPos(m_levelManager);
-	m_enemies->Setup(m_levelManager, m_player->GetPos());
+	m_enemies->Setup(m_player->GetPos());
 	m_levelManager->ReloadRenderer();
 }
 

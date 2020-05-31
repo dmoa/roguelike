@@ -103,7 +103,7 @@ int main()
 	// game related
 	LevelManager levelManager;
 	Player player;
-	Enemies enemies;
+	Enemies enemies(&levelManager);
 	Game game(&window, &levelManager, &player, &enemies);
 	LevelMaker levelMaker(&window, &levelManager, &player, &enemies);
 

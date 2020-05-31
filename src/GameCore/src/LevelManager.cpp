@@ -20,16 +20,16 @@ LevelManager::LevelManager()
 // Draws everything except the player and enemies
 void LevelManager::Draw(sf::RenderTexture* renderTexture)
 {
-	for (unsigned int i = 0; i < m_tiles.size(); i++)
+	for (unsigned int i = 0; i < m_baseTiles.size(); i++)
     {
-        renderTexture->draw(m_tiles[i]);
+        renderTexture->draw(m_baseTiles[i]);
     }
 }
 
 void LevelManager::ReloadRenderer()
 {
     // setting render of level objects other than enemy and player
-    m_tiles.clear();
+    m_baseTiles.clear();
     for (unsigned int i = 0; i < m_currentLevel.tileData.size(); i++)
     {
         int ID = m_currentLevel.tileData[i];
@@ -42,7 +42,7 @@ void LevelManager::ReloadRenderer()
             // dividing by 2, since the border of two squares will double the line thickness
             shape.setOutlineThickness(- m_lineThickness / 2);
             shape.setOutlineColor(m_gridLineColor);
-            m_tiles.push_back(shape);
+            m_baseTiles.push_back(shape);
         }
     }
 }
@@ -69,6 +69,8 @@ Tile* LevelManager::GetTile(sf::Vector2f pos, bool remove)
     if (remove) { m_currentLevel.tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)] = 0; }
     return &m_tileData[m_currentLevel.tileData[MapUtil::GetVectorToInt(pos, m_currentLevel.width)]];
 }
+
+// SET TILE FUNCTION
 
 int* LevelManager::GetTileLength()
 {

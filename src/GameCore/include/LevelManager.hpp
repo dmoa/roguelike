@@ -34,6 +34,8 @@ private:
 	int m_tileLength;
 	int m_lineThickness;
 	std::map<int, Tile> m_tileData;
-	std::vector<sf::RectangleShape> m_tiles;
+	std::vector<sf::RectangleShape> m_baseTiles;
+	// base_tiles + m_all_tiles?
+	// have all the tiles (for loading and saving level files), then have just base tiles (being only for rendering)
 	sf::Color m_gridLineColor;
 };

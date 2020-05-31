@@ -10,8 +10,8 @@
 class Enemies
 {
 public:
-	Enemies();
-	void Setup(LevelManager* levelManager, sf::Vector2f playerPos);
+	Enemies(LevelManager* levelManager);
+	void Setup(sf::Vector2f playerPos);
 	void Draw(sf::RenderTexture* renderTexture);
 	void Update(sf::Vector2f playerPos);
 	std::vector<EnemyProperties>* GetEnemyTypes();
