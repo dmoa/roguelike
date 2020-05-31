@@ -28,7 +28,7 @@ private:
 	LevelManager* m_levelManager;
 	Player* m_player;
 	Enemies* m_enemies;
-	std::map<int, EnemyProperties>* m_enemyTypes;
+	std::vector<EnemyProperties>* m_enemyTypes;
 	CursorModes m_cursorMode;
 	int m_selectedItemIndex;
 	int m_commonBorder;

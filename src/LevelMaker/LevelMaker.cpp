@@ -17,8 +17,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_selectedItemIndex = 0;
 
 	m_commonBorder = 30;
-	m_enemySelectorWidth = (*m_enemyTypes)[3].width + m_commonBorder;
-
+	m_enemySelectorWidth = (*m_enemyTypes)[0].width + m_commonBorder;
 	m_modeSelectorShape.setSize(sf::Vector2f(100, 50));
 	m_modeSelectorShape.setPosition(m_commonBorder, 180);
 	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
@@ -49,10 +48,7 @@ void LevelMaker::Draw()
 		EnemyProperties tempEnemy = (*m_enemyTypes)[i];
 		for (unsigned int j = 0; j < tempEnemy.shapes.size(); j ++)
 		{
-			// meh fix
-			// i - 3 because the map actually starts indexing at 9
-			// might be good to add k variable if we get lots of enemies
-			tempEnemy.shapes[j].setPosition((i - 3) * m_enemySelectorWidth + m_commonBorder * 1.5, m_commonBorder);
+			tempEnemy.shapes[j].setPosition(i * m_enemySelectorWidth + m_commonBorder * 1.5, m_commonBorder);
 			m_window->draw(tempEnemy.shapes[j]);
 		}
 
@@ -85,14 +81,12 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 			// ideally, we would figure out the max enemy height earlier and use that.
 			if (mouse_pos.y > m_commonBorder && mouse_pos.y < m_commonBorder + 80)
 			{
-				int j;
 				for (unsigned int i = 0; i < m_enemyTypes->size(); i++)
 				{
-					j = i - 3; // for everything but indexing (becaue map starts at 2, will have to fix this at some point)
 					EnemyProperties ep = (*m_enemyTypes)[i];
-					if (Collision::PointInRect(mouse_pos, sf::FloatRect(m_commonBorder + m_enemySelectorWidth * j, m_commonBorder, m_enemySelectorWidth, (*m_enemyTypes)[i].height)))
+					if (Collision::PointInRect(mouse_pos, sf::FloatRect(m_commonBorder + m_enemySelectorWidth * i, m_commonBorder, m_enemySelectorWidth, (*m_enemyTypes)[i].height)))
 					{
-						m_selectedItemIndex = j;
+						m_selectedItemIndex = i;
 						UpdateToolsRender();
 					}
 				}
