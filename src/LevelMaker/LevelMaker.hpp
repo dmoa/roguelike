@@ -29,9 +29,11 @@ public:
 	void Draw();
 	void Update(std::vector<sf::Event>* events);
 private:
-	void UpdateToolsRender();
-	void SelectEnemy(int index);
-	std::vector<std::string> Split(std::string str, char delim = '\n');
+	void ToggleMode();
+	void SetDrawMode();
+	void SetEraseMode();
+	void SelectEnemy(int index = -1);
+	void UpdateText();
 	Render m_levelRender;
 	sf::RenderWindow* m_window;
 	LevelManager* m_levelManager;

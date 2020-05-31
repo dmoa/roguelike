@@ -37,7 +37,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_toolRenderer.shapes = (*m_enemyTypes)[0].shapes;
 	m_toolRenderer.width = (*m_enemyTypes)[0].width;
 	m_toolRenderer.height = (*m_enemyTypes)[0].height;
-	m_toolRenderer.should_draw = false; // doesn't matter what we set it here because it calculates every frame
+	m_toolRenderer.should_draw = false; // doesn't matter what we set it here because it calculates it every frame
 }
 
 void LevelMaker::Draw()
@@ -90,8 +90,7 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 		{
 			if (Collision::PointInRect(mouse_pos, m_modeSelectorShape.getGlobalBounds()))
 			{
-				m_cursorMode = (m_cursorMode == Drawing) ? Erase : Drawing;
-				UpdateToolsRender();
+				ToggleMode();
 			}
 			// all enemies have a height of 80, this is temp fix, because enemy heights could change.
 			// ideally, we would figure out the max enemy height earlier and use that.
@@ -121,6 +120,7 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 			}
 		}
 	}
+
 	m_toolRenderer.should_draw = Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds());
 	// updating the tool renderer to the cursor's position
 	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
@@ -131,11 +131,60 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 	}
 }
 
-void LevelMaker::UpdateToolsRender()
+void LevelMaker::ToggleMode()
 {
-	m_modeSelectorShape.setFillColor(m_cursorMode == Drawing ? sf::Color::Yellow : sf::Color::White);
+	if (m_cursorMode == Erase)
+	{
+		SetDrawMode();
+	}
+	else
+	{
+		SetEraseMode();
+	}
+}
+
+void LevelMaker::SetDrawMode()
+{
+	m_cursorMode = Drawing;
+
+	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
+	SelectEnemy();
+
+	UpdateText();
+}
+
+void LevelMaker::SetEraseMode()
+{
+	m_cursorMode = Erase;
+
+	m_modeSelectorShape.setFillColor(sf::Color::White);
+
+	m_toolRenderer.shapes.clear();
+	m_toolRenderer.shapes.push_back(sf::ConvexShape(4));
+	m_toolRenderer.shapes[0].setPoint(0, sf::Vector2f(0, 0));
+	m_toolRenderer.shapes[0].setPoint(1, sf::Vector2f(40, 0));
+	m_toolRenderer.shapes[0].setPoint(2, sf::Vector2f(40, 40));
+	m_toolRenderer.shapes[0].setPoint(3, sf::Vector2f(0, 40));
+	m_toolRenderer.shapes[0].setFillColor(sf::Color::Black);
+	m_toolRenderer.width = 40;
+	m_toolRenderer.height = 40;
+
+	UpdateText();
+}
+
+void LevelMaker::SelectEnemy(int index)
+{
+	if (index != -1) { m_selectedItemIndex = index; } // useful for returning back to draw state without changing the selected enemy
+
 	m_selectedShapeOutline.setPosition((m_selectedItemIndex + 0.5) * m_enemySelectorWidth + m_commonBorder - m_selectedShapeOutline.getSize().x / 2, m_commonBorder / 2 - m_selectedShapeOutline.getSize().y / 2);
 
+	m_toolRenderer.shapes = (*m_enemyTypes)[m_selectedItemIndex].shapes;
+	m_toolRenderer.width = (*m_enemyTypes)[m_selectedItemIndex].width;
+	m_toolRenderer.height = (*m_enemyTypes)[m_selectedItemIndex].height;
+}
+
+void LevelMaker::UpdateText()
+{
 	std::string new_string = "mode: ";
 	new_string += (m_cursorMode == Drawing) ? "draw" : "erase";
 	new_string += "\n";
@@ -143,25 +192,6 @@ void LevelMaker::UpdateToolsRender()
 	m_details.setString(new_string);
 }
 
-void LevelMaker::SelectEnemy(int index)
-{
-	m_selectedItemIndex = index;
-	UpdateToolsRender();
-
-	m_toolRenderer.shapes = (*m_enemyTypes)[m_selectedItemIndex].shapes;
-	m_toolRenderer.width = (*m_enemyTypes)[m_selectedItemIndex].width;
-	m_toolRenderer.height = (*m_enemyTypes)[m_selectedItemIndex].height;
-}
-
-
-// I needed this, then turns out I didn't, but I'm still not sure yet
-std::vector<std::string> LevelMaker::Split(std::string str, char delim)
-{
-    std::stringstream ss(str);
-    std::string token;
-	std::vector<std::string> stats;
-    while (std::getline(ss, token, delim)) {
-        stats.push_back(token);
-    }
-	return stats;
-}
+// @TODO
+// Click on the level to add the enemy
+// I should somehow implement replacing the current thing there, with whatever my current tool
