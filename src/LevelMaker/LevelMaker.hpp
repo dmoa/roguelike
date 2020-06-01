@@ -14,6 +14,11 @@ enum CursorModes
 	Drawing, Erase
 };
 
+enum DrawingModes
+{
+	D_Enemies, D_Walls // ugly prefix so that it doesn't clash with classes
+};
+
 struct Tool
 {
 	std::vector<sf::ConvexShape> shapes;
@@ -33,6 +38,7 @@ private:
 	void SetDrawMode();
 	void SetEraseMode();
 	void SelectEnemy(int index = -1);
+	void SelectWall();
 	void UpdateText();
 	void HandleTile(sf::Vector2f pos);
 	Render m_levelRender;
@@ -41,13 +47,15 @@ private:
 	Player* m_player;
 	Enemies* m_enemies;
 	std::vector<EnemyProperties>* m_enemyTypes;
-	CursorModes m_cursorMode;
-	int m_selectedItemIndex;
+	CursorModes m_currentMode;
+	DrawingModes m_currentDrawingMode;
+	int m_selectedEnemyIndex;
 	int m_commonBorder;
-	int m_enemySelectorWidth;
+	int m_itemSelectorWidth;
 	sf::Font* m_font;
 	sf::Text m_details;
 	sf::RectangleShape m_modeSelectorShape;
 	sf::RectangleShape m_selectedShapeOutline;
+	sf::RectangleShape m_wallSelectorShape;
 	Tool m_toolRenderer;
 };

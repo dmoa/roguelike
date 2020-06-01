@@ -7,8 +7,8 @@ LevelManager::LevelManager()
 
     m_gridLineColor = sf::Color(46, 52, 64);
 
-    m_tileData[0] = Tile("ground", sf::Color(216, 222, 233), true);
-    m_tileData[1] = Tile("wall", sf::Color(129,161,193), false);
+    m_tileData.push_back(Tile("ground", sf::Color(216, 222, 233), true));
+    m_tileData.push_back(Tile("wall", sf::Color(129,161,193), false));
 
     LoadLevel();
     ReloadRenderer();
@@ -35,7 +35,6 @@ void LevelManager::LoadLevel()
 
 void LevelManager::ReloadRenderer()
 {
-    printf("reload renderer\n");
     // setting render of level objects other than enemy and player
     m_renderedTiles.clear();
     m_currentLevel.base_tiles.clear();
@@ -62,7 +61,6 @@ void LevelManager::ReloadRenderer()
 std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
 {
     std::vector<sf::Vector2f> results;
-    printf("4-3\n");
     for (unsigned int i = 0; i < m_currentLevel.all_tiles.size(); i++)
     {
         if (m_currentLevel.all_tiles[i] == ID)
@@ -70,8 +68,12 @@ std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
             results.push_back(MapUtil::GetIntToVector(i, m_currentLevel.width));
         }
     }
-    printf("4-4\n");
     return results;
+}
+
+std::vector<Tile>* LevelManager::GetTileData()
+{
+    return &m_tileData;
 }
 
 Tile* LevelManager::GetBaseTile(sf::Vector2f pos)

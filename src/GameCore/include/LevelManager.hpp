@@ -23,6 +23,7 @@ public:
 	void LoadLevel();
 	void ReloadRenderer();
 	std::vector<sf::Vector2f> GetTileLocations(int ID);
+	std::vector<Tile>* GetTileData();
 	Tile* GetBaseTile(sf::Vector2f pos);
 	bool IsBaseTile(int index);
 	int GetTileIndex(sf::Vector2f pos);
@@ -38,7 +39,7 @@ private:
 	LevelData m_currentLevel;
 	int m_tileLength;
 	int m_lineThickness;
-	std::map<int, Tile> m_tileData;
+	std::vector<Tile> m_tileData;
 	std::vector<sf::RectangleShape> m_renderedTiles;
 	// base_tiles + m_all_tiles?
 	// have all the tiles (for loading and saving level files), then have just base tiles (being only for rendering)
