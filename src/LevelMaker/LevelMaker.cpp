@@ -1,6 +1,6 @@
 #include "LevelMaker.hpp"
 
-LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies)
+LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font)
 {
 	m_window = renderWindow;
 	m_levelManager = levelManager;
@@ -27,8 +27,8 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_selectedShapeOutline.setFillColor(sf::Color::White);
 	m_selectedShapeOutline.setPosition((m_selectedItemIndex + 0.5) * m_enemySelectorWidth + m_commonBorder - m_selectedShapeOutline.getSize().x / 2, m_commonBorder / 2 - m_selectedShapeOutline.getSize().y / 2);
 
-	m_font.loadFromFile("content/fonts/stats.ttf");
-	m_details.setFont(m_font);
+	m_font = font;
+	m_details.setFont(*m_font);
 	m_details.setCharacterSize(18);
 	m_details.setPosition(m_commonBorder, 130);
 	m_details.setString("mode: draw\nselected: " + std::to_string(m_selectedItemIndex));
@@ -124,6 +124,11 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 				case sf::Keyboard::A:
 					SelectEnemy((m_selectedItemIndex + m_enemyTypes->size() - 1) % m_enemyTypes->size());
 					break;
+				case sf::Keyboard::E:
+					SetEraseMode();
+					break;
+				case sf::Keyboard::W:
+					SetDrawMode();
 				default: break;
 			}
 		}
@@ -189,6 +194,8 @@ void LevelMaker::SelectEnemy(int index)
 	m_toolRenderer.shapes = (*m_enemyTypes)[m_selectedItemIndex].shapes;
 	m_toolRenderer.width = (*m_enemyTypes)[m_selectedItemIndex].width;
 	m_toolRenderer.height = (*m_enemyTypes)[m_selectedItemIndex].height;
+
+	if (m_cursorMode == Erase) { SetDrawMode(); }
 }
 
 void LevelMaker::UpdateText()
@@ -224,6 +231,7 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 	}
 	else
 	{
+		m_levelManager->SetTile(pos, m_enemies->GetID(0));
 		if (m_enemies->IsEnemyThere(pos))
 		{
 			m_enemies->RemoveEnemy(pos);

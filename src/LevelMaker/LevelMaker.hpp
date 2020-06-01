@@ -25,7 +25,7 @@ struct Tool
 class LevelMaker
 {
 public:
-	LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies);
+	LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font);
 	void Draw();
 	void Update(std::vector<sf::Event>* events);
 private:
@@ -45,7 +45,7 @@ private:
 	int m_selectedItemIndex;
 	int m_commonBorder;
 	int m_enemySelectorWidth;
-	sf::Font m_font;
+	sf::Font* m_font;
 	sf::Text m_details;
 	sf::RectangleShape m_modeSelectorShape;
 	sf::RectangleShape m_selectedShapeOutline;

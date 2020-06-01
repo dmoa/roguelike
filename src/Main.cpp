@@ -66,8 +66,8 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 
 	// draw & update
 	window->clear(sf::Color(46,52,64));
-	// sf::Int32 dt =
-	deltaClock->restart();
+	//sf::Int32 dt =
+	deltaClock->restart().asMilliseconds();
 
 	switch (*currentState)
 	{
@@ -100,6 +100,12 @@ int main()
 	// where shit gets real
 	InitWindow(&window, &initial_window_width, &initial_window_height);
 
+	// miscellaneous
+	sf::Font mainFont;
+	mainFont.loadFromFile("content/fonts/stats.ttf");
+	sf::Text fpsText;
+	fpsText.setFont(mainFont);
+
 	// game related
 	printf("test1\n");
 	LevelManager levelManager;
@@ -110,7 +116,7 @@ int main()
 	printf("test4\n");
 	Game game(&window, &levelManager, &player, &enemies);
 	printf("test5\n");
-	LevelMaker levelMaker(&window, &levelManager, &player, &enemies);
+	LevelMaker levelMaker(&window, &levelManager, &player, &enemies, &mainFont);
 	printf("test6\n");
 
 	// "game" states
