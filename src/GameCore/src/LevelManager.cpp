@@ -76,8 +76,6 @@ std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
 
 Tile* LevelManager::GetBaseTile(sf::Vector2f pos)
 {
-    printf("testing testing\n");
-    printf("index: %i\n", m_currentLevel.base_tiles[MapUtil::GetVectorToInt(pos, m_currentLevel.width)]);
     return &m_tileData[m_currentLevel.base_tiles[MapUtil::GetVectorToInt(pos, m_currentLevel.width)]];
 }
 
@@ -94,6 +92,7 @@ int LevelManager::GetTileIndex(sf::Vector2f pos)
 void LevelManager::SetTile(sf::Vector2f pos, int new_id)
 {
     m_currentLevel.all_tiles[MapUtil::GetVectorToInt(pos, m_currentLevel.width)] = new_id;
+    ReloadRenderer();
 }
 
 int* LevelManager::GetTileLength()

@@ -205,21 +205,36 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 	// if that tile is not the player (player is special, you cannot delet it or add duplicates)
 	if (m_cursorMode == Drawing)
 	{
+		// add if not in enemy pos
+
 		// if choosing enemy
-		if (m_levelManager->IsBaseTile(m_levelManager->GetTileIndex(pos)))
-		{
-			// add enemy in that position
+			//m_enemies->AddEnemy(m_selectedItemIndex, pos, m_player->GetPos());
 			// remove a wall if it's there, i.e. set base_tile to empty
+			// change enemy type in that position, maybe add methodd there?
+
+		m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedItemIndex));
+		if (m_enemies->IsEnemyThere(pos))
+		{
+			m_enemies->ChangeEnemy(pos, m_selectedItemIndex);
 		}
 		else
 		{
-			// change enemy type in that position, maybe add methodd there?
-			m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedItemIndex));
-			m_enemies->ChangeEnemy(pos, m_selectedItemIndex);
+			m_enemies->AddEnemy(m_selectedItemIndex, pos, m_player->GetPos());
+		}
+	}
+	else
+	{
+		if (m_enemies->IsEnemyThere(pos))
+		{
+			m_enemies->RemoveEnemy(pos);
 		}
 	}
 }
 
+// @DONE
+// changing enemies
+
 // @TODO
-// Click on the level to add the enemy
-// I should somehow implement replacing the current thing there, with whatever my current tool
+// deleting and creating enemies
+// replacing if there's wall
+// eraser and shit

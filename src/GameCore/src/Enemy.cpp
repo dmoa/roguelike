@@ -22,7 +22,7 @@ void Enemy::Draw(sf::RenderTexture* renderTexture)
 	}
 }
 
-void Enemy::InformAboutPlayerPos()
+void Enemy::ReactToPlayerPos()
 {
 	// destination X and Y are where the enemy is going -> this can be over several turns
 	// if the enemy seees the player in view, it sets the player position to the destination
@@ -54,7 +54,7 @@ void Enemy::Reset()
 {
 	m_pos = m_startingPos;
 	m_destinationPos = m_pos;
-	InformAboutPlayerPos();
+	ReactToPlayerPos();
 }
 
 sf::Vector2f Enemy::GetPos()

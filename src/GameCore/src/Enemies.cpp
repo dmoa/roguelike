@@ -113,10 +113,41 @@ void Enemies::Update()
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i].InformAboutPlayerPos();
+		m_enemies[i].ReactToPlayerPos();
         m_enemies[i].Move();
-        m_enemies[i].InformAboutPlayerPos();
+        m_enemies[i].ReactToPlayerPos();
 	}
+}
+
+void Enemies::Reset()
+{
+	for (unsigned int i = 0; i < m_enemies.size(); i++)
+	{
+		m_enemies[i].Reset();
+	}
+}
+
+
+std::vector<EnemyProperties>* Enemies::GetEnemyTypes()
+{
+    return &m_enemyTypes;
+}
+
+int Enemies::GetID(int index)
+{
+	return index + 3;
+}
+
+bool Enemies::IsEnemyThere(sf::Vector2f pos)
+{
+	for (unsigned int i = 0; i < m_enemies.size(); i++)
+	{
+		if (m_enemies[i].GetPos() == pos)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f* playerPos)
@@ -128,22 +159,16 @@ void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f* playerPos)
 	printf("4-9\n");
 }
 
-std::vector<EnemyProperties>* Enemies::GetEnemyTypes()
-{
-    return &m_enemyTypes;
-}
-
-void Enemies::Reset()
+void Enemies::RemoveEnemy(sf::Vector2f pos)
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i].Reset();
+		if (m_enemies[i].GetPos() == pos)
+		{
+			m_enemies.erase(m_enemies.begin() + i);
+			return;
+		}
 	}
-}
-
-int Enemies::GetID(int index)
-{
-	return index + 3;
 }
 
 void Enemies::ChangeEnemy(sf::Vector2f pos, int type)

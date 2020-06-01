@@ -12,7 +12,7 @@ class Enemy
 public:
 	Enemy(EnemyProperties* properties, sf::Vector2f pos, LevelManager* levelManager, sf::Vector2f* playerPos);
 	void Draw(sf::RenderTexture* renderTexture);
-	void InformAboutPlayerPos();
+	void ReactToPlayerPos();
 	void Move();
 	bool CanSeePlayer();
 	void Reset();
