@@ -1,4 +1,4 @@
-#include "../include/LevelLoader.hpp"
+#include "LevelLoader.hpp"
 
 std::tuple<int, int, std::vector<int> > LevelLoader::GetLevel(std::string path)
 {

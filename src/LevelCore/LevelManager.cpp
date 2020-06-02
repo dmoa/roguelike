@@ -1,4 +1,4 @@
-#include "../include/LevelManager.hpp"
+#include "LevelManager.hpp"
 
 LevelManager::LevelManager()
 {

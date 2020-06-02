@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shader.hpp"
-#include "LevelManager.hpp"
+#include "../../LevelCore/LevelManager.hpp"
 #include "Player.hpp"
 #include "Enemies.hpp"
 

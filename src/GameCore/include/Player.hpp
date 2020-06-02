@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LevelManager.hpp"
+#include "../../LevelCore/LevelManager.hpp"
 #include "Shader.hpp"
 
 class Player

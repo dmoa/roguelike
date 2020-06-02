@@ -1,9 +1,9 @@
 #pragma once
 
-#include "LevelManager.hpp"
+#include "../../LevelCore/LevelManager.hpp"
+#include "../../LevelCore/Tile.hpp"
 #include "EnemyProperties.hpp"
 #include "ViewType.hpp"
-#include "Tile.hpp"
 
 // The logic is that pos1 is looking for pos2
 

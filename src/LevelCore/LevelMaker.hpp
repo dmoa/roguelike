@@ -2,10 +2,10 @@
 
 #include <Collision/Collision.hpp>
 
-#include "GameCore/include/LevelManager.hpp"
-#include "GameCore/include/EnemyProperties.hpp"
-#include "GameCore/include/Enemies.hpp"
-#include "GameCore/include/Player.hpp"
+#include "LevelManager.hpp"
+#include "../GameCore/include/EnemyProperties.hpp"
+#include "../GameCore/include/Enemies.hpp"
+#include "../GameCore/include/Player.hpp"
 
 #include "../Render.hpp"
 

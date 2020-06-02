@@ -4,8 +4,8 @@
 
 #include "EnemyProperties.hpp"
 #include "ViewType.hpp"
-#include "LevelManager.hpp"
-#include "Tile.hpp"
+#include "../../LevelCore/LevelManager.hpp"
+#include "../../LevelCore/Tile.hpp"
 
 class Enemy
 {

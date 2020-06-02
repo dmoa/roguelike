@@ -2,7 +2,7 @@
 
 #include <MapUtil/MapUtil.hpp>
 
-#include "LevelManager.hpp"
+#include "../../LevelCore/LevelManager.hpp"
 #include "EnemyProperties.hpp"
 #include "ViewType.hpp"
 #include "Enemy.hpp"
