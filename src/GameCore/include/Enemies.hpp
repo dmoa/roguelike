@@ -19,7 +19,7 @@ public:
 	int GetID(int index);
 	bool IsEnemyThere(sf::Vector2f pos);
 	void AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f* playerPos);
-	void RemoveEnemy(sf::Vector2f pos);
+	void RemoveEnemyIf(sf::Vector2f pos);
 	void ChangeEnemy(sf::Vector2f pos, int type); // for level editor only
 private:
 	std::vector<Enemy> m_enemies;

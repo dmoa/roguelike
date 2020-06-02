@@ -45,9 +45,7 @@ void Enemy::Move()
 
 bool Enemy::CanSeePlayer()
 {
-	printf("path check\n");
 	return PathChecker::IsPathClear(m_pos, *m_playerPos, m_levelManager, (*m_properties).viewType);
-	printf("path check done\n");
 }
 
 void Enemy::Reset()

@@ -94,9 +94,7 @@ void Enemies::Setup(sf::Vector2f* playerPos)
         int tileID = i + 3;
         for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID))
         {
-			printf("4-5\n");
             AddEnemy(i, pos, playerPos);
-			printf("4-6\n");
         }
     }
 }
@@ -152,14 +150,11 @@ bool Enemies::IsEnemyThere(sf::Vector2f pos)
 
 void Enemies::AddEnemy(int enemyType, sf::Vector2f pos, sf::Vector2f* playerPos)
 {
-	printf("4-6\n");
 	Enemy enemy(&(m_enemyTypes[enemyType]), pos, m_levelManager, playerPos);
-	printf("4-8\n");
 	m_enemies.insert(m_enemies.begin(), enemy);
-	printf("4-9\n");
 }
 
-void Enemies::RemoveEnemy(sf::Vector2f pos)
+void Enemies::RemoveEnemyIf(sf::Vector2f pos)
 {
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{

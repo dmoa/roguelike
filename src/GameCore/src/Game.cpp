@@ -14,15 +14,9 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 	m_enemies = enemies;
 
 	m_player->GiveShader(m_shader.GetShader());
-	printf("4-111111\n");
-	m_player->SetStartingPos(m_levelManager);
-	printf("4-222222\n");
+	m_player->SetStartingPos(m_levelManager->GetTileLocations(m_player->GetID())[0]);
 	m_enemies->Setup(m_player->GetPos());
-	printf("4-33333\n");
-	printf("reload\n");
 	m_levelManager->ReloadRenderer();
-	printf("reload done\n");
-	printf("4-444444\n");
 }
 
 
@@ -106,7 +100,6 @@ void Game::PlayerMoveAttempt(bool playerDidMove)
 
 void Game::ResetLevel()
 {
-	printf("--------------------level reset\n");
 	m_player->Reset();
 	m_enemies->Reset();
 }
