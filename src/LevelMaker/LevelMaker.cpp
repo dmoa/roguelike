@@ -24,6 +24,9 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_wallSelectorShape.setSize(sf::Vector2f(*(m_levelManager->GetTileLength()), (*m_levelManager->GetTileLength())));
 	m_wallSelectorShape.setFillColor((*m_levelManager->GetTileData())[1].GetColor());
 
+	m_playerSelectorShape = m_player->GetDrawable();
+	m_playerSelectorShape.setPosition(m_itemSelectorWidth * (m_enemyTypes->size() + 1) + m_commonBorder * 2, m_commonBorder);
+
 	m_modeSelectorShape.setSize(sf::Vector2f(100, 50));
 	m_modeSelectorShape.setPosition(m_commonBorder, 180);
 	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
@@ -65,6 +68,7 @@ void LevelMaker::Draw()
 	m_window->draw(m_details);
 	m_window->draw(m_selectedShapeOutline);
 	m_window->draw(m_wallSelectorShape);
+	m_window->draw(m_playerSelectorShape);
 
 	// drawing enemy options to choose from
 	for (unsigned int i = 0; i < m_enemyTypes->size(); i++)
@@ -100,6 +104,10 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 			if (Collision::PointInRect(mouse_pos, m_modeSelectorShape.getGlobalBounds()))
 			{
 				ToggleMode();
+			}
+			else if (Collision::PointInRect(mouse_pos, m_playerSelectorShape.getGlobalBounds()))
+			{
+				SelectPlayer();
 			}
 			else if (Collision::PointInRect(mouse_pos, m_wallSelectorShape.getGlobalBounds()))
 			{
@@ -173,7 +181,15 @@ void LevelMaker::SetDrawMode()
 	m_currentMode = Drawing;
 
 	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
-	SelectEnemy();
+
+
+	switch (m_currentDrawingMode)
+	{
+		case D_Enemies: SelectEnemy(); break;
+		case D_Walls: SelectWall(); break;
+		case D_Player: SelectEnemy(); break;
+		default: break;
+	}
 
 	UpdateText();
 }
@@ -213,7 +229,6 @@ void LevelMaker::SelectEnemy(int index)
 
 void LevelMaker::SelectWall()
 {
-	m_currentDrawingMode = D_Walls;
 	sf::ConvexShape temp_shape(4);
 	temp_shape.setPoint(0, sf::Vector2f(0, 0));
 	temp_shape.setPoint(1, sf::Vector2f(m_wallSelectorShape.getSize().x, 0));
@@ -224,6 +239,26 @@ void LevelMaker::SelectWall()
 	m_toolRenderer.shapes.push_back(temp_shape);
 	m_toolRenderer.width = m_wallSelectorShape.getSize().x;
 	m_toolRenderer.height = m_wallSelectorShape.getSize().y;
+
+	m_currentDrawingMode = D_Walls;
+	if (m_currentMode == Erase) { SetDrawMode(); }
+}
+
+void LevelMaker::SelectPlayer()
+{
+	sf::ConvexShape temp_shape(4);
+	temp_shape.setPoint(0, sf::Vector2f(0, 0));
+	temp_shape.setPoint(1, sf::Vector2f(m_playerSelectorShape.getSize().x, 0));
+	temp_shape.setPoint(2, sf::Vector2f(m_playerSelectorShape.getSize().x, m_playerSelectorShape.getSize().y));
+	temp_shape.setPoint(3, sf::Vector2f(0, m_playerSelectorShape.getSize().y));
+	temp_shape.setFillColor(m_playerSelectorShape.getFillColor());
+	m_toolRenderer.shapes.clear();
+	m_toolRenderer.shapes.push_back(temp_shape);
+	m_toolRenderer.width = m_playerSelectorShape.getSize().x;
+	m_toolRenderer.height = m_playerSelectorShape.getSize().y;
+
+	m_currentDrawingMode = D_Player;
+	if (m_currentMode == Erase) { SetDrawMode(); }
 }
 
 void LevelMaker::UpdateText()
@@ -237,31 +272,33 @@ void LevelMaker::UpdateText()
 
 void LevelMaker::HandleTile(sf::Vector2f pos)
 {
-	// if that tile is not the player (player is special, you cannot delet it or add duplicates)
 	if (m_currentMode == Drawing)
 	{
-		// add if not in enemy pos
+		switch (m_currentDrawingMode)
+		{
+			case D_Enemies:
+				m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedEnemyIndex));
+				if (m_enemies->IsEnemyThere(pos))
+				{
+					m_enemies->ChangeEnemy(pos, m_selectedEnemyIndex);
+				}
+				else
+				{
+					m_enemies->AddEnemy(m_selectedEnemyIndex, pos, m_player->GetPos());
+				}
+				break;
 
-		// if choosing enemy
-			//m_enemies->AddEnemy(m_selectedEnemyIndex, pos, m_player->GetPos());
-			// remove a wall if it's there, i.e. set base_tile to empty
-			// change enemy type in that position, maybe add methodd there?
-		if (m_currentDrawingMode == D_Enemies)
-		{
-			m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedEnemyIndex));
-			if (m_enemies->IsEnemyThere(pos))
-			{
-				m_enemies->ChangeEnemy(pos, m_selectedEnemyIndex);
-			}
-			else
-			{
-				m_enemies->AddEnemy(m_selectedEnemyIndex, pos, m_player->GetPos());
-			}
-		}
-		else // if you are not drawing enemies, you are drawing walls. for now.
-		{
-			m_enemies->RemoveEnemy(pos);
-			m_levelManager->SetTile(pos, 1);
+			case D_Walls:
+				m_levelManager->SetTile(pos, 1);
+				m_enemies->RemoveEnemyIf(pos);
+				break;
+			case D_Player:
+				m_levelManager->SetTile(pos, 2);
+				m_player->SetStartingPos(pos);
+				m_enemies->RemoveEnemyIf(pos);
+				break;
+
+			default: break;
 		}
 	}
 	else
@@ -269,7 +306,7 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 		m_levelManager->SetTile(pos, m_enemies->GetID(0));
 		if (m_enemies->IsEnemyThere(pos))
 		{
-			m_enemies->RemoveEnemy(pos);
+			m_enemies->RemoveEnemyIf(pos);
 		}
 	}
 }

@@ -16,7 +16,7 @@ enum CursorModes
 
 enum DrawingModes
 {
-	D_Enemies, D_Walls // ugly prefix so that it doesn't clash with classes
+	D_Enemies, D_Walls, D_Player // ugly prefix so that it doesn't clash with classes
 };
 
 struct Tool
@@ -39,6 +39,7 @@ private:
 	void SetEraseMode();
 	void SelectEnemy(int index = -1);
 	void SelectWall();
+	void SelectPlayer();
 	void UpdateText();
 	void HandleTile(sf::Vector2f pos);
 	Render m_levelRender;
@@ -57,5 +58,6 @@ private:
 	sf::RectangleShape m_modeSelectorShape;
 	sf::RectangleShape m_selectedShapeOutline;
 	sf::RectangleShape m_wallSelectorShape;
+	sf::RectangleShape m_playerSelectorShape;
 	Tool m_toolRenderer;
 };

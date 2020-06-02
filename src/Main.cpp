@@ -93,7 +93,7 @@ int main()
 
 	// window
 	sf::RenderWindow window;
-	float initial_window_width = 1000.0;
+	float initial_window_width = 1200.0;
 	float initial_window_height = 1000.0;
 	sf::Clock deltaClock;
 
@@ -107,17 +107,11 @@ int main()
 	fpsText.setFont(mainFont);
 
 	// game related
-	printf("test1\n");
 	LevelManager levelManager;
-	printf("test2\n");
-	Player player;
-	printf("test3\n");
+	Player player(&levelManager);
 	Enemies enemies(&levelManager);
-	printf("test4\n");
 	Game game(&window, &levelManager, &player, &enemies);
-	printf("test5\n");
 	LevelMaker levelMaker(&window, &levelManager, &player, &enemies, &mainFont);
-	printf("test6\n");
 
 	// "game" states
 	States currentState = InGame;

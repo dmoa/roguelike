@@ -3,8 +3,10 @@
 extern const int WINDOWS_WIDTH;
 extern const int WINDOWS_HEIGHT;
 
-Player::Player()
+Player::Player(LevelManager* levelManager)
 {
+	m_levelManager = levelManager;
+
 	m_ID = 2;
 	m_playerLength = 100;
 	m_drawable.setSize(sf::Vector2f(m_playerLength, m_playerLength));
@@ -16,10 +18,9 @@ void Player::GiveShader(sf::Shader* shader)
 	m_shader = shader;
 }
 
-void Player::SetStartingPos(LevelManager* levelManager)
+void Player::SetStartingPos(sf::Vector2f pos)
 {
-	m_levelManager = levelManager;
-	m_pos = levelManager->GetTileLocations(m_ID)[0];
+	m_pos = pos;
 	m_startingPos = m_pos;
 	ResetRenderPos();
 }
@@ -53,6 +54,16 @@ void Player::ResetRenderPos()
 
 	m_drawable.setPosition(newPosX, newPosY);
 	m_shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
+}
+
+int Player::GetID()
+{
+	return m_ID;
+}
+
+sf::RectangleShape Player::GetDrawable()
+{
+	return m_drawable;
 }
 
 sf::Vector2f* Player::GetPos()
