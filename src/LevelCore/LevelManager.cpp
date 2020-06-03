@@ -33,6 +33,11 @@ void LevelManager::LoadLevel()
     m_currentLevel.all_tiles = std::get<2>(loadedData);
 }
 
+void LevelManager::SaveLevel()
+{
+    LevelSaver::Save("content/levels/" + std::to_string(m_currentLevelIndex), false, m_currentLevel);
+}
+
 void LevelManager::ReloadRenderer()
 {
     // setting render of level objects other than enemy and player
@@ -58,7 +63,7 @@ void LevelManager::ReloadRenderer()
     }
 }
 
-std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
+std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID, bool must_find)
 {
     std::vector<sf::Vector2f> results;
     for (unsigned int i = 0; i < m_currentLevel.all_tiles.size(); i++)
@@ -68,6 +73,7 @@ std::vector<sf::Vector2f> LevelManager::GetTileLocations(int ID)
             results.push_back(MapUtil::GetIntToVector(i, m_currentLevel.width));
         }
     }
+    if (must_find && results.size() == 0) { throw std::invalid_argument("\nTile ID (" + std::to_string(ID) + ") not found in current level [LevelManager.cpp]"); }
     return results;
 }
 
@@ -97,14 +103,16 @@ void LevelManager::SetTile(sf::Vector2f pos, int new_id)
     ReloadRenderer();
 }
 
-int* LevelManager::GetTileLength()
+//void LevelManager::
+
+int LevelManager::GetTileLength()
 {
-    return &m_tileLength;
+    return m_tileLength;
 }
 
-int* LevelManager::GetLineThickness()
+int LevelManager::GetLineThickness()
 {
-    return &m_lineThickness;
+    return m_lineThickness;
 }
 
 int LevelManager::GetLevelWidth()
@@ -125,4 +133,32 @@ int LevelManager::GetLevelTileWidth()
 int LevelManager::GetLevelTileHeight()
 {
     return m_currentLevel.height;
+}
+
+void LevelManager::SetLevelSize(sf::Vector2f size)
+{
+    int size_inc_x = size.x - m_currentLevel.width;
+    int size_inc_y = size.y - m_currentLevel.height;
+
+    for (unsigned int i = 0; i < m_currentLevel.all_tiles.size(); i++)
+    {
+        if ((i + 1) % m_currentLevel.width == 0)
+        {
+            for (int j = 0; j < size_inc_x; j++)
+            {
+                printf("new tile\n");
+                m_currentLevel.all_tiles.push_back(0);
+            }
+        }
+    }
+    for (int j = 0; j < size.x * size_inc_y - 1; j++)
+    {
+        printf("new tile\n");
+        m_currentLevel.all_tiles.push_back(0);
+    }
+
+    m_currentLevel.width = size.x;
+    m_currentLevel.height = size.y;
+
+    ReloadRenderer();
 }

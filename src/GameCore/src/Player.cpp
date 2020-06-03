@@ -49,8 +49,8 @@ bool Player::Move(int directionX, int directionY)
 
 void Player::ResetRenderPos()
 {
-	int newPosX = m_pos.x * *m_levelManager->GetTileLength() + *m_levelManager->GetLineThickness();
-	int newPosY = m_pos.y * *m_levelManager->GetTileLength() + *m_levelManager->GetLineThickness();
+	int newPosX = m_pos.x * m_levelManager->GetTileLength() + m_levelManager->GetLineThickness();
+	int newPosY = m_pos.y * m_levelManager->GetTileLength() + m_levelManager->GetLineThickness();
 
 	m_drawable.setPosition(newPosX, newPosY);
 	m_shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));

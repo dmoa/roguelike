@@ -5,14 +5,10 @@
 #include <MapUtil/MapUtil.hpp>
 
 #include "LevelLoader.hpp"
+#include "LevelSaver.hpp"
 #include "Tile.hpp"
 
-struct LevelData {
-	int width;
-	int height;
-	std::vector<int> all_tiles;
-	std::vector<int> base_tiles;
-};
+#include "LevelDataStruct.hpp"
 
 class LevelManager
 {
@@ -21,19 +17,21 @@ public:
 	// Draws everything except the player and enemies
 	void Draw(sf::RenderTexture* renderTexture);
 	void LoadLevel();
+	void SaveLevel();
 	void ReloadRenderer();
-	std::vector<sf::Vector2f> GetTileLocations(int ID);
+	std::vector<sf::Vector2f> GetTileLocations(int ID, bool must_find);
 	std::vector<Tile>* GetTileData();
 	Tile* GetBaseTile(sf::Vector2f pos);
 	bool IsBaseTile(int index);
 	int GetTileIndex(sf::Vector2f pos);
 	void SetTile(sf::Vector2f pos, int new_id);
-	int* GetTileLength();
-	int* GetLineThickness();
+	int GetTileLength();
+	int GetLineThickness();
 	int GetLevelWidth();
 	int GetLevelHeight();
 	int GetLevelTileWidth();
 	int GetLevelTileHeight();
+	void SetLevelSize(sf::Vector2f size);
 private:
 	int m_currentLevelIndex;
 	LevelData m_currentLevel;

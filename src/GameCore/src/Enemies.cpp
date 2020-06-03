@@ -12,7 +12,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(40, 0));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(80, 80));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(0, 80));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 
 	m_enemyTypes.push_back(EnemyProperties());
 	m_enemyTypes.back().viewType = Down;
@@ -22,7 +22,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(0, 0));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(80, 0));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(40, 80));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 
 	m_enemyTypes.push_back(EnemyProperties());
 	m_enemyTypes.back().viewType = Left;
@@ -30,7 +30,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(0, 40));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(80, 0));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(80, 80));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().width = 80;
 	m_enemyTypes.back().height = 80;
 
@@ -40,7 +40,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(0, 0));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(0, 80));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(80, 40));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().width = 80;
 	m_enemyTypes.back().height = 80;
 
@@ -50,12 +50,12 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(40, 0));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(80, 30));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(0, 30));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().shapes.push_back(sf::ConvexShape(3));
 	m_enemyTypes.back().shapes[1].setPoint(0, sf::Vector2f(0, 50));
 	m_enemyTypes.back().shapes[1].setPoint(1, sf::Vector2f(80, 50));
 	m_enemyTypes.back().shapes[1].setPoint(2, sf::Vector2f(40, 80));
-	m_enemyTypes.back().shapes[1].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[1].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().width = 80;
 	m_enemyTypes.back().height = 80;
 
@@ -65,12 +65,12 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(0, sf::Vector2f(0, 40));
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(30, 0));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(30, 80));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().shapes.push_back(sf::ConvexShape(3));
 	m_enemyTypes.back().shapes[1].setPoint(0, sf::Vector2f(50, 0));
 	m_enemyTypes.back().shapes[1].setPoint(1, sf::Vector2f(80, 40));
 	m_enemyTypes.back().shapes[1].setPoint(2, sf::Vector2f(50, 80));
-	m_enemyTypes.back().shapes[1].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[1].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().width = 80;
 	m_enemyTypes.back().height = 80;
 
@@ -81,7 +81,7 @@ Enemies::Enemies(LevelManager* levelManager)
 	m_enemyTypes.back().shapes[0].setPoint(1, sf::Vector2f(80, 40));
 	m_enemyTypes.back().shapes[0].setPoint(2, sf::Vector2f(40, 80));
 	m_enemyTypes.back().shapes[0].setPoint(3, sf::Vector2f(0, 40));
-	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(191,97,106));
+	m_enemyTypes.back().shapes[0].setFillColor(sf::Color(255,0,0));
 	m_enemyTypes.back().width = 80;
 	m_enemyTypes.back().height = 80;
 }
@@ -92,7 +92,7 @@ void Enemies::Setup(sf::Vector2f* playerPos)
     for (unsigned int i = 0; i < m_enemyTypes.size(); i++)
     {
         int tileID = i + 3;
-        for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID))
+        for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID, false))
         {
             AddEnemy(i, pos, playerPos);
         }

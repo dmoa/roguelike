@@ -42,6 +42,7 @@ private:
 	void SelectPlayer();
 	void UpdateText();
 	void HandleTile(sf::Vector2f pos);
+	void ChangeLevelSize(int x, int y);
 	Render m_levelRender;
 	sf::RenderWindow* m_window;
 	LevelManager* m_levelManager;
@@ -59,5 +60,6 @@ private:
 	sf::RectangleShape m_selectedShapeOutline;
 	sf::RectangleShape m_wallSelectorShape;
 	sf::RectangleShape m_playerSelectorShape;
+	sf::RectangleShape m_saveLevelShape;
 	Tool m_toolRenderer;
 };

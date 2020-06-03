@@ -8,7 +8,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_enemies = enemies;
 	m_enemyTypes = enemies->GetEnemyTypes();
 
-	m_levelRender.texture.create(levelManager->GetLevelWidth(), levelManager->GetLevelHeight());
+	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
 	m_levelRender.bg = sf::Color(34, 35, 35);
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
@@ -21,24 +21,28 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_itemSelectorWidth = (*m_enemyTypes)[0].width + m_commonBorder;
 
 	m_wallSelectorShape.setPosition(m_itemSelectorWidth * m_enemyTypes->size() + m_commonBorder * 2, m_commonBorder);
-	m_wallSelectorShape.setSize(sf::Vector2f(*(m_levelManager->GetTileLength()), (*m_levelManager->GetTileLength())));
+	m_wallSelectorShape.setSize(sf::Vector2f(m_levelManager->GetTileLength(), m_levelManager->GetTileLength()));
 	m_wallSelectorShape.setFillColor((*m_levelManager->GetTileData())[1].GetColor());
 
 	m_playerSelectorShape = m_player->GetDrawable();
 	m_playerSelectorShape.setPosition(m_itemSelectorWidth * (m_enemyTypes->size() + 1) + m_commonBorder * 2, m_commonBorder);
 
 	m_modeSelectorShape.setSize(sf::Vector2f(100, 50));
-	m_modeSelectorShape.setPosition(m_commonBorder, 180);
-	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
+	m_modeSelectorShape.setPosition(m_commonBorder, 230);
+	m_modeSelectorShape.setFillColor(sf::Color::Black);
 
 	m_selectedShapeOutline.setSize(sf::Vector2f(m_commonBorder / 2, m_commonBorder / 2));
 	m_selectedShapeOutline.setFillColor(sf::Color::White);
 	m_selectedShapeOutline.setPosition((m_selectedEnemyIndex + 0.5) * m_itemSelectorWidth + m_commonBorder - m_selectedShapeOutline.getSize().x / 2, m_commonBorder / 2 - m_selectedShapeOutline.getSize().y / 2);
 
+	m_saveLevelShape.setSize(sf::Vector2f(100, 50));
+	m_saveLevelShape.setFillColor(sf::Color::Transparent);
+	m_saveLevelShape.setPosition(m_commonBorder, 340);
+
 	m_font = font;
 	m_details.setFont(*m_font);
 	m_details.setCharacterSize(18);
-	m_details.setPosition(m_commonBorder, 130);
+	m_details.setPosition(m_commonBorder, 150);
 	m_details.setString("mode: draw\nselected: " + std::to_string(m_selectedEnemyIndex));
 	m_details.setFillColor(sf::Color::White);
 
@@ -58,7 +62,7 @@ void LevelMaker::Draw()
 
 	m_levelRender.texture.display();
 
-	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture());
+	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture(), true);
 	m_levelRender.sprite.setPosition((m_window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (m_window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
 
 	m_window->draw(m_levelRender.sprite);
@@ -69,6 +73,7 @@ void LevelMaker::Draw()
 	m_window->draw(m_selectedShapeOutline);
 	m_window->draw(m_wallSelectorShape);
 	m_window->draw(m_playerSelectorShape);
+	m_window->draw(m_saveLevelShape);
 
 	// drawing enemy options to choose from
 	for (unsigned int i = 0; i < m_enemyTypes->size(); i++)
@@ -105,6 +110,11 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 			{
 				ToggleMode();
 			}
+			else if (Collision::PointInRect(mouse_pos, m_saveLevelShape.getGlobalBounds()))
+			{
+				m_levelManager->SaveLevel();
+				m_saveLevelShape.setFillColor(sf::Color::Transparent);
+			}
 			else if (Collision::PointInRect(mouse_pos, m_playerSelectorShape.getGlobalBounds()))
 			{
 				SelectPlayer();
@@ -129,8 +139,8 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 			// calculating where the cursor is going if "inside the level"
 			else if (Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds()))
 			{
-				int x = (mouse_pos.x - m_levelRender.sprite.getPosition().x) / *(m_levelManager->GetTileLength());
-				int y = (mouse_pos.y - m_levelRender.sprite.getPosition().y) / *(m_levelManager->GetTileLength());
+				int x = (mouse_pos.x - m_levelRender.sprite.getPosition().x) / m_levelManager->GetTileLength();
+				int y = (mouse_pos.y - m_levelRender.sprite.getPosition().y) / m_levelManager->GetTileLength();
 				HandleTile(sf::Vector2f(x, y));
 			}
 		}
@@ -149,6 +159,23 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 					break;
 				case sf::Keyboard::W:
 					SetDrawMode();
+					break;
+				case sf::Keyboard::T:
+					m_levelManager->SaveLevel();
+					m_saveLevelShape.setFillColor(sf::Color::Transparent);
+					break;
+				case sf::Keyboard::Right:
+					ChangeLevelSize(1, 0);
+					break;
+				case sf::Keyboard::Down:
+					ChangeLevelSize(0, 1);
+					break;
+				case sf::Keyboard::Left:
+					ChangeLevelSize(-1, 0);
+					break;
+				case sf::Keyboard::Up:
+					ChangeLevelSize(0, -1);
+					break;
 				default: break;
 			}
 		}
@@ -180,7 +207,7 @@ void LevelMaker::SetDrawMode()
 {
 	m_currentMode = Drawing;
 
-	m_modeSelectorShape.setFillColor(sf::Color::Yellow);
+	m_modeSelectorShape.setFillColor(sf::Color::Black);
 
 
 	switch (m_currentDrawingMode)
@@ -206,7 +233,7 @@ void LevelMaker::SetEraseMode()
 	m_toolRenderer.shapes[0].setPoint(1, sf::Vector2f(40, 0));
 	m_toolRenderer.shapes[0].setPoint(2, sf::Vector2f(40, 40));
 	m_toolRenderer.shapes[0].setPoint(3, sf::Vector2f(0, 40));
-	m_toolRenderer.shapes[0].setFillColor(sf::Color::Black);
+	m_toolRenderer.shapes[0].setFillColor(sf::Color::White);
 	m_toolRenderer.width = 40;
 	m_toolRenderer.height = 40;
 
@@ -272,11 +299,13 @@ void LevelMaker::UpdateText()
 
 void LevelMaker::HandleTile(sf::Vector2f pos)
 {
+	m_saveLevelShape.setFillColor(sf::Color::Cyan);
 	if (m_currentMode == Drawing)
 	{
 		switch (m_currentDrawingMode)
 		{
 			case D_Enemies:
+				if (*(m_player->GetPos()) == pos) { break; } // if the player is already there, don't try to create an enemy
 				m_levelManager->SetTile(pos, m_enemies->GetID(m_selectedEnemyIndex));
 				if (m_enemies->IsEnemyThere(pos))
 				{
@@ -303,12 +332,20 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 	}
 	else
 	{
-		m_levelManager->SetTile(pos, m_enemies->GetID(0));
+		if (*(m_player->GetPos()) == pos) { return; }
+		m_levelManager->SetTile(pos, 0);
 		if (m_enemies->IsEnemyThere(pos))
 		{
 			m_enemies->RemoveEnemyIf(pos);
 		}
 	}
+}
+
+void LevelMaker::ChangeLevelSize(int x, int y)
+{
+	m_saveLevelShape.setFillColor(sf::Color::Cyan);
+	m_levelManager->SetLevelSize(sf::Vector2f(m_levelManager->GetLevelTileWidth() + x, m_levelManager->GetLevelTileHeight() + y));
+	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
 }
 
 // @DONE

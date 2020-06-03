@@ -16,8 +16,8 @@ void Enemy::Draw(sf::RenderTexture* renderTexture)
 	for (unsigned int i = 0; i < (*m_properties).shapes.size(); i++)
 	{
 		iter_shape = (*m_properties).shapes[i];
-		iter_shape.setPosition(m_pos.x * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).width) / 2 + *m_levelManager->GetLineThickness() / 2,
-								   	   m_pos.y * *m_levelManager->GetTileLength() + (*m_levelManager->GetTileLength() - (*m_properties).height) / 2 + *m_levelManager->GetLineThickness() / 2);
+		iter_shape.setPosition(m_pos.x * m_levelManager->GetTileLength() + (m_levelManager->GetTileLength() - (*m_properties).width) / 2 + m_levelManager->GetLineThickness() / 2,
+								   	   m_pos.y * m_levelManager->GetTileLength() + (m_levelManager->GetTileLength() - (*m_properties).height) / 2 + m_levelManager->GetLineThickness() / 2);
 		renderTexture->draw(iter_shape);
 	}
 }
