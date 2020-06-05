@@ -66,6 +66,7 @@ sf::RectangleShape Player::GetDrawable()
 	return m_drawable;
 }
 
+// returns a pointer because each enemy stores it, no great, but better than making a copy
 sf::Vector2f* Player::GetPos()
 {
 	return &m_pos;
