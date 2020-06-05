@@ -103,8 +103,6 @@ void LevelManager::SetTile(sf::Vector2f pos, int new_id)
     ReloadRenderer();
 }
 
-//void LevelManager::
-
 int LevelManager::GetTileLength()
 {
     return m_tileLength;
@@ -137,24 +135,53 @@ int LevelManager::GetLevelTileHeight()
 
 void LevelManager::SetLevelSize(sf::Vector2f size)
 {
+
+    // DELETE AND REDO
+
+
     int size_inc_x = size.x - m_currentLevel.width;
     int size_inc_y = size.y - m_currentLevel.height;
 
-    for (unsigned int i = 0; i < m_currentLevel.all_tiles.size(); i++)
+    if (size_inc_x > 0)
     {
-        if ((i + 1) % m_currentLevel.width == 0)
+        for (unsigned int i = m_currentLevel.all_tiles.size(); i > 0; i--)
         {
-            for (int j = 0; j < size_inc_x; j++)
+            if ((i + 1) % m_currentLevel.width == 0)
             {
-                printf("new tile\n");
-                m_currentLevel.all_tiles.push_back(0);
+                for (int j = 0; j < size_inc_x; j++)
+                {
+                    m_currentLevel.all_tiles.push_back(0);
+                }
             }
         }
     }
-    for (int j = 0; j < size.x * size_inc_y - 1; j++)
+    else
     {
-        printf("new tile\n");
-        m_currentLevel.all_tiles.push_back(0);
+        for (unsigned int i = m_currentLevel.all_tiles.size(); i > 0; i--)
+        {
+            if ((i + 1) % m_currentLevel.width == 0)
+            {
+                for (int j = 0; j < abs(size_inc_x); j++)
+                {
+                    m_currentLevel.all_tiles.erase(m_currentLevel.all_tiles.begin() + i);
+                }
+            }
+        }
+    }
+
+    if (size_inc_y > 0)
+    {
+        for (int i = 0; i < size.x * size_inc_y; i++)
+        {
+            m_currentLevel.all_tiles.push_back(0);
+        }
+    }
+    else
+    {
+        for (int i = size.x * abs(size_inc_y); i > 0; i--)
+        {
+            m_currentLevel.all_tiles.erase(m_currentLevel.all_tiles.begin() + i);
+        }
     }
 
     m_currentLevel.width = size.x;

@@ -323,6 +323,7 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 				break;
 			case D_Player:
 				m_levelManager->SetTile(pos, 2);
+				m_levelManager->SetTile(*(m_player->GetPos()), 0);
 				m_player->SetStartingPos(pos);
 				m_enemies->RemoveEnemyIf(pos);
 				break;
