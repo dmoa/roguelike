@@ -91,7 +91,7 @@ void Enemies::Setup(sf::Vector2f* playerPos)
 	m_enemies.clear();
     for (unsigned int i = 0; i < m_enemyTypes.size(); i++)
     {
-        int tileID = i + 3;
+        int tileID = GetID(i);
         for (sf::Vector2f const& pos: m_levelManager->GetTileLocations(tileID, false))
         {
             AddEnemy(i, pos, playerPos);

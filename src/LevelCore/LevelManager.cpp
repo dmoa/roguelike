@@ -135,10 +135,6 @@ int LevelManager::GetLevelTileHeight()
 
 void LevelManager::SetLevelSize(sf::Vector2f size)
 {
-
-    // DELETE AND REDO
-
-
     int size_inc_x = size.x - m_currentLevel.width;
     int size_inc_y = size.y - m_currentLevel.height;
 

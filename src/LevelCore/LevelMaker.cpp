@@ -344,6 +344,21 @@ void LevelMaker::HandleTile(sf::Vector2f pos)
 
 void LevelMaker::ChangeLevelSize(int x, int y)
 {
+	if (x < 0)
+	{
+		for (int i = 0; i < m_levelManager->GetLevelTileHeight(); i++)
+		{
+			m_enemies->RemoveEnemyIf(sf::Vector2f(m_levelManager->GetLevelTileWidth() - 1, i));
+		}
+	}
+	if (y < 0)
+	{
+		for (int i = 0; i < m_levelManager->GetLevelTileWidth(); i++)
+		{
+			m_enemies->RemoveEnemyIf(sf::Vector2f(i, m_levelManager->GetLevelTileHeight() - 1));
+		}
+	}
+
 	m_saveLevelShape.setFillColor(sf::Color::Cyan);
 	m_levelManager->SetLevelSize(sf::Vector2f(m_levelManager->GetLevelTileWidth() + x, m_levelManager->GetLevelTileHeight() + y));
 	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
@@ -351,8 +366,8 @@ void LevelMaker::ChangeLevelSize(int x, int y)
 
 // @DONE
 // changing enemies
-
-// @TODO
+// eraser and shit
 // deleting and creating enemies
 // replacing if there's wall
-// eraser and shit
+
+// @TODO
