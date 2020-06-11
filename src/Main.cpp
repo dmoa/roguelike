@@ -2,7 +2,6 @@
 #include "GameCore/include/Game.hpp"
 #include "LevelCore/LevelMaker.hpp"
 
-
 // temp
 // I'm a bad dev
 enum States
@@ -110,7 +109,8 @@ int main()
 	LevelManager levelManager;
 	Player player(&levelManager);
 	Enemies enemies(&levelManager);
-	Game game(&window, &levelManager, &player, &enemies);
+	Endpoint endpoint(&levelManager);
+	Game game(&window, &levelManager, &player, &enemies, &endpoint);
 	LevelMaker levelMaker(&window, &levelManager, &player, &enemies, &mainFont);
 
 	// "game" states

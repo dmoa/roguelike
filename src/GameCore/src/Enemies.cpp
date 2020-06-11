@@ -133,7 +133,7 @@ std::vector<EnemyProperties>* Enemies::GetEnemyTypes()
 
 int Enemies::GetID(int index)
 {
-	return index + 3;
+	return index + 4;
 }
 
 bool Enemies::IsEnemyThere(sf::Vector2f pos)

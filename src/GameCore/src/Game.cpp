@@ -1,6 +1,6 @@
 #include "../include/Game.hpp"
 
-Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies)
+Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies, Endpoint* endpoint)
 {
 	m_window = window;
 	m_levelRender.texture.create(m_window->getSize().x, m_window->getSize().y);
@@ -8,44 +8,27 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
 
-	// m_shader.Init(m_windowWidth, m_windowHeight);
 	m_levelManager = levelManager;
 	m_player = player;
 	m_enemies = enemies;
+	m_endpoint = endpoint;
 
 	m_player->GiveShader(m_shader.GetShader());
 	m_player->SetStartingPos(m_levelManager->GetTileLocations(m_player->GetID(), true)[0]);
 	m_enemies->Setup(m_player->GetPos());
+	m_endpoint->m_pos = m_levelManager->GetTileLocations(m_endpoint->m_ID, true)[0];
 	m_levelManager->ReloadRenderer();
 }
 
 
 void Game::Update(std::vector<sf::Event>* events)
 {
-	// we aren't doing anything with dt right now but we will need it later
-	//dt = 0;
-			// case sf::Event::Resized:
-			// {
-			// 	*window_width = event.size.width;
-			// 	WINDOW_HEIGHT = event.size.height;
-			// 	m_levelRender.scale = std::min(*window_width / 1000, WINDOW_HEIGHT / 1000);
-			// 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
-			// // sometimes there's input lag, not sure why
 	for (unsigned int i = 0; i < events->size(); i++)
 	{
 		if ((*events)[i].type == sf::Event::KeyPressed)
 		{
 			switch ((*events)[i].key.code)
 			{
-				// case sf::Keyboard::Space:
-				// 	m_levelManager = Map();
-				// 	m_enemies = Enemies();
-				// 	m_player = Player();
-				// 	m_player.SetTextures(&m_tileSetTexture);
-				// 	m_player.SetStartingPos(&m_levelManager, m_shader.GetShader());
-				// 	m_enemies.Setup(&m_tileSetTexture, &m_levelManager, m_player.GetX(), m_player.GetY());
-				// 	break;
-
 				case sf::Keyboard::Left:
 				case sf::Keyboard::A:
 					PlayerMoveAttempt(m_player->Move(-1, 0));
@@ -71,6 +54,8 @@ void Game::Update(std::vector<sf::Event>* events)
 			}
 		}
 	}
+
+	m_endpoint->Update();
 }
 
 void Game::Draw()
@@ -80,6 +65,7 @@ void Game::Draw()
 	m_levelManager->Draw(&m_levelRender.texture);
 	m_enemies->Draw(&m_levelRender.texture);
 	m_player->Draw(&m_levelRender.texture);
+	m_endpoint->Draw(&m_levelRender.texture);
 
 	m_levelRender.texture.display();
 
