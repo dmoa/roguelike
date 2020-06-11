@@ -65,13 +65,12 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 
 	// draw & update
 	window->clear(sf::Color(46,52,64));
-	//sf::Int32 dt =
-	deltaClock->restart().asMilliseconds();
+	sf::Int32 dt = deltaClock->restart().asMilliseconds();
 
 	switch (*currentState)
 	{
 		case InGame:
-			game->Update(&events);
+			game->Update(&events, &dt);
 			game->Draw();
 			break;
 		case LevelEditor:

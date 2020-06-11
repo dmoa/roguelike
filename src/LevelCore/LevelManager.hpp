@@ -31,6 +31,7 @@ public:
 	int GetLevelHeight();
 	int GetLevelTileWidth();
 	int GetLevelTileHeight();
+	sf::Vector2f CenterTile(sf::Vector2f coords);
 	void SetLevelSize(sf::Vector2f size);
 private:
 	int m_currentLevelIndex;

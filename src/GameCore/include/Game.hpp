@@ -12,7 +12,7 @@ class Game
 {
 public:
 	Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player, Enemies* enemies, Endpoint* endpoint);
-	void Update(std::vector<sf::Event>* events);
+	void Update(std::vector<sf::Event>* events, sf::Int32* dt);
 	void Draw();
 	void ResetLevel();
 private:

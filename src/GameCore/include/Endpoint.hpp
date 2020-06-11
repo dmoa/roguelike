@@ -7,9 +7,10 @@ class Endpoint
 public:
 	Endpoint(LevelManager* levelManager);
 	void Draw(sf::RenderTexture* renderTexture);
-	void Update();
+	void Update(sf::Int32* dt);
 	sf::Vector2f m_pos;
 	int m_ID; // @TODO make const
+	float m_angle;
 private:
 	sf::CircleShape m_shape;
 	LevelManager* m_levelManager;

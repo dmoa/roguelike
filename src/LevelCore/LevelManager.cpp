@@ -133,6 +133,11 @@ int LevelManager::GetLevelTileHeight()
     return m_currentLevel.height;
 }
 
+sf::Vector2f LevelManager::CenterTile(sf::Vector2f coords)
+{
+    return sf::Vector2f((coords.x + 0.5) * m_tileLength + m_lineThickness, (coords.y + 0.5) * m_tileLength + m_lineThickness);
+}
+
 void LevelManager::SetLevelSize(sf::Vector2f size)
 {
     int size_inc_x = size.x - m_currentLevel.width;
