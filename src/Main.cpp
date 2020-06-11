@@ -65,7 +65,9 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 
 	// draw & update
 	window->clear(sf::Color(46,52,64));
-	sf::Int32 dt = deltaClock->restart().asMilliseconds();
+	float dt = deltaClock->restart().asSeconds();
+
+	// printf("dt: %i", sf::Int32)
 
 	switch (*currentState)
 	{

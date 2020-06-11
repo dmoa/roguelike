@@ -21,7 +21,7 @@ Game::Game(sf::RenderWindow* window, LevelManager* levelManager, Player* player,
 }
 
 
-void Game::Update(std::vector<sf::Event>* events, sf::Int32* dt)
+void Game::Update(std::vector<sf::Event>* events, float* dt)
 {
 	for (unsigned int i = 0; i < events->size(); i++)
 	{
