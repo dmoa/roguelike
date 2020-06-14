@@ -51,7 +51,7 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 			{
         		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
         		window->setView(sf::View(visibleArea)); // game->getRenderWindow()->setView(sf::vView(visibleArea))
-				// game->resize(window_width, window_height);
+				//game->ResizeScreen(event.size.width, event.size.height);
 				break;
 			}
 			default:
@@ -78,7 +78,6 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 		case LevelEditor:
 			levelMaker->Update(&events);
 			levelMaker->Draw();
-
 		default:
 			break;
 	}

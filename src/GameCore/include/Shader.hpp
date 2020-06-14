@@ -4,7 +4,6 @@ class Shader
 {
 public:
 	Shader();
-	sf::Shader* GetShader();
+	sf::Shader shader;
 private:
-	sf::Shader m_shader;
 };

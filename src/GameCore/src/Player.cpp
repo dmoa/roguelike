@@ -53,7 +53,7 @@ void Player::ResetRenderPos()
 	int newPosY = m_pos.y * m_levelManager->GetTileLength() + m_levelManager->GetLineThickness();
 
 	m_drawable.setPosition(newPosX, newPosY);
-	m_shader->setUniform("lights[0].position", sf::Glsl::Vec2(m_pos.x * m_playerLength + m_playerLength / 2, newPosY + m_playerLength / 2));
+	m_shader->setUniform("lights[0].position", sf::Glsl::Vec2(newPosX + m_playerLength / 2, newPosY + m_playerLength / 2));
 }
 
 int Player::GetID()
