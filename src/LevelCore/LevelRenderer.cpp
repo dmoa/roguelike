@@ -6,12 +6,11 @@ LevelRenderer::LevelRenderer(Player* player, Enemies* enemies, LevelManager* lev
 	m_enemies = enemies;
 	m_levelManager = levelManager;
 
-	m_player->GiveShader(&m_shader.shader);
-
 	m_levelRender.bg = sf::Color(34, 35, 35);
 	m_levelRender.scale = 1;
 	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
-	m_levelRender.texture.create(1000, 1000); // change to size of current level
+	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()); // change to size of current level
+	m_shader.shader.setUniform("screen", sf::Glsl::Vec2(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()));
 }
 
 void LevelRenderer::Draw(sf::RenderWindow* window)
@@ -28,4 +27,9 @@ void LevelRenderer::Draw(sf::RenderWindow* window)
 	m_levelRender.sprite.setPosition((window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
 
 	window->draw(m_levelRender.sprite, &m_shader.shader);
+}
+
+void LevelRenderer::Update()
+{
+	m_shader.shader.setUniform("lights[0].position", sf::Glsl::Vec2(((*m_player->GetPos()).x * m_levelManager->GetTileLength()) + 100 / 2, ((*m_player->GetPos()).y * m_levelManager->GetTileLength()) + 100 / 2));
 }

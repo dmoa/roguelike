@@ -50,6 +50,7 @@ void Game::Update(std::vector<sf::Event>* events, float* dt)
 		}
 	}
 
+	m_levelRenderer->Update();
 	m_endpoint->Update(dt);
 }
 

@@ -1,13 +1,11 @@
 #pragma once
 
 #include "../../LevelCore/LevelManager.hpp"
-#include "Shader.hpp"
 
 class Player
 {
 public:
 	Player(LevelManager* levelManager);
-	void GiveShader(sf::Shader* shader);
 	void SetStartingPos(sf::Vector2f pos);
 	void Draw(sf::RenderTexture* renderTexture);
 	bool Move(int directionX, int directionY);
