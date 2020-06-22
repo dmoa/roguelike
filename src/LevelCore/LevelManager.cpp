@@ -11,13 +11,14 @@ LevelManager::LevelManager()
     m_tileData.push_back(Tile("wall", sf::Color(129,161,193), false));
 
     LoadLevel();
-    ReloadRenderer();
+    ReloadTileRenderer();
 }
 
+
 // Draws everything except the player and enemies
-void LevelManager::Draw(sf::RenderTexture* renderTexture)
+void LevelManager::DrawTiles(sf::RenderTexture* renderTexture)
 {
-	for (unsigned int i = 0; i < m_currentLevel.base_tiles.size(); i++)
+    for (unsigned int i = 0; i < m_currentLevel.base_tiles.size(); i++)
     {
         renderTexture->draw(m_renderedTiles[i]);
     }
@@ -38,7 +39,7 @@ void LevelManager::SaveLevel()
     LevelSaver::Save("content/levels/" + std::to_string(m_currentLevelIndex), false, m_currentLevel);
 }
 
-void LevelManager::ReloadRenderer()
+void LevelManager::ReloadTileRenderer()
 {
     // setting render of level objects other than enemy and player
     m_renderedTiles.clear();
@@ -100,7 +101,7 @@ int LevelManager::GetTileIndex(sf::Vector2f pos)
 void LevelManager::SetTile(sf::Vector2f pos, int new_id)
 {
     m_currentLevel.all_tiles[MapUtil::GetVectorToInt(pos, m_currentLevel.width)] = new_id;
-    ReloadRenderer();
+    ReloadTileRenderer();
 }
 
 int LevelManager::GetTileLength()
@@ -188,5 +189,5 @@ void LevelManager::SetLevelSize(sf::Vector2f size)
     m_currentLevel.width = size.x;
     m_currentLevel.height = size.y;
 
-    ReloadRenderer();
+    ReloadTileRenderer();
 }

@@ -1,6 +1,7 @@
 #include "Platform/PlatformHelper.hpp"
 #include "GameCore/include/Game.hpp"
 #include "LevelCore/LevelMaker.hpp"
+#include "LeveLCore/LevelRenderer.hpp"
 
 // temp
 // I'm a bad dev
@@ -110,7 +111,8 @@ int main()
 	Player player(&levelManager);
 	Enemies enemies(&levelManager);
 	Endpoint endpoint(&levelManager);
-	Game game(&window, &levelManager, &player, &enemies, &endpoint);
+	LevelRenderer levelRenderer(&player, &enemies, &levelManager);
+	Game game(&window, &levelRenderer, &levelManager, &player, &enemies, &endpoint);
 	LevelMaker levelMaker(&window, &levelManager, &player, &enemies, &mainFont);
 
 	// "game" states

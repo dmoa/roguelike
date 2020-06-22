@@ -8,11 +8,6 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 	m_enemies = enemies;
 	m_enemyTypes = enemies->GetEnemyTypes();
 
-	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
-	m_levelRender.bg = sf::Color(34, 35, 35);
-	m_levelRender.scale = 1;
-	m_levelRender.sprite.setScale(m_levelRender.scale, m_levelRender.scale);
-
 	m_currentMode = Drawing;
 	m_currentDrawingMode = D_Enemies;
 	m_selectedEnemyIndex = 0;
@@ -54,19 +49,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 
 void LevelMaker::Draw()
 {
-	m_levelRender.texture.clear(m_levelRender.bg);
-
-	m_levelManager->Draw(&m_levelRender.texture);
-	m_enemies->Draw(&m_levelRender.texture);
-	m_player->Draw(&m_levelRender.texture);
-
-	m_levelRender.texture.display();
-
-	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture(), true);
-	m_levelRender.sprite.setPosition((m_window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (m_window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
-
-	m_window->draw(m_levelRender.sprite);
-
+	// m_levelManager->Draw(m_levelManager->GetLevelRender());
 
 	m_window->draw(m_modeSelectorShape);
 	m_window->draw(m_details);

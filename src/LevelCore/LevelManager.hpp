@@ -15,10 +15,10 @@ class LevelManager
 public:
 	LevelManager();
 	// Draws everything except the player and enemies
-	void Draw(sf::RenderTexture* renderTexture);
+	void DrawTiles(sf::RenderTexture* renderTexture);
 	void LoadLevel();
 	void SaveLevel();
-	void ReloadRenderer();
+	void ReloadTileRenderer();
 	std::vector<sf::Vector2f> GetTileLocations(int ID, bool must_find);
 	std::vector<Tile>* GetTileData();
 	Tile* GetBaseTile(sf::Vector2f pos);
@@ -43,4 +43,5 @@ private:
 	// base_tiles + m_all_tiles?
 	// have all the tiles (for loading and saving level files), then have just base tiles (being only for rendering)
 	sf::Color m_gridLineColor;
+
 };
