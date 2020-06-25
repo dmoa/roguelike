@@ -14,6 +14,7 @@ public:
 	void Draw();
 	void Update();
 	sf::FloatRect GetBounds();
+	void UpdateRenderBounds();
 private:
 	Render m_levelRender;
 	Shader m_shader;

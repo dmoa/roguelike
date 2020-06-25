@@ -342,5 +342,5 @@ void LevelMaker::ChangeLevelSize(int x, int y)
 
 	m_saveLevelShape.setFillColor(sf::Color::Cyan);
 	m_levelManager->SetLevelSize(sf::Vector2f(m_levelManager->GetLevelTileWidth() + x, m_levelManager->GetLevelTileHeight() + y));
-	// m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
+	m_levelRenderer->UpdateRenderBounds();
 }
