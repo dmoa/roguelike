@@ -1,8 +1,9 @@
 #include "LevelMaker.hpp"
 
-LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font)
+LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font)
 {
 	m_window = renderWindow;
+	m_levelRenderer = levelRenderer;
 	m_levelManager = levelManager;
 	m_player = player;
 	m_enemies = enemies;
@@ -49,7 +50,7 @@ LevelMaker::LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManage
 
 void LevelMaker::Draw()
 {
-	// m_levelManager->Draw(m_levelManager->GetLevelRender());
+	m_levelRenderer->Draw();
 
 	m_window->draw(m_modeSelectorShape);
 	m_window->draw(m_details);
@@ -69,12 +70,9 @@ void LevelMaker::Draw()
 		}
 	}
 
-	if (m_toolRenderer.should_draw)
+	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
 	{
-		for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
-		{
-			m_window->draw(m_toolRenderer.shapes[i]);
-		}
+		m_window->draw(m_toolRenderer.shapes[i]);
 	}
 }
 
@@ -120,10 +118,10 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 				}
 			}
 			// calculating where the cursor is going if "inside the level"
-			else if (Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds()))
+			else if (Collision::PointInRect(mouse_pos, m_levelRenderer->GetBounds()))
 			{
-				int x = (mouse_pos.x - m_levelRender.sprite.getPosition().x) / m_levelManager->GetTileLength();
-				int y = (mouse_pos.y - m_levelRender.sprite.getPosition().y) / m_levelManager->GetTileLength();
+				int x = (mouse_pos.x -  m_levelRenderer->GetBounds().left) / m_levelManager->GetTileLength();
+				int y = (mouse_pos.y -  m_levelRenderer->GetBounds().top) / m_levelManager->GetTileLength();
 				HandleTile(sf::Vector2f(x, y));
 			}
 		}
@@ -164,7 +162,7 @@ void LevelMaker::Update(std::vector<sf::Event>* events)
 		}
 	}
 
-	m_toolRenderer.should_draw = Collision::PointInRect(mouse_pos, m_levelRender.sprite.getGlobalBounds());
+	m_toolRenderer.should_draw = Collision::PointInRect(mouse_pos, m_levelRenderer->GetBounds());
 	// updating the tool renderer to the cursor's position
 	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
 	{
@@ -344,13 +342,5 @@ void LevelMaker::ChangeLevelSize(int x, int y)
 
 	m_saveLevelShape.setFillColor(sf::Color::Cyan);
 	m_levelManager->SetLevelSize(sf::Vector2f(m_levelManager->GetLevelTileWidth() + x, m_levelManager->GetLevelTileHeight() + y));
-	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
+	// m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
 }
-
-// @DONE
-// changing enemies
-// eraser and shit
-// deleting and creating enemies
-// replacing if there's wall
-
-// @TODO

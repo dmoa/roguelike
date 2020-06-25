@@ -1,7 +1,9 @@
 #include "LevelRenderer.hpp"
 
-LevelRenderer::LevelRenderer(Player* player, Enemies* enemies, LevelManager* levelManager)
+LevelRenderer::LevelRenderer(sf::RenderWindow* window, Player* player, Enemies* enemies, LevelManager* levelManager)
 {
+	m_window = window;
+
 	m_player = player;
 	m_enemies = enemies;
 	m_levelManager = levelManager;
@@ -13,7 +15,7 @@ LevelRenderer::LevelRenderer(Player* player, Enemies* enemies, LevelManager* lev
 	m_shader.shader.setUniform("screen", sf::Glsl::Vec2(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()));
 }
 
-void LevelRenderer::Draw(sf::RenderWindow* window)
+void LevelRenderer::Draw()
 {
     m_levelRender.texture.clear(m_levelRender.bg);
 
@@ -24,12 +26,17 @@ void LevelRenderer::Draw(sf::RenderWindow* window)
 	m_levelRender.texture.display();
 
 	m_levelRender.sprite.setTexture(m_levelRender.texture.getTexture());
-	m_levelRender.sprite.setPosition((window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
+	m_levelRender.sprite.setPosition((m_window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (m_window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
 
-	window->draw(m_levelRender.sprite, &m_shader.shader);
+	m_window->draw(m_levelRender.sprite, &m_shader.shader);
 }
 
 void LevelRenderer::Update()
 {
 	m_shader.shader.setUniform("lights[0].position", sf::Glsl::Vec2(((*m_player->GetPos()).x * m_levelManager->GetTileLength()) + 100 / 2, ((*m_player->GetPos()).y * m_levelManager->GetTileLength()) + 100 / 2));
+}
+
+sf::FloatRect LevelRenderer::GetBounds()
+{
+	return m_levelRender.sprite.getGlobalBounds();
 }

@@ -2,6 +2,7 @@
 
 #include <Collision/Collision.hpp>
 
+#include "LevelRenderer.hpp"
 #include "LevelManager.hpp"
 #include "../GameCore/include/EnemyProperties.hpp"
 #include "../GameCore/include/Enemies.hpp"
@@ -30,7 +31,7 @@ struct Tool
 class LevelMaker
 {
 public:
-	LevelMaker(sf::RenderWindow* renderWindow, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font);
+	LevelMaker(sf::RenderWindow* renderWindow, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies, sf::Font* font);
 	void Draw();
 	void Update(std::vector<sf::Event>* events);
 private:
@@ -43,8 +44,8 @@ private:
 	void UpdateText();
 	void HandleTile(sf::Vector2f pos);
 	void ChangeLevelSize(int x, int y);
-	Render m_levelRender;
 	sf::RenderWindow* m_window;
+	LevelRenderer* m_levelRenderer;
 	LevelManager* m_levelManager;
 	Player* m_player;
 	Enemies* m_enemies;

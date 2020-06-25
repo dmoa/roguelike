@@ -111,9 +111,9 @@ int main()
 	Player player(&levelManager);
 	Enemies enemies(&levelManager);
 	Endpoint endpoint(&levelManager);
-	LevelRenderer levelRenderer(&player, &enemies, &levelManager);
+	LevelRenderer levelRenderer(&window, &player, &enemies, &levelManager);
 	Game game(&window, &levelRenderer, &levelManager, &player, &enemies, &endpoint);
-	LevelMaker levelMaker(&window, &levelManager, &player, &enemies, &mainFont);
+	LevelMaker levelMaker(&window, &levelRenderer, &levelManager, &player, &enemies, &mainFont);
 
 	// "game" states
 	States currentState = InGame;

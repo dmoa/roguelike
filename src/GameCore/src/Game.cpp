@@ -56,7 +56,7 @@ void Game::Update(std::vector<sf::Event>* events, float* dt)
 
 void Game::Draw()
 {
-	m_levelRenderer->Draw(m_window);
+	m_levelRenderer->Draw();
 }
 
 void Game::PlayerMoveAttempt(bool playerDidMove)

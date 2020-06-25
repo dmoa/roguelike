@@ -10,12 +10,14 @@
 class LevelRenderer
 {
 public:
-	LevelRenderer(Player* player, Enemies* enemies, LevelManager* levelManager);
-	void Draw(sf::RenderWindow* window);
+	LevelRenderer(sf::RenderWindow* window, Player* player, Enemies* enemies, LevelManager* levelManager);
+	void Draw();
 	void Update();
+	sf::FloatRect GetBounds();
 private:
 	Render m_levelRender;
 	Shader m_shader;
+	sf::RenderWindow* m_window;
 	Player* m_player;
 	Enemies* m_enemies;
 	LevelManager* m_levelManager;
