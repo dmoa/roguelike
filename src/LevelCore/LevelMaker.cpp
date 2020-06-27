@@ -327,6 +327,7 @@ void LevelMaker::ChangeLevelSize(int x, int y)
 {
 	if (x < 0)
 	{
+		if (m_levelManager->GetLevelTileWidth() == 1) return;
 		for (int i = 0; i < m_levelManager->GetLevelTileHeight(); i++)
 		{
 			m_enemies->RemoveEnemyIf(sf::Vector2f(m_levelManager->GetLevelTileWidth() - 1, i));
@@ -334,6 +335,7 @@ void LevelMaker::ChangeLevelSize(int x, int y)
 	}
 	if (y < 0)
 	{
+		if (m_levelManager->GetLevelTileHeight() == 1) return;
 		for (int i = 0; i < m_levelManager->GetLevelTileWidth(); i++)
 		{
 			m_enemies->RemoveEnemyIf(sf::Vector2f(i, m_levelManager->GetLevelTileHeight() - 1));
