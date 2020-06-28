@@ -5,13 +5,12 @@
 #include "../../LevelCore/LevelRenderer.hpp"
 #include "Player.hpp"
 #include "Enemies.hpp"
-#include "Endpoint.hpp"
 
 class Game
 {
 public:
-	Game(sf::RenderWindow* window, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies, Endpoint* endpoint);
-	void Update(std::vector<sf::Event>* events, float* dt);
+	Game(sf::RenderWindow* window, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies);
+	void Update(std::vector<sf::Event>* events, float dt);
 	void Draw();
 	void ResetLevel();
 private:
@@ -25,5 +24,4 @@ private:
 	LevelManager* m_levelManager;
 	Player* m_player;
 	Enemies* m_enemies;
-	Endpoint* m_endpoint;
 };

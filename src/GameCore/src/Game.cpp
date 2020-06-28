@@ -1,6 +1,6 @@
 #include "../include/Game.hpp"
 
-Game::Game(sf::RenderWindow* window, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies, Endpoint* endpoint)
+Game::Game(sf::RenderWindow* window, LevelRenderer* levelRenderer, LevelManager* levelManager, Player* player, Enemies* enemies)
 {
 	m_window = window;
 
@@ -8,15 +8,13 @@ Game::Game(sf::RenderWindow* window, LevelRenderer* levelRenderer, LevelManager*
 	m_levelManager = levelManager;
 	m_player = player;
 	m_enemies = enemies;
-	m_endpoint = endpoint;
 
 	m_player->SetStartingPos(m_levelManager->GetTileLocations(m_player->GetID(), true)[0]);
 	m_enemies->Setup(m_player->GetPos());
-	m_endpoint->m_pos = m_levelManager->GetTileLocations(m_endpoint->m_ID, true)[0];
 }
 
 
-void Game::Update(std::vector<sf::Event>* events, float* dt)
+void Game::Update(std::vector<sf::Event>* events, float dt)
 {
 	for (unsigned int i = 0; i < events->size(); i++)
 	{
@@ -51,8 +49,7 @@ void Game::Update(std::vector<sf::Event>* events, float* dt)
 		}
 	}
 
-	m_levelRenderer->Update();
-	m_endpoint->Update(dt);
+	m_levelRenderer->Update(dt);
 }
 
 void Game::Draw()

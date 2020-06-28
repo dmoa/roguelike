@@ -68,12 +68,10 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 	window->clear(sf::Color(46,52,64));
 	float dt = deltaClock->restart().asSeconds();
 
-	// printf("dt: %i", sf::Int32)
-
 	switch (*currentState)
 	{
 		case InGame:
-			game->Update(&events, &dt);
+			game->Update(&events, dt);
 			game->Draw();
 			break;
 		case LevelEditor:
@@ -111,8 +109,8 @@ int main()
 	Player player(&levelManager);
 	Enemies enemies(&levelManager);
 	Endpoint endpoint(&levelManager);
-	LevelRenderer levelRenderer(&window, &player, &enemies, &levelManager);
-	Game game(&window, &levelRenderer, &levelManager, &player, &enemies, &endpoint);
+	LevelRenderer levelRenderer(&window, &player, &enemies, &endpoint, &levelManager);
+	Game game(&window, &levelRenderer, &levelManager, &player, &enemies);
 	LevelMaker levelMaker(&window, &levelRenderer, &levelManager, &player, &enemies, &mainFont);
 
 	// "game" states

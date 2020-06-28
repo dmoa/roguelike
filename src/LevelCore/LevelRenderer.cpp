@@ -1,11 +1,12 @@
 #include "LevelRenderer.hpp"
 
-LevelRenderer::LevelRenderer(sf::RenderWindow* window, Player* player, Enemies* enemies, LevelManager* levelManager)
+LevelRenderer::LevelRenderer(sf::RenderWindow* window, Player* player, Enemies* enemies, Endpoint* endpoint, LevelManager* levelManager)
 {
 	m_window = window;
 
 	m_player = player;
 	m_enemies = enemies;
+	m_endpoint = endpoint;
 	m_levelManager = levelManager;
 
 	m_levelRender.bg = sf::Color(34, 35, 35);
@@ -22,6 +23,7 @@ void LevelRenderer::Draw()
 	m_levelManager->DrawTiles(&(m_levelRender.texture));
     m_enemies->Draw(&(m_levelRender.texture));
 	m_player->Draw(&(m_levelRender.texture));
+	m_endpoint->Draw(&(m_levelRender.texture));
 
 	m_levelRender.texture.display();
 
@@ -30,9 +32,10 @@ void LevelRenderer::Draw()
 	m_window->draw(m_levelRender.sprite, &m_shader.shader);
 }
 
-void LevelRenderer::Update()
+void LevelRenderer::Update(float dt)
 {
 	m_shader.shader.setUniform("lights[0].position", sf::Glsl::Vec2(((*m_player->GetPos()).x * m_levelManager->GetTileLength()) + 100 / 2, ((*m_player->GetPos()).y * m_levelManager->GetTileLength()) + 100 / 2));
+	m_endpoint->Update(dt);
 }
 
 void LevelRenderer::ReloadShader()
