@@ -21,7 +21,7 @@ inline void InitWindow(sf::RenderWindow* window, float* initial_window_width, fl
 }
 // main loop
 
-inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelMaker* levelMaker)
+inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, States* currentState, Game* game, LevelRenderer* levelRenderer, LevelMaker* levelMaker)
 {
 	// input
 	std::vector<sf::Event> events;
@@ -51,8 +51,8 @@ inline void Update(sf::RenderWindow* window, bool* QUIT, sf::Clock* deltaClock, 
 			case sf::Event::Resized:
 			{
         		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-        		window->setView(sf::View(visibleArea)); // game->getRenderWindow()->setView(sf::vView(visibleArea))
-				//game->ResizeScreen(event.size.width, event.size.height);
+        		window->setView(sf::View(visibleArea));
+				levelRenderer->UpdateRenderBounds();
 				break;
 			}
 			default:
@@ -120,7 +120,7 @@ int main()
 
 	while (!QUIT)
 	{
-		Update(&window, &QUIT, &deltaClock, &currentState, &game, &levelMaker);
+		Update(&window, &QUIT, &deltaClock, &currentState, &game, &levelRenderer, &levelMaker);
 	}
 
 	return 0;

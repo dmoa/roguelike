@@ -70,9 +70,12 @@ void LevelMaker::Draw()
 		}
 	}
 
-	for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
+	if (m_toolRenderer.should_draw)
 	{
-		m_window->draw(m_toolRenderer.shapes[i]);
+		for (unsigned int i = 0; i < m_toolRenderer.shapes.size(); i++)
+		{
+			m_window->draw(m_toolRenderer.shapes[i]);
+		}
 	}
 }
 

@@ -35,6 +35,12 @@ void LevelRenderer::Update()
 	m_shader.shader.setUniform("lights[0].position", sf::Glsl::Vec2(((*m_player->GetPos()).x * m_levelManager->GetTileLength()) + 100 / 2, ((*m_player->GetPos()).y * m_levelManager->GetTileLength()) + 100 / 2));
 }
 
+void LevelRenderer::ReloadShader()
+{
+	m_shader.Reload();
+	m_shader.shader.setUniform("screen", sf::Glsl::Vec2(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()));
+}
+
 sf::FloatRect LevelRenderer::GetBounds()
 {
 	return m_levelRender.sprite.getGlobalBounds();
@@ -45,5 +51,4 @@ void LevelRenderer::UpdateRenderBounds()
 	m_levelRender.texture.create(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight());
 	m_levelRender.sprite.setPosition((m_window->getSize().x - m_levelManager->GetLevelWidth() * m_levelRender.scale) / 2, (m_window->getSize().y - m_levelManager->GetLevelHeight() * m_levelRender.scale) / 2);
 	m_shader.shader.setUniform("screen", sf::Glsl::Vec2(m_levelManager->GetLevelWidth(), m_levelManager->GetLevelHeight()));
-	printf("%i\n", m_levelManager->GetLevelWidth());
 }
