@@ -14,8 +14,8 @@ uniform int num_lights;
 uniform vec2 screen;
 
 const float constant = 1.0;
-const float linear = 90.0;
-const float quadratic = 200.0;
+const float linear = 0.1;
+const float quadratic = 0.0005;
 
 uniform sampler2D texture;
 
@@ -32,7 +32,7 @@ void main()
         Light light = lights[i];
 
         vec2 norm_pos = light.position / screen;
-        float distance = length(norm_pos - norm_screen);
+        float distance = length(light.position - (norm_screen * screen));
         float attenuation = 1.0 / (constant + distance * linear / light.power + quadratic * distance * distance / light.power);
         diffuse += light.diffuse * attenuation;
     }

@@ -42,7 +42,8 @@ void Game::Update(std::vector<sf::Event>* events, float* dt)
 					break;
 
 				case sf::Keyboard::R:
-					ResetLevel();
+					// ResetLevel();
+					m_levelRenderer->ReloadShader();
 					break;
 
 				default: break;

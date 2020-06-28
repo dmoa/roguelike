@@ -13,6 +13,7 @@ public:
 	LevelRenderer(sf::RenderWindow* window, Player* player, Enemies* enemies, LevelManager* levelManager);
 	void Draw();
 	void Update();
+	void ReloadShader();
 	sf::FloatRect GetBounds();
 	void UpdateRenderBounds();
 private:
